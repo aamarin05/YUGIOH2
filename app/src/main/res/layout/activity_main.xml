@@ -281,7 +281,6 @@
         app:srcCompat="@drawable/carta_abajo" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
@@ -300,7 +299,7 @@
         app:layout_constraintGuide_percent="0.495" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -373,7 +372,6 @@
         app:srcCompat="@drawable/carta_abajo" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
@@ -420,7 +418,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/guideline22">
+        app:layout_constraintTop_toTopOf="@+id/guideline22"
+        tools:ignore="UnknownId">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -546,32 +545,37 @@
         android:id="@+id/J_mano"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="Desplazamiento horizontal con imágenes"
         app:layout_constraintBottom_toTopOf="@+id/anchobajoscroll"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/anchoaltoscroll"
-        android:contentDescription="Desplazamiento horizontal con imágenes">
+        app:layout_constraintTop_toTopOf="@+id/guideline22">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/mago_oscuro"/>
+                android:src="@drawable/mago_oscuro" />
+
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tigre_tortuga"/>
+                android:src="@drawable/tigre_tortuga" />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/hechicero_de_los_condenados" />
+
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/tifon_del_espacio_mistico" />
+
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"

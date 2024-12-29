@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.500684" />
+        app:layout_constraintGuide_percent="0.505" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80" />
+        app:layout_constraintGuide_percent="0.795" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline8"
@@ -175,7 +175,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="706dp"
         app:layout_constraintGuide_percent="0.99" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -183,7 +182,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="702dp"
         app:layout_constraintGuide_percent="0.96" />
 
     <ScrollView
@@ -208,7 +206,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="63dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="45dp"
         app:layout_constraintGuide_percent="0.14"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -217,7 +214,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="133dp"
         app:layout_constraintGuide_percent="0.34" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -225,7 +221,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="172dp"
         app:layout_constraintGuide_percent="0.40" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -233,7 +228,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="244dp"
         app:layout_constraintGuide_percent="0.60" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -241,7 +235,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="278dp"
         app:layout_constraintGuide_percent="0.66" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -249,7 +242,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="347dp"
         app:layout_constraintGuide_percent="0.86" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -271,7 +263,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="268dp"
         app:layout_constraintGuide_percent="0.355" />
 
     <ImageView
@@ -383,17 +374,17 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline26"
         app:layout_constraintStart_toStartOf="@+id/guideline25"
-        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline36"
         app:srcCompat="@drawable/carta_abajo" />
 
     <ImageView
         android:id="@+id/J_cartaMonstruo1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="81dp"
+        android:layout_height="102dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline24"
         app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline36"
         app:srcCompat="@drawable/images" />
 
     <ImageView
@@ -404,14 +395,14 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline28"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="@+id/guideline27"
-        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline36"
         app:srcCompat="@drawable/images__1_" />
 
     <ImageView
         android:id="@+id/J_cartaMagica1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintBottom_toTopOf="@+id/guideline35"
         app:layout_constraintEnd_toStartOf="@+id/guideline24"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline23"
@@ -423,7 +414,7 @@
         android:id="@+id/J_cartaMagica2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintBottom_toTopOf="@+id/guideline35"
         app:layout_constraintEnd_toStartOf="@+id/guideline26"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="@+id/guideline25"
@@ -435,11 +426,12 @@
         android:id="@+id/J_cartaMagica3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintBottom_toTopOf="@+id/guideline35"
         app:layout_constraintEnd_toStartOf="@+id/guideline28"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline27"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/_4f2939e711a2" />
 
     <ScrollView
@@ -456,6 +448,41 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.495" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.645" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.655" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

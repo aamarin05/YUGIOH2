@@ -5,11 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_yugioh_duel_links"
     tools:context=".MainActivity"
     tools:layout_editor_absoluteX="-1dp"
-    tools:layout_editor_absoluteY="1dp"
-    android:background="@drawable/fondo_yugioh_duel_links"
-    >
+    tools:layout_editor_absoluteY="1dp">
 
 
     <ImageView
@@ -90,7 +89,7 @@
         app:layout_constraintGuide_percent="0.795" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
+        android:id="@+id/anchobajoscroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -282,7 +281,6 @@
         app:srcCompat="@drawable/carta_abajo" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
@@ -301,7 +299,7 @@
         app:layout_constraintGuide_percent="0.495" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -374,7 +372,6 @@
         app:srcCompat="@drawable/carta_abajo" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
@@ -411,7 +408,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/guideline22">
+        app:layout_constraintTop_toTopOf="@+id/guideline22"
+        tools:ignore="UnknownId">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -477,12 +475,13 @@
 
     <ImageView
         android:id="@+id/J_cartaMonstruo1"
-        android:layout_width="81dp"
-        android:layout_height="102dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline24"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/guideline36"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/images" />
 
     <ImageView
@@ -503,7 +502,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline35"
         app:layout_constraintEnd_toStartOf="@+id/guideline24"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/images__2_" />
@@ -532,20 +531,48 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/_4f2939e711a2" />
 
-    <ScrollView
+    <HorizontalScrollView
         android:id="@+id/J_mano"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        android:contentDescription="Desplazamiento horizontal con imágenes"
+        app:layout_constraintBottom_toTopOf="@+id/anchobajoscroll"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/guideline7">
+        app:layout_constraintTop_toTopOf="@+id/guideline22">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/mago_oscuro" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tigre_tortuga" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/hechicero_de_los_condenados" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/tifon_del_espacio_mistico" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/images" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline33"
@@ -576,7 +603,7 @@
         app:layout_constraintGuide_percent="0.655" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline37"
+        android:id="@+id/anchoaltoscroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

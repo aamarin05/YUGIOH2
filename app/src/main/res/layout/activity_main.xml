@@ -618,16 +618,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toStartOf="@+id/guideline24"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toTopOf="@+id/guideline31"
-        app:srcCompat="@drawable/carta_yugioh_no_hay_carta" />
-
     <HorizontalScrollView
         android:id="@+id/Scroll_2"
         android:layout_width="0dp"
@@ -676,6 +666,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.195" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline24"
+        app:layout_constraintStart_toStartOf="@+id/guideline23"
+        app:layout_constraintTop_toTopOf="@+id/guideline31"
+        app:srcCompat="@drawable/no_hay_carta" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

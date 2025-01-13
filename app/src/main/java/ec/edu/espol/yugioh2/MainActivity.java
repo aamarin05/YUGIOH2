@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         fases_M = (TextView) findViewById(R.id.fases_M);
         fases_J = (TextView) findViewById(R.id.fases_J);
-/*
+
         //Se define un boton con el ID y se crea una variable
         Button btnCambiarFase = findViewById(R.id.boton_cambiar_fase); //se agrega el boton con el ID
         // Agrega un OnClickListener al botón
@@ -41,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Aquí va la lógica para cambiar de fase
-                cambiarFase();
+                cambiarFase(fases_J);
+                cambiarFase(fases_M);
             }
 
         });
@@ -49,19 +52,24 @@ public class MainActivity extends AppCompatActivity {
 
     // Metodo para cambiar de fase
 
-    private void cambiarFase() {
+    private void cambiarFase(TextView j) {
         // Lógica para cambiar de fase
-        private faseActual = fases_J.getText().toString();
-        private nuevaFase = "";
+        String faseActual = j.getText().toString();
+        String nuevaFase = "";
         if (faseActual.equals("Fase Tomar Carta")) {
             nuevaFase = "Fase Principal";
         }
+        else if (faseActual.equals("Fase Principal")){
+            nuevaFase = "Fase Batalla";
+        }
+        else if (faseActual.equals("Fase Batalla")){
+            nuevaFase = "Fase Tomar Carta";
+        }
         Toast.makeText(this, "Fase cambiada", Toast.LENGTH_SHORT).show();//muestra un pequeño mensaje que la fase se ha cambiado y luego se elimina
-        fases_J.setText(nuevaFase);
+        j.setText(nuevaFase);
 
     manoJugador=findViewById(R.id.manoJugador);
 
     }
-*/
+
 }
-     }

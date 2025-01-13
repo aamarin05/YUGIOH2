@@ -398,6 +398,10 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/rey_bestia" />
 
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/rey_bestia" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -579,6 +583,11 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/caballero_del_destello" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/rey_bestia" />
 
         </LinearLayout>
     </HorizontalScrollView>

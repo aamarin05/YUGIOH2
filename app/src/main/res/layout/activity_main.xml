@@ -338,7 +338,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline29"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/carta_abajo" />
-    
+
 
 
 
@@ -392,6 +392,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline22">
 
         <LinearLayout
+            android:id="@+id/manoJugador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

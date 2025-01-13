@@ -1,18 +1,23 @@
 package ec.edu.espol.yugioh2;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.LinearLayout;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
     private TextView fases_M;
     private TextView fases_J;
+  
+    LinearLayout manoJugador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         fases_M = (TextView) findViewById(R.id.fases_M);
         fases_J = (TextView) findViewById(R.id.fases_J);
 
@@ -50,5 +56,9 @@ public class MainActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "Fase cambiada", Toast.LENGTH_SHORT).show();//muestra un pequeño mensaje que la fase se ha cambiado y luego se elimina
         fases_J.setText(nuevaFase);
+
+    manoJugador=findViewById(R.id.manoJugador);
+
     }
+
 }

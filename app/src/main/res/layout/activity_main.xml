@@ -11,18 +11,6 @@
     tools:layout_editor_absoluteY="1dp">
 
 
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline30"
-        app:layout_constraintEnd_toStartOf="@+id/guideline28"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline27"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/no_hay_carta" />
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -248,28 +236,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.355" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="82dp"
-        android:layout_height="102dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toStartOf="@+id/guideline28"
-        app:layout_constraintStart_toStartOf="@+id/guideline27"
-        app:layout_constraintTop_toTopOf="@+id/guideline31"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline30"
-        app:layout_constraintEnd_toStartOf="@+id/guideline24"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"
-        app:layout_constraintVertical_bias="0.477"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -318,17 +284,6 @@
         app:layout_constraintGuide_percent="0.805" />
 
     <ImageView
-
-        android:id="@+id/imageView7"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline30"
-        app:layout_constraintEnd_toStartOf="@+id/guideline26"
-        app:layout_constraintStart_toStartOf="@+id/guideline25"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-
         android:id="@+id/imageView8"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -339,7 +294,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline22"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/tif_n_del_espacio_m_stico" />
-
 
     <ImageView
         android:id="@+id/imageView10"
@@ -353,20 +307,25 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/carta_abajo" />
 
-
-
-
-
     <ImageView
-        android:id="@+id/imageView14"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guideline28"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline27"
+        app:layout_constraintTop_toTopOf="@+id/guideline22"
+        app:srcCompat="@drawable/olla_de_la_codicia" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline26"
         app:layout_constraintStart_toStartOf="@+id/guideline25"
-        app:layout_constraintTop_toTopOf="@+id/guideline31"
-        app:srcCompat="@drawable/no_hay_carta" />
-
+        app:layout_constraintTop_toTopOf="@+id/guideline22"
+        app:srcCompat="@drawable/fusionador" />
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -408,7 +367,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline22">
 
         <LinearLayout
-            android:id="@+id/manoJugador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -421,22 +379,22 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/fuerza_de_la_oscuridad" />
+                android:src="@drawable/tigre_tortuga" />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/dragon_blanco_de_ojos_azules" />
+                app:srcCompat="@drawable/hechicero_de_los_condenados" />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/dragon_de_acero" />
+                app:srcCompat="@drawable/tifon_del_espacio_mistico" />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/rey_bestia" />
+                app:srcCompat="@drawable/images" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -473,75 +431,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline13"
         app:layout_constraintTop_toTopOf="@+id/guideline18" />
-
-
-    <ImageView
-        android:id="@+id/J_cartaMonstruo2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintEnd_toStartOf="@+id/guideline26"
-        app:layout_constraintStart_toStartOf="@+id/guideline25"
-        app:layout_constraintTop_toTopOf="@+id/guideline36"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-    <ImageView
-        android:id="@+id/J_cartaMonstruo1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintEnd_toStartOf="@+id/guideline24"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toTopOf="@+id/guideline36"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-    <ImageView
-        android:id="@+id/J_cartaMonstruo3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintEnd_toStartOf="@+id/guideline28"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="@+id/guideline27"
-        app:layout_constraintTop_toTopOf="@+id/guideline36"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-    <ImageView
-        android:id="@+id/J_cartaMagica1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline35"
-        app:layout_constraintEnd_toStartOf="@+id/guideline24"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-    <ImageView
-        android:id="@+id/J_cartaMagica2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline35"
-        app:layout_constraintEnd_toStartOf="@+id/guideline26"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="@+id/guideline25"
-        app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0"
-        app:srcCompat="@drawable/no_hay_carta" />
-
-    <ImageView
-        android:id="@+id/J_cartaMagica3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline35"
-        app:layout_constraintEnd_toStartOf="@+id/guideline28"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline27"
-        app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/no_hay_carta" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -608,22 +497,22 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/actor_del_abismo" />
+                android:src="@drawable/tigre_tortuga" />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/barrera_infernica" />
+                app:srcCompat="@drawable/hechicero_de_los_condenados" />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/bestia_de_cristal_avanzada_aguila_cobalto" />
+                app:srcCompat="@drawable/tifon_del_espacio_mistico" />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/caballero_del_destello" />
+                app:srcCompat="@drawable/images" />
 
         </LinearLayout>
     </HorizontalScrollView>

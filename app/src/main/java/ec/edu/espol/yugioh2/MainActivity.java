@@ -1,6 +1,8 @@
 package ec.edu.espol.yugioh2;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
+    LinearLayout manoJugador;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +26,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    manoJugador=findViewById(R.id.manoJugador);
     }
+
 }

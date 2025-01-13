@@ -411,10 +411,10 @@
         app:layout_constraintTop_toTopOf="@+id/guideline18" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/fases_M"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fases: Fase Principal"
+        android:text="Fase Tomar Carta"
         android:textColor="#FAFAFA"
         app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintEnd_toEndOf="parent"
@@ -422,10 +422,10 @@
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/fases_J"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fases: Fase Principal"
+        android:text="Fase Tomar Carta"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/guideline17"
         app:layout_constraintEnd_toEndOf="parent"
@@ -643,6 +643,18 @@
         app:layout_constraintStart_toStartOf="@+id/guideline27"
         app:layout_constraintTop_toTopOf="@+id/guideline20"
         app:srcCompat="@drawable/no_hay_carta" />
+
+    <Button
+        android:id="@+id/boton_cambiar_fase"
+        android:layout_width="139dp"
+        android:layout_height="42dp"
+        android:orientation="vertical"
+        android:rotation="-90"
+        android:text="Cambiar fase"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.497"
+        tools:layout_editor_absoluteX="-39dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

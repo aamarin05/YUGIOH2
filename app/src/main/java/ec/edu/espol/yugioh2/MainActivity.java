@@ -2,6 +2,7 @@ package ec.edu.espol.yugioh2;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.LinearLayout;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         fases_M = (TextView) findViewById(R.id.fases_M);
         fases_J = (TextView) findViewById(R.id.fases_J);
-
+/*
         //Se define un boton con el ID y se crea una variable
         Button btnCambiarFase = findViewById(R.id.boton_cambiar_fase); //se agrega el boton con el ID
         // Agrega un OnClickListener al botón
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Metodo para cambiar de fase
+
     private void cambiarFase() {
         // Lógica para cambiar de fase
         private faseActual = fases_J.getText().toString();
@@ -60,5 +62,6 @@ public class MainActivity extends AppCompatActivity {
     manoJugador=findViewById(R.id.manoJugador);
 
     }
-
+*/
 }
+     }

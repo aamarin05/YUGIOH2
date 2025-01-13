@@ -1,6 +1,6 @@
 package ec.edu.espol.yugioh2;
 
-public class CartaMonstruo extends Carta{
+public class CartaMonstruo extends Carta {
     private final TipoMonstruo tipo;
     private final TipoAtributo atributo;
     private int defensa;
@@ -72,4 +72,5 @@ public class CartaMonstruo extends Carta{
             return "Carta boca abajo";
         }
     }
+
 }

@@ -1,5 +1,6 @@
 package ec.edu.espol.yugioh2;
 
+
 public class Carta {
     private final String nombre;
     private final String descripcion;
@@ -38,7 +39,7 @@ public class Carta {
         this.posicion = posicion;
     }
 
-    // Metodo destrucción de la carta
+    // Método destrucción de la carta
     public String destruida() {
         return nombre + " fue destruida";
     }
@@ -53,3 +54,4 @@ public class Carta {
         }
     }
 }
+

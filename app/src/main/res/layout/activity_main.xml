@@ -381,11 +381,6 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/mago_oscuro" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
                 android:src="@drawable/fuerza_de_la_oscuridad" />
 
             <ImageView
@@ -568,11 +563,6 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/mago_oscuro" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
                 android:src="@drawable/actor_del_abismo" />
 
             <ImageView
@@ -718,9 +708,10 @@
         android:rotation="-90"
         android:text="Cambiar fase"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.497"
-        tools:layout_editor_absoluteX="-39dp" />
+        app:layout_constraintVertical_bias="0.497" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

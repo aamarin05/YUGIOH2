@@ -6,8 +6,8 @@ public class CartaMonstruo extends Carta {
     private int defensa;
     private int ataque;
 
-    public CartaMonstruo(String nombre, String descripcion, Orientacion orientacion, TipoMonstruo tipo, TipoAtributo atributo, int defensa, int ataque) {
-        super(nombre, descripcion, Posicion.VERTICAL, orientacion);
+    public CartaMonstruo(String nombre, String descripcion, Orientacion orientacion, TipoMonstruo tipo, TipoAtributo atributo, int defensa, int ataque, String imagen) {
+        super(nombre, descripcion, Posicion.VERTICAL, orientacion,imagen);
         this.tipo = tipo;
         this.atributo = atributo;
         this.defensa = defensa;
@@ -67,7 +67,7 @@ public class CartaMonstruo extends Carta {
         else
             modo = "DEFENSA";
         if (getOrientacion() == Orientacion.ARRIBA) {
-            return "Carta Monstruo Modo: " + modo + " " + super.toString() + " ATQ: " + ataque + " DEF: " + defensa + " TIPO: " + tipo + " ATRIBUTO: " + atributo;
+            return super.toString() + " \nATQ: " + ataque + " \nDEF: " + defensa + " \nTIPO: " + tipo + " \nATRIBUTO: " + atributo;
         } else {
             return "Carta boca abajo";
         }

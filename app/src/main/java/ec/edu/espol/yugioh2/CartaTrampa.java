@@ -4,8 +4,8 @@ import ec.edu.espol.yugioh2.*;
 public class CartaTrampa extends Carta{
     private final TipoAtributo atributo;
 
-    public CartaTrampa(String nombre, String descripcion, Posicion posicion, Orientacion orientacion, TipoAtributo atributo) {
-        super(nombre, descripcion, posicion, orientacion);
+    public CartaTrampa(String nombre, String descripcion, Posicion posicion, Orientacion orientacion, TipoAtributo atributo,String imagen) {
+        super(nombre, descripcion, posicion, orientacion,imagen);
         this.atributo = atributo;
         setOrientacion(Orientacion.ABAJO);
     }

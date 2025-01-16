@@ -7,7 +7,7 @@ CartaMonstruo,"Zombi Fundido","Un no-muerto aterrador",Posicion.VERTICAL,Orienta
 CartaMonstruo,"Caballero de Destello","Un caballero radiante",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.G,TipoAtributo.LUZ,600,1800,caballero_del_destello
 CartaMonstruo,"Actor del Abismo - Esperanza Salvaje","Un actor inigualable",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.O,TipoAtributo.OSCURIDAD,1200,1600,actor_del_abismo
 CartaMonstruo,"Bestia de Cristal Avanzada Águila Cobalto","Una criatura que domina los cielos",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.B,TipoAtributo.VIENTO,800,1400,bestia_de_cristal_avanzada_aguila_cobalto
-CartaMonstruo,"Heroe Elemental Neos","Un heroe que llega desde el Neo Espacio",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.G,TipoAtributo.Luz,2000,2500,heroe_elemental_neos
+CartaMonstruo,"Heroe Elemental Neos","Un heroe que llega desde el Neo Espacio",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.G,TipoAtributo.LUZ,2000,2500,heroe_elemental_neos
 CartaMonstruo,"Golem de Piedra","Un monstruo inmenso con un gran poder defensivo",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.G,TipoAtributo.TIERRA,2000,1300,golem_de_piedra
 CartaMonstruo,"Dragón de Acero","Un dragón mecánico con resistencia imparable",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.D,TipoAtributo.TIERRA,2300,2800,dragon_de_acero
 CartaMonstruo,"Bestia Salvaje","Una criatura de gran velocidad y fuerza",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.B,TipoAtributo.VIENTO,1600,1400,bestia_salvaje

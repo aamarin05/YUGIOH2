@@ -6,11 +6,14 @@ public class Carta {
     private Posicion posicion;
     private Orientacion orientacion;
 
-    public Carta(String nombre, String descripcion, Posicion posicion, Orientacion orientacion) {
+    private final String imagen;
+
+    public Carta(String nombre, String descripcion, Posicion posicion, Orientacion orientacion, String imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.posicion = posicion;
         this.orientacion = orientacion;
+        this.imagen= imagen;
     }
 
     // Getters y Setters
@@ -25,6 +28,8 @@ public class Carta {
     public Orientacion getOrientacion() {
         return orientacion;
     }
+
+    public String getImagen() { return imagen;}
 
     public void setOrientacion(Orientacion orientacion) {
         this.orientacion = orientacion;

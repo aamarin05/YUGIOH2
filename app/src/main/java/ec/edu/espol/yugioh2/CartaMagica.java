@@ -5,8 +5,8 @@ public class CartaMagica extends Carta{
     private final int defensa;
     private final int ataque;
 
-    public CartaMagica(String nombre, String descripcion, Posicion posicion, Orientacion orientacion, int ataque, int defensa, TipoMonstruo tipo) {
-        super(nombre, descripcion, posicion, orientacion);
+    public CartaMagica(String nombre, String descripcion, Posicion posicion, Orientacion orientacion, int ataque, int defensa, TipoMonstruo tipo, String imagen) {
+        super(nombre, descripcion, posicion, orientacion,imagen);
         this.tipo = tipo;
         this.defensa = defensa;
         this.ataque = ataque;

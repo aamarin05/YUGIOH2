@@ -11,7 +11,7 @@ public class Jugador {
 
     public Jugador(String nombre) {
         this.nombre = nombre;
-        deck = Deck.crearDeck("cartasCreadas.txt");
+        //deck = Deck.crearDeck("cartasCreadas.txt");
         puntos = 4000;
         tablero = new Tablero();
         mano = new ArrayList<>();

@@ -376,33 +376,7 @@
             android:id="@+id/manoJugador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/fuerza_de_la_oscuridad" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/dragon_blanco_de_ojos_azules" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/dragon_de_acero" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/rey_bestia" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/rey_bestia" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
     </HorizontalScrollView>
 
     <TextView

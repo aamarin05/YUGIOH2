@@ -14,6 +14,7 @@ public class Carta {
         this.posicion = posicion;
         this.orientacion = orientacion;
         this.imagen= imagen;
+
     }
 
     // Getters y Setters

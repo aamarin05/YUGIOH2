@@ -82,17 +82,7 @@ public class Juego {
         }
         return resultado.toString();
     }
-/*
-    public void faseTomarCarta(LinearLayout manoJ, LinearLayout manoM){
-        String msjJ = jugador.tomarCarta();
-        String msjM = maquina.tomarCarta();
-        String msj = msjJ + "/n" + msjM;
-        Utilitaria.crearDialogs(context,"Cartas tomadas", msj, "Se han tomado las cartas");
-        //Buscar la imagen con ese nombre y colocarlo en el LinearLayout de la mano
-        //Tiene que agregarse la carta a la mano visualmente
-    }
 
- */
     public void faseTomarCarta(){
         String msjJ = jugador.tomarCarta();
         String msjM = maquina.tomarCarta();
@@ -117,11 +107,11 @@ public class Juego {
     public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesM) {
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
         for (Carta c: jugador.getMano()){
-            Utilitaria.cartaView(context,c,manoJ);
+            Utilitaria.crearyAgregar(context,c,manoJ);
         }
 
         for (Carta c: maquina.getMano()){
-            Utilitaria.cartaView(context,c,manoM);
+            Utilitaria.crearyAgregar(context,c,manoM);
         }
         //Se cambie el text del nombre del jugador
         //Que se cambien los turnos
@@ -129,16 +119,16 @@ public class Juego {
         while (jugador.getPuntos() > 0 && maquina.getPuntos() > 0){
             faseTomarCarta();
             Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
-            Utilitaria.cartaView(context,cartaTomadaJ,manoJ);
+            Utilitaria.crearyAgregar(context,cartaTomadaJ,manoJ);
             Carta cartaTomadaM = maquina.getMano().get(maquina.getMano().size()-1);
-            Utilitaria.cartaView(context,cartaTomadaM,manoM);
+            Utilitaria.crearyAgregar(context,cartaTomadaM,manoM);
 
             fasePrincipal(manoJ,monstruosJ);
             maquina.mFasePrincipal();
             for (Carta carta: maquina.getTablero().getCartasMons())
-                Utilitaria.cartaView(context,carta,monstruosM);
+                Utilitaria.crearyAgregar(context,carta,monstruosM);
             for (Carta carta: maquina.getTablero().getEspeciales())
-                Utilitaria.cartaView(context,carta,especialesM);
+                Utilitaria.crearyAgregar(context,carta,especialesM);
 
             //faseBatalla();
         }
@@ -146,11 +136,11 @@ public class Juego {
     public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesM) {
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
         for (Carta c: jugador.getMano()){
-            Utilitaria.cartaView(context,c,manoJ);
+            Utilitaria.crearyAgregar(context,c,manoJ);
         }
 
         for (Carta c: maquina.getMano()){
-            Utilitaria.cartaView(context,c,manoM);
+            Utilitaria.crearyAgregar(context,c,manoM);
         }
         //Se cambie el text del nombre del jugador
         //Que se cambien los turnos
@@ -158,18 +148,22 @@ public class Juego {
 
         faseTomarCarta();
         Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
-        Utilitaria.cartaView(context,cartaTomadaJ,manoJ);
+        Utilitaria.crearyAgregar(context,cartaTomadaJ,manoJ);
         Carta cartaTomadaM = maquina.getMano().get(maquina.getMano().size()-1);
-        Utilitaria.cartaView(context,cartaTomadaM,manoM);
+        Utilitaria.crearyAgregar(context,cartaTomadaM,manoM);
 
-        fasePrincipal(manoJ,monstruosJ);
+       fasePrincipal(manoJ,monstruosJ);
+
+
         maquina.mFasePrincipal();
         for (Carta carta: maquina.getTablero().getCartasMons())
-            Utilitaria.cartaViewM(context,carta,monstruosM);
+            Utilitaria.reemplazar(context,carta,monstruosM);
         for (Carta carta: maquina.getTablero().getEspeciales())
-            Utilitaria.cartaViewM(context,carta,especialesM);
+            Utilitaria.reemplazar(context,carta,especialesM);
 
         //faseBatalla();
+
+
 
     }
 

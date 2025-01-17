@@ -48,12 +48,15 @@ public class Deck {
             for (int i = 0; i<10; i ++){
                 int randomInt = random.nextInt(monstruos.size());
                 cartas.add(monstruos.get(randomInt));
+                monstruos.remove(randomInt);
             }
             for (int i = 0; i<5; i ++){
                 int randomIntT = random.nextInt(trampas.size());
                 int randomIntM = random.nextInt(magicas.size());
                 cartas.add(magicas.get(randomIntM));
                 cartas.add(trampas.get(randomIntT));
+                trampas.remove(randomIntT);
+                magicas.remove(randomIntM);
             }
         }
         Collections.shuffle(cartas);

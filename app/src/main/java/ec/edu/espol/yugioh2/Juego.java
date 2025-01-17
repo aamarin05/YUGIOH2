@@ -114,7 +114,7 @@ public class Juego {
     private void faseBatalla() {
     }
 
-    public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ) {
+    public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesM) {
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
         for (Carta c: jugador.getMano()){
             Utilitaria.cartaView(context,c,manoJ);
@@ -134,11 +134,16 @@ public class Juego {
             Utilitaria.cartaView(context,cartaTomadaM,manoM);
 
             fasePrincipal(manoJ,monstruosJ);
+            maquina.mFasePrincipal();
+            for (Carta carta: maquina.getTablero().getCartasMons())
+                Utilitaria.cartaView(context,carta,monstruosM);
+            for (Carta carta: maquina.getTablero().getEspeciales())
+                Utilitaria.cartaView(context,carta,especialesM);
 
             //faseBatalla();
         }
     }
-    public void prueba(LinearLayout manoJ,LinearLayout manoM, LinearLayout monstruosJ) {
+    public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesM) {
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
         for (Carta c: jugador.getMano()){
             Utilitaria.cartaView(context,c,manoJ);
@@ -151,19 +156,20 @@ public class Juego {
         //Que se cambien los turnos
         //Que se cambien las fases
 
-
-
         faseTomarCarta();
         Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
         Utilitaria.cartaView(context,cartaTomadaJ,manoJ);
-
         Carta cartaTomadaM = maquina.getMano().get(maquina.getMano().size()-1);
         Utilitaria.cartaView(context,cartaTomadaM,manoM);
 
-
-
         fasePrincipal(manoJ,monstruosJ);
+        maquina.mFasePrincipal();
+        for (Carta carta: maquina.getTablero().getCartasMons())
+            Utilitaria.cartaViewM(context,carta,monstruosM);
+        for (Carta carta: maquina.getTablero().getEspeciales())
+            Utilitaria.cartaViewM(context,carta,especialesM);
 
+        //faseBatalla();
 
     }
 

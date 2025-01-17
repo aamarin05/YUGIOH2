@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         //inicializar();
 
         Juego juego = new Juego(new Jugador("Alexa",this),this);
-        juego.prueba(manoJugador,manoMaquina,monstruosJ);
+        juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasM);
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
 

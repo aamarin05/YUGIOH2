@@ -141,6 +141,20 @@ public class Utilitaria {
                     carta.setImageDrawable(currentSelectedCard[0].getDrawable()); // Reemplazar carta
                     currentSelectedCard[0] = null; // Resetear selección
                     Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
+                    // Hacer que la carta en el tablero sea clickeable para mostrar un nuevo diálogo
+                    carta.setOnClickListener(view -> {
+                        // Mostrar un nuevo cuadro de diálogo cuando se haga clic en la carta en el tablero
+                        new AlertDialog.Builder(context)
+                                .setTitle("Detalles de la Carta en el Tablero")
+                                .setMessage("Esta es la carta colocada en el tablero. Puedes realizar más acciones aquí.")
+                                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                                .setNegativeButton("Acción Adicional", (dialog, which) -> {
+                                    // Lógica para una acción adicional con la carta
+                                    Toast.makeText(context, "Acción adicional realizada", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                })
+                                .show();
+                    });
                 } else {
                     Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
                 }
@@ -178,4 +192,5 @@ public class Utilitaria {
         }
 
     }
+
 }

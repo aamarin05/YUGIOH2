@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -192,5 +193,12 @@ public class Utilitaria {
         }
 
     }
+    public static void cambiarDatosJugaddr(Context context, Jugador j, TextView j_vida)
+    {
+        if (j_vida != null) {
+            j_vida.setText("LP "+j.getNombre()+": "+j.getPuntos());
+        }
+    }
+
 
 }

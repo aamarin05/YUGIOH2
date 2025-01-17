@@ -15,18 +15,16 @@ public class Juego {
     private Maquina maquina;
     private Jugador jugador;
     private Context context;
-    private TextView j_vida;
-    private TextView turno;
+
 
     public Juego (Context context){
         this.context = context;
     }
-    public Juego(Jugador jugador, Context context, TextView j_vida,TextView turno){
+    public Juego(Jugador jugador, Context context){
         maquina= new Maquina(context);
         this.jugador= jugador;
         this.context = context;
-        this.j_vida= j_vida;
-        this.turno= turno;
+
     }
 
     public static void batallaDirecta(CartaMonstruo monstruoAtacante, Jugador oponente){
@@ -132,9 +130,9 @@ public class Juego {
             Utilitaria.cartaView(context,c,manoM);
         }
         //Se cambie el text del nombre del jugador
-        j_vida.setText("LP "+jugador.getNombre()+": "+ jugador.getPuntos()); //No estoy seguro si cambia fuera del while o si hay que ingresarlo
+
         //Que se cambien los turnos
-        turno.setText("Turno: "+turn);
+
         //Que se cambien las fases
         while (jugador.getPuntos() > 0 && maquina.getPuntos() > 0){
 

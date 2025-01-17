@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView J_vida;
     private TextView turno;
 
+    private Jugador j= new Jugador("Juan",this);
+
 
 
 
@@ -61,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
         monstruoM= findViewById(R.id.monstruosM);
         J_vida= findViewById(R.id.J_vida);
         turno= (TextView) findViewById(R.id.turno);
+        //Utilitaria.cambiarDatosJugaddr(this,j,J_vida);
 
 
 
         //fases();
         //inicializar();
-
-        Juego juego = new Juego(new Jugador("Alexa",this),this,J_vida,turno);
+        //Juego juego = new Juego(new Jugador("Alexa",this),this);
         //juego.prueba(manoJugador,monstruosJ);
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
     }
 
 
@@ -96,10 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 */
-    // Metodo para cambiar de fase
-    public void cambiarNombreJugador(String nombreJugador,int puntos) {
-        J_vida.setText("LP " + nombreJugador +": "+puntos);
-    }
+
     private void cambiarFase(TextView j) {
         // Lógica para cambiar de fase
         String faseActual = j.getText().toString();
@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     //Esta funcion permite ver todos los detalles de las cartas siendo magicas,trampa o monstruo cuando se coloca en la mano
     //Esta funcion puede ser llamada para cambiar el setOnClickListener de las imagenes cuando esta en la mano
     public void detallesCartaMano(Carta carta) {
@@ -168,9 +169,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     public void inicializar()
     {
-        ArrayList<ImageView> imagenesDeck= new ArrayList<>();
+
         AssetManager am = this.getAssets();
         try {
             //Jugador j = new Jugador("Alexa",this);
@@ -195,11 +197,12 @@ public class MainActivity extends AppCompatActivity {
                         detallesCartaMano(c);
                     }
                 });
-                imagenesDeck.add(imv);
+
             }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

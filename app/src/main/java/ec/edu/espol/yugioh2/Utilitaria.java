@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class Utilitaria {
 
+
     public static void crearDialogs(Context context, String titulo, String descripcion, String msj){
         new AlertDialog.Builder(context)
                 .setTitle(titulo)
@@ -21,6 +22,8 @@ public class Utilitaria {
                 })
                 .show();
     }
+
+
     public static void fasesDialog(Context context, Carta carta, String fase,ImageView imageView,ImageView[] currentSelectedCard){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -158,6 +161,21 @@ public class Utilitaria {
         final ImageView[] currentSelectedCard = {null};
         selecMano(context,cartas,mano,currentSelectedCard,fase);
         selecTablero(context,cartasViews,currentSelectedCard);
+        for (int i = 0; i < cartasViews.getChildCount(); i++) {
+            ImageView cartaTablero = (ImageView) cartasViews.getChildAt(i);
+
+            cartaTablero.setOnClickListener(v -> {
+                if (currentSelectedCard[0] != null) {
+                    // Encuentra y elimina la carta de la mano
+                    for (int j = 0; j < mano.getChildCount(); j++) {
+                        if (mano.getChildAt(j) == currentSelectedCard[0]) {
+                            mano.removeViewAt(j); // Elimina la carta de la mano
+                            break;
+                        }
+                    }
+                }
+            });
+        }
 
     }
 }

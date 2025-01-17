@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Juego juego;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         //inicializar();
 
         Juego juego = new Juego(new Jugador("Alexa",this),this);
-        juego.prueba(manoJugador,monstruosJ);
+        //juego.prueba(manoJugador,monstruosJ);
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
 
@@ -80,12 +81,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    /*
     public void fases(){
         if (fases_J.getText().toString().equals("Fase Tomar Carta"))
             inicializar();
 
     }
-
+*/
     // Metodo para cambiar de fase
 
     private void cambiarFase(TextView j) {
@@ -106,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void mostrarDetallesCarta(Carta carta) {
+    //Esta funcion permite ver todos los detalles de las cartas siendo magicas,trampa o monstruo cuando se coloca en la mano
+    //Esta funcion puede ser llamada para cambiar el setOnClickListener de las imagenes cuando esta en la mano
+    public void detallesCartaMano(Carta carta) {
         // Crear el cuadro de diálogo
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Detalles de la Carta");
@@ -114,29 +120,46 @@ public class MainActivity extends AppCompatActivity {
         if (carta instanceof CartaMonstruo) {
             CartaMonstruo c = (CartaMonstruo) carta;
             builder.setMessage(c.toString());
+            builder.setPositiveButton("Ataque", (dialog, which) -> {
+                Toast.makeText(getApplicationContext(), "Carta colocada en Ataque", Toast.LENGTH_SHORT).show();
+                // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
+            });
+
+            builder.setNegativeButton("Defensa", (dialog, which) -> {
+                Toast.makeText(getApplicationContext(), "Carta colocada en Defensa", Toast.LENGTH_SHORT).show();
+                // Aquí puedes agregar la lógica para poner la carta en defensa (guardar el estado, etc.)
+            });
+
+            builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
+            builder.show();
         } else if (carta instanceof CartaMagica) {
             CartaMagica c = (CartaMagica) carta;
             builder.setMessage(c.toString());
+            // Botones del cuadro de diálogo
+            builder.setPositiveButton("Colocar", (dialog, which) -> {
+                Toast.makeText(getApplicationContext(), "Carta colocada", Toast.LENGTH_SHORT).show();
+                // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
+            });
+            builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
+            builder.show();
         } else if (carta instanceof CartaTrampa) {
             CartaTrampa c = (CartaTrampa) carta;
             builder.setMessage(c.toString());
+            // Botones del cuadro de diálogo
+            builder.setPositiveButton("Colocar", (dialog, which) -> {
+                Toast.makeText(getApplicationContext(), "Carta colocada", Toast.LENGTH_SHORT).show();
+                // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
+            });
+            builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
+            builder.show();
         }
 
-        // Botones del cuadro de diálogo
-        builder.setPositiveButton("Ataque", (dialog, which) -> {
-            Toast.makeText(getApplicationContext(), "Carta colocada en Ataque", Toast.LENGTH_SHORT).show();
-            // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
-        });
 
-        builder.setNegativeButton("Defensa", (dialog, which) -> {
-            Toast.makeText(getApplicationContext(), "Carta colocada en Defensa", Toast.LENGTH_SHORT).show();
-            // Aquí puedes agregar la lógica para poner la carta en defensa (guardar el estado, etc.)
-        });
-
-        builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
-        builder.show();
 
     }
+
+
+
     public void inicializar()
     {
         ArrayList<ImageView> imagenesDeck= new ArrayList<>();
@@ -161,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 imv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mostrarDetallesCarta(c);
+                        detallesCartaMano(c);
                     }
                 });
                 imagenesDeck.add(imv);

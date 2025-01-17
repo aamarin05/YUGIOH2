@@ -47,7 +47,7 @@ public class Utilitaria {
             if (carta instanceof CartaTrampa) {
                 CartaTrampa c = (CartaTrampa) carta;
                 builder.setMessage(c.toString());
-                boton = "Colorcar";
+                boton = "Colocar";
             }
             // Botones del cuadro de diálogo
             builder.setPositiveButton(boton, (dialog, which) -> {
@@ -128,10 +128,10 @@ public class Utilitaria {
         }
     }
 
-    public static void selecTablero(Context context, LinearLayout cartasViews, ImageView[] currentSelectedCard){
-        for (int i = 0; i< cartasViews.getChildCount(); i++){
+    public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, ImageView[] currentSelectedCard){
+        for (int i = 0; i< monstruosJ.getChildCount(); i++){
             // Referencias a las cartas en el tablero
-            ImageView carta = (ImageView) cartasViews.getChildAt(i); // Ajusta según los IDs reales
+            ImageView carta = (ImageView) monstruosJ.getChildAt(i); // Ajusta según los IDs reales
 
             carta.setOnClickListener(v -> {
                 if (currentSelectedCard[0] != null) {
@@ -154,10 +154,10 @@ public class Utilitaria {
         return null; // En caso de no encontrar la carta
     }
 
-    public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout cartasViews, String fase){
+    public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout monstruosJ, String fase){
         final ImageView[] currentSelectedCard = {null};
         selecMano(context,cartas,mano,currentSelectedCard,fase);
-        selecTablero(context,cartasViews,currentSelectedCard);
+        selecTablero(context,mano,monstruosJ,currentSelectedCard);
 
     }
 }

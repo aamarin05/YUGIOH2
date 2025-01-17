@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ public class Juego {
     public Juego (Context context){
         this.context = context;
     }
-    public Juego(Maquina maquina, Jugador jugador){
-        this.maquina= maquina;
+    public Juego(Jugador jugador,Context context){
+        maquina= new Maquina(context);
         this.jugador= jugador;
+        this.context = context;
     }
     public static void batallaDirecta(CartaMonstruo monstruoAtacante, Jugador oponente){
         int puntos = oponente.getPuntos() - monstruoAtacante.getAtaque();
@@ -80,48 +82,77 @@ public class Juego {
         }
         return resultado.toString();
     }
-
-    public void faseTomarCarta(){
-        jugador.tomarCarta();
-        maquina.tomarCarta();
+/*
+    public void faseTomarCarta(LinearLayout manoJ, LinearLayout manoM){
+        String msjJ = jugador.tomarCarta();
+        String msjM = maquina.tomarCarta();
+        String msj = msjJ + "/n" + msjM;
+        Utilitaria.crearDialogs(context,"Cartas tomadas", msj, "Se han tomado las cartas");
+        //Buscar la imagen con ese nombre y colocarlo en el LinearLayout de la mano
+        //Tiene que agregarse la carta a la mano visualmente
     }
 
-    public void FasePrincipal(){
+ */
+    public void faseTomarCarta(){
+        String msjJ = jugador.tomarCarta();
+        String msjM = maquina.tomarCarta();
+        String msj = msjJ + "/n" + msjM;
+        Utilitaria.crearDialogs(context,"Cartas tomadas", msj, "Se han tomado las cartas");
+        //Buscar la imagen con ese nombre y colocarlo en el LinearLayout de la mano
+        //Tiene que agregarse la carta a la mano visualmente
+    }
+
+    public void fasePrincipal(LinearLayout mano, LinearLayout cartasViews){
         // TIENE QUE HABILITAR PARA PONER LAS CARTAS EN EL TABLERO Y SE PUEDAN USAR MAGICAS
+
+        Utilitaria.colocarTablero(context,jugador.getMano(),mano,cartasViews,"Fase Principal");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Detalles de la Carta");
 
-        for (Carta carta: jugador.getTablero().getCartasMons()){
-            CartaMonstruo c = (CartaMonstruo) carta;
-            builder.setMessage(c.toString());
+    }
+
+    private void faseBatalla() {
+    }
+
+    public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM) {
+        //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
+        for (Carta c: jugador.getMano()){
+            Utilitaria.cartaView(context,c,manoJ);
         }
-        for (Carta carta: jugador.getTablero().getEspeciales()){
-            CartaMagica c = (CartaMagica) carta;
-            builder.setMessage(c.toString());
+        for (Carta c: maquina.getMano()){
+            Utilitaria.cartaView(context,c,manoM);
+        }
+        //Se cambie el text del nombre del jugador
+        //Que se cambien los turnos
+        //Que se cambien las fases
+        while (jugador.getPuntos() > 0 && maquina.getPuntos() > 0){
+            faseTomarCarta();
+            Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
+            Utilitaria.cartaView(context,cartaTomadaJ,manoJ);
+            Carta cartaTomadaM = maquina.getMano().get(maquina.getMano().size()-1);
+            Utilitaria.cartaView(context,cartaTomadaM,manoM);
+
+            fasePrincipal(manoJ,monstruosJ);
+
+            //faseBatalla();
+        }
+    }
+
+    public void prueba(LinearLayout manoJ, LinearLayout monstruosJ) {
+        //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
+        for (Carta c: jugador.getMano()){
+            Utilitaria.cartaView(context,c,manoJ);
         }
 
+        faseTomarCarta();
+        Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
+        Utilitaria.cartaView(context,cartaTomadaJ,manoJ);
 
-        // Botones del cuadro de diálogo
-        builder.setPositiveButton("Ataque", (dialog, which) -> {
-            Toast.makeText(context.getApplicationContext(), "Carta colocada en Ataque", Toast.LENGTH_SHORT).show();
-            // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
-        });
+        fasePrincipal(manoJ,monstruosJ);
 
-        builder.setNegativeButton("Defensa", (dialog, which) -> {
-            Toast.makeText(context.getApplicationContext(), "Carta colocada en Defensa", Toast.LENGTH_SHORT).show();
-            // Aquí puedes agregar la lógica para poner la carta en defensa (guardar el estado, etc.)
-        });
-
-        builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
-        builder.show();
+        //faseBatalla();
 
     }
 
-    public void FaseBatalla(){
-
-    }
-
-
-    
 }

@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView selectedCard;
     private ImageView currentSelectedCard = null;
+    private Juego juego;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         //fases();
-        inicializar();
-        colocarTablero();
+        //inicializar();
+
+        Juego juego = new Juego(new Jugador("Alexa",this),this);
+        juego.prueba(manoJugador,monstruosJ);
+        //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
+
 
         //Se define un boton con el ID y se crea una variable
         Button btnCambiarFase = findViewById(R.id.boton_cambiar_fase); //se agrega el boton con el ID
@@ -64,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
     }
     public void fases(){
         if (fases_J.getText().toString().equals("Fase Tomar Carta"))
             inicializar();
-        if (fases_J.getText().toString().equals("Fase Principal"))
-            colocarTablero();
+
     }
 
     // Metodo para cambiar de fase
@@ -127,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     {
         AssetManager am = this.getAssets();
         try {
-            //Jugador j = new Jugador("Alexa");
+            //Jugador j = new Jugador("Alexa",this);
             Deck deck= Deck.crearDeck(am);
             ArrayList<Carta> cartas= deck.getCartas();
             //ArrayList<Carta> cartas= j.getMano();
@@ -155,41 +161,4 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-
-    public void colocarTablero(){
-        final ImageView[] currentSelectedCard = {null};
-
-        for (int i = 0; i< manoJugador.getChildCount(); i++) {
-
-            ImageView imageView = (ImageView) manoJugador.getChildAt(i); // Ajusta según el ID real de la carta
-
-            imageView.setOnClickListener(v -> {
-                new AlertDialog.Builder(this)
-                        .setTitle("¿Colocar carta en el tablero?")
-                        .setMessage("¿Quieres colocar esta carta en el tablero?")
-                        .setPositiveButton("OK", (dialog, which) -> {
-                            currentSelectedCard[0] = imageView; // Almacenar la carta seleccionada
-                            Toast.makeText(this, "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .show();
-            });
-        }
-        for (int i = 0; i< monstruosJ.getChildCount(); i++){
-            // Referencias a las cartas en el tablero
-            ImageView monstruo = (ImageView) monstruosJ.getChildAt(i); // Ajusta según los IDs reales
-
-            monstruo.setOnClickListener(v -> {
-                if (currentSelectedCard[0] != null) {
-                    monstruo.setImageDrawable(currentSelectedCard[0].getDrawable()); // Reemplazar carta
-                    currentSelectedCard[0] = null; // Resetear selección
-                    Toast.makeText(this, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-
 }

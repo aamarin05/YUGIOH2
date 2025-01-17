@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Deck {
     private ArrayList<Carta> cartas;
@@ -42,14 +43,20 @@ public class Deck {
                     trampas.add(c);
                 }
             }
-
+        Random random = new Random();
         if (monstruos.size() > 10 && magicas.size() > 6 && trampas.size() > 6){
             for (int i = 0; i<10; i ++){
-                cartas.add(monstruos.get(i));
+                int randomInt = random.nextInt(monstruos.size());
+                cartas.add(monstruos.get(randomInt));
+                monstruos.remove(randomInt);
             }
             for (int i = 0; i<5; i ++){
-                cartas.add(magicas.get(i));
-                cartas.add(trampas.get(i));
+                int randomIntT = random.nextInt(trampas.size());
+                int randomIntM = random.nextInt(magicas.size());
+                cartas.add(magicas.get(randomIntM));
+                cartas.add(trampas.get(randomIntT));
+                trampas.remove(randomIntT);
+                magicas.remove(randomIntM);
             }
         }
         Collections.shuffle(cartas);

@@ -96,30 +96,30 @@ public class Juego {
     public void faseTomarCarta(){
         String msjJ = jugador.tomarCarta();
         String msjM = maquina.tomarCarta();
-        String msj = msjJ + "/n" + msjM;
+        String msj = msjJ+ "\n" + msjM;
         Utilitaria.crearDialogs(context,"Cartas tomadas", msj, "Se han tomado las cartas");
         //Buscar la imagen con ese nombre y colocarlo en el LinearLayout de la mano
         //Tiene que agregarse la carta a la mano visualmente
     }
 
-    public void fasePrincipal(LinearLayout mano, LinearLayout cartasViews){
+    public void fasePrincipal(LinearLayout mano, LinearLayout monstruosJ){
         // TIENE QUE HABILITAR PARA PONER LAS CARTAS EN EL TABLERO Y SE PUEDAN USAR MAGICAS
 
-        Utilitaria.colocarTablero(context,jugador.getMano(),mano,cartasViews,"Fase Principal");
+        Utilitaria.colocarTablero(context,jugador.getMano(),mano,monstruosJ,"Fase Principal");
+       // Utilitaria.colocarTablero(context,maquina.getMano(),mano,monstruosJ,"Fase Principal");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Detalles de la Carta");
 
     }
 
     private void faseBatalla() {
     }
 
-    public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM) {
+    public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesM) {
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
         for (Carta c: jugador.getMano()){
             Utilitaria.cartaView(context,c,manoJ);
         }
+
         for (Carta c: maquina.getMano()){
             Utilitaria.cartaView(context,c,manoM);
         }
@@ -134,25 +134,44 @@ public class Juego {
             Utilitaria.cartaView(context,cartaTomadaM,manoM);
 
             fasePrincipal(manoJ,monstruosJ);
+            maquina.mFasePrincipal();
+            for (Carta carta: maquina.getTablero().getCartasMons())
+                Utilitaria.cartaView(context,carta,monstruosM);
+            for (Carta carta: maquina.getTablero().getEspeciales())
+                Utilitaria.cartaView(context,carta,especialesM);
 
             //faseBatalla();
         }
     }
-
-    public void prueba(LinearLayout manoJ, LinearLayout monstruosJ) {
+    public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesM) {
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
         for (Carta c: jugador.getMano()){
             Utilitaria.cartaView(context,c,manoJ);
         }
 
+        for (Carta c: maquina.getMano()){
+            Utilitaria.cartaView(context,c,manoM);
+        }
+        //Se cambie el text del nombre del jugador
+        //Que se cambien los turnos
+        //Que se cambien las fases
+
         faseTomarCarta();
         Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
         Utilitaria.cartaView(context,cartaTomadaJ,manoJ);
+        Carta cartaTomadaM = maquina.getMano().get(maquina.getMano().size()-1);
+        Utilitaria.cartaView(context,cartaTomadaM,manoM);
 
         fasePrincipal(manoJ,monstruosJ);
+        maquina.mFasePrincipal();
+        for (Carta carta: maquina.getTablero().getCartasMons())
+            Utilitaria.cartaViewM(context,carta,monstruosM);
+        for (Carta carta: maquina.getTablero().getEspeciales())
+            Utilitaria.cartaViewM(context,carta,especialesM);
 
         //faseBatalla();
 
     }
+
 
 }

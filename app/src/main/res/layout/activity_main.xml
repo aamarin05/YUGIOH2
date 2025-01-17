@@ -419,14 +419,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/no_hay_carta" />
+            app:srcCompat="@drawable/no_hay_carta"/>
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/no_hay_carta" />
+            app:srcCompat="@drawable/no_hay_carta"/>
     </LinearLayout>
 
     <LinearLayout
@@ -463,7 +463,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/monstruoJ"
+        android:id="@+id/monstruosJ"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"

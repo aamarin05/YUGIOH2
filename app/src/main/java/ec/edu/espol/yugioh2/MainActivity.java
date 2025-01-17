@@ -23,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView fases_M;
     private TextView fases_J;
     private LinearLayout manoJugador;
+    private LinearLayout manoMaquina;
     private LinearLayout magicasJ;
 
-    private LinearLayout monstruoJ;
+    private LinearLayout monstruosJ;
     private LinearLayout magicasM;
     private LinearLayout monstruoM;
 
@@ -51,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
         fases_J = (TextView) findViewById(R.id.fases_J);
         manoJugador= findViewById(R.id.manoJugador);
         magicasJ = findViewById(R.id.magicasJ); // cambie monstruoJ por magicaJ incluso en la funcion del tablero
-        monstruoJ= findViewById(R.id.monstruoJ);
+        monstruosJ= findViewById(R.id.monstruosJ);
         magicasM= findViewById(R.id.magicasM);
         monstruoM= findViewById(R.id.monstruosM);
+        manoMaquina = findViewById(R.id.manoMaquina);
 
 
 
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         //inicializar();
 
         Juego juego = new Juego(new Jugador("Alexa",this),this);
-        juego.prueba(manoJugador,monstruosJ);
+        juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasM);
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
 

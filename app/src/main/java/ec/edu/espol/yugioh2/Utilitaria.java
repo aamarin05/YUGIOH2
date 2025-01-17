@@ -2,6 +2,8 @@ package ec.edu.espol.yugioh2;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -47,7 +49,7 @@ public class Utilitaria {
             if (carta instanceof CartaTrampa) {
                 CartaTrampa c = (CartaTrampa) carta;
                 builder.setMessage(c.toString());
-                boton = "Colorcar";
+                boton = "Colocar";
             }
             // Botones del cuadro de diálogo
             builder.setPositiveButton(boton, (dialog, which) -> {
@@ -105,6 +107,74 @@ public class Utilitaria {
 
     }
 
+    public static void cartaContenedor(Context context, Carta carta, LinearLayout contenedor) {
+        int imagenId = context.getResources().getIdentifier(
+                carta.getImagen(),"drawable",context.getPackageName()
+        );
+        ImageView cartaView = new ImageView(context);
+        cartaView.setImageResource(imagenId);
+        cartaView.setTag(carta.getImagen());
+        contenedor.addView(cartaView);
+        cartaView.getLayoutParams().width = 250;
+        cartaView.setPadding(10,0,10,0);
+        cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
+/*
+        if (imagenId != 0) {
+            cartaView.setImageResource(imagenId);
+        } else {
+            cartaView.setImageResource(R.drawable.no_hay_carta);
+        }
+
+        cartaView.setOnClickListener(view -> fasesDialog(context, carta,fase));
+    */
+
+    }
+
+    public static void cartaViewM(Context context, Carta carta, LinearLayout contenedor) {
+        int imagenId = context.getResources().getIdentifier(
+                carta.getImagen(), "drawable", context.getPackageName()
+        );
+
+        int noHayCartaId = context.getResources().getIdentifier(
+                "no_hay_carta", "drawable", context.getPackageName()
+        );
+
+        Drawable noHayCartaDrawable = context.getResources().getDrawable(noHayCartaId);
+
+        // Buscar si existe un ImageView con la imagen "no_hay_carta"
+        ImageView noHayCartaView = null;
+        for (int i = 0; i < contenedor.getChildCount(); i++) {
+            View child = contenedor.getChildAt(i);
+            if (child instanceof ImageView) {
+                ImageView imageView = (ImageView) child;
+
+                // Verificar si el Drawable actual del ImageView es "no_hay_carta"
+                Drawable currentDrawable = imageView.getDrawable();
+                if (currentDrawable != null && currentDrawable.getConstantState().equals(noHayCartaDrawable.getConstantState())) {
+                    noHayCartaView = imageView;
+                }
+            }
+        }
+
+        if (noHayCartaView != null) {
+            noHayCartaView.setImageDrawable(noHayCartaDrawable);
+            noHayCartaView.setImageResource(imagenId);
+            noHayCartaView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        } else {
+            // Crear un nuevo ImageView si no existe "no_hay_carta"
+            ImageView cartaView = new ImageView(context);
+            cartaView.setImageResource(imagenId);
+            cartaView.setTag(carta.getImagen());
+            contenedor.addView(cartaView);
+
+            // Configurar las propiedades del nuevo ImageView
+            cartaView.getLayoutParams().width = 250;
+            cartaView.setPadding(10, 0, 10, 0);
+            cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+    }
+
     public static void selecMano(Context context, ArrayList<Carta> cartas, LinearLayout mano, ImageView[] currentSelectedCard,String fase){
         for (int i = 0; i < mano.getChildCount(); i++) {
 
@@ -128,10 +198,10 @@ public class Utilitaria {
         }
     }
 
-    public static void selecTablero(Context context, LinearLayout cartasViews, ImageView[] currentSelectedCard){
-        for (int i = 0; i< cartasViews.getChildCount(); i++){
+    public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, ImageView[] currentSelectedCard){
+        for (int i = 0; i< monstruosJ.getChildCount(); i++){
             // Referencias a las cartas en el tablero
-            ImageView carta = (ImageView) cartasViews.getChildAt(i); // Ajusta según los IDs reales
+            ImageView carta = (ImageView) monstruosJ.getChildAt(i); // Ajusta según los IDs reales
 
             carta.setOnClickListener(v -> {
                 if (currentSelectedCard[0] != null) {
@@ -154,10 +224,10 @@ public class Utilitaria {
         return null; // En caso de no encontrar la carta
     }
 
-    public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout cartasViews, String fase){
+    public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout monstruosJ, String fase){
         final ImageView[] currentSelectedCard = {null};
         selecMano(context,cartas,mano,currentSelectedCard,fase);
-        selecTablero(context,cartasViews,currentSelectedCard);
+        selecTablero(context,mano,monstruosJ,currentSelectedCard);
 
     }
 }

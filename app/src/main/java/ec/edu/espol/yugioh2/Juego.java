@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,15 +15,20 @@ public class Juego {
     private Maquina maquina;
     private Jugador jugador;
     private Context context;
+    private TextView j_vida;
+    private TextView turno;
 
     public Juego (Context context){
         this.context = context;
     }
-    public Juego(Jugador jugador,Context context){
+    public Juego(Jugador jugador, Context context, TextView j_vida,TextView turno){
         maquina= new Maquina(context);
         this.jugador= jugador;
         this.context = context;
+        this.j_vida= j_vida;
+        this.turno= turno;
     }
+
     public static void batallaDirecta(CartaMonstruo monstruoAtacante, Jugador oponente){
         int puntos = oponente.getPuntos() - monstruoAtacante.getAtaque();
         oponente.setPuntos(puntos);
@@ -115,8 +121,10 @@ public class Juego {
     private void faseBatalla() {
     }
 
+
     public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM) {
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
+        int turn =1;
         for (Carta c: jugador.getMano()){
             Utilitaria.cartaView(context,c,manoJ);
         }
@@ -124,9 +132,12 @@ public class Juego {
             Utilitaria.cartaView(context,c,manoM);
         }
         //Se cambie el text del nombre del jugador
+        j_vida.setText("LP "+jugador.getNombre()+": "+ jugador.getPuntos()); //No estoy seguro si cambia fuera del while o si hay que ingresarlo
         //Que se cambien los turnos
+        turno.setText("Turno: "+turn);
         //Que se cambien las fases
         while (jugador.getPuntos() > 0 && maquina.getPuntos() > 0){
+
             faseTomarCarta();
             Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
             Utilitaria.cartaView(context,cartaTomadaJ,manoJ);

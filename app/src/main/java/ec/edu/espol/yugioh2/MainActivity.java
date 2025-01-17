@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageView selectedCard;
     private ImageView currentSelectedCard = null;
     private Juego juego;
+    private TextView J_vida;
+    private TextView turno;
+
+
 
 
 
@@ -55,13 +59,15 @@ public class MainActivity extends AppCompatActivity {
         monstruoJ= findViewById(R.id.monstruoJ);
         magicasM= findViewById(R.id.magicasM);
         monstruoM= findViewById(R.id.monstruosM);
+        J_vida= findViewById(R.id.J_vida);
+        turno= (TextView) findViewById(R.id.turno);
 
 
 
         //fases();
         //inicializar();
 
-        Juego juego = new Juego(new Jugador("Alexa",this),this);
+        Juego juego = new Juego(new Jugador("Alexa",this),this,J_vida,turno);
         //juego.prueba(manoJugador,monstruosJ);
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
@@ -91,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
     }
 */
     // Metodo para cambiar de fase
-
+    public void cambiarNombreJugador(String nombreJugador,int puntos) {
+        J_vida.setText("LP " + nombreJugador +": "+puntos);
+    }
     private void cambiarFase(TextView j) {
         // Lógica para cambiar de fase
         String faseActual = j.getText().toString();

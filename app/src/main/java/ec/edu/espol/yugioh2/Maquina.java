@@ -44,10 +44,10 @@ public class Maquina extends Jugador {
             CartaMonstruo c = (CartaMonstruo) carta;
             cartasOrdenadas.add(c);
         }
-        if (tresMejores.size() > 2){
-            cartasOrdenadas.sort((c1, c2) -> Integer.compare((c2.getAtaque() + c2.getDefensa()), (c1.getAtaque() + c1.getDefensa())));
-            for (int i = 0; i<3; i ++)
-                tresMejores.add(cartasOrdenadas.get(i));
+        int i = 0;
+        while (tresMejores.size()<3 && i<cartasOrdenadas.size()){
+            tresMejores.add(cartasOrdenadas.get(i));
+            i++;
         }
         return tresMejores;
     }

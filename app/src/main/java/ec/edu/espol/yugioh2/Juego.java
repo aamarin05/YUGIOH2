@@ -146,20 +146,16 @@ public class Juego {
         //Que se cambien los turnos
         //Que se cambien las fases
 
-        faseTomarCarta();
-        Carta cartaTomadaJ = jugador.getMano().get(jugador.getMano().size()-1);
-        Utilitaria.crearyAgregar(context,cartaTomadaJ,manoJ);
-        Carta cartaTomadaM = maquina.getMano().get(maquina.getMano().size()-1);
-        Utilitaria.crearyAgregar(context,cartaTomadaM,manoM);
-
-       fasePrincipal(manoJ,monstruosJ);
 
 
+        fasePrincipal(manoJ,monstruosJ);
         maquina.mFasePrincipal();
+
         for (Carta carta: maquina.getTablero().getCartasMons())
             Utilitaria.reemplazar(context,carta,monstruosM);
         for (Carta carta: maquina.getTablero().getEspeciales())
             Utilitaria.reemplazar(context,carta,especialesM);
+
 
         //faseBatalla();
 

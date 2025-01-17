@@ -84,7 +84,7 @@ public class Utilitaria {
 
     }
 
-    public static void cartaView(Context context, Carta carta, LinearLayout contenedor) {
+    public static void crearyAgregar(Context context, Carta carta, LinearLayout contenedor) {
         int imagenId = context.getResources().getIdentifier(
                 carta.getImagen(),"drawable",context.getPackageName()
         );
@@ -95,6 +95,7 @@ public class Utilitaria {
         cartaView.getLayoutParams().width = 250;
         cartaView.setPadding(10,0,10,0);
         cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
+
 /*
         if (imagenId != 0) {
             cartaView.setImageResource(imagenId);
@@ -105,31 +106,44 @@ public class Utilitaria {
         cartaView.setOnClickListener(view -> fasesDialog(context, carta,fase));
     */
 
+
     }
 
-    public static void cartaContenedor(Context context, Carta carta, LinearLayout contenedor) {
+    public static void reemplazar(Context context, Carta carta, LinearLayout contenedor) {
         int imagenId = context.getResources().getIdentifier(
                 carta.getImagen(),"drawable",context.getPackageName()
         );
-        ImageView cartaView = new ImageView(context);
-        cartaView.setImageResource(imagenId);
-        cartaView.setTag(carta.getImagen());
-        contenedor.addView(cartaView);
-        cartaView.getLayoutParams().width = 250;
-        cartaView.setPadding(10,0,10,0);
-        cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
-/*
-        if (imagenId != 0) {
-            cartaView.setImageResource(imagenId);
-        } else {
-            cartaView.setImageResource(R.drawable.no_hay_carta);
+        int noHayCartaId = context.getResources().getIdentifier(
+                "no_hay_carta", "drawable", context.getPackageName()
+        );
+
+        Drawable noHayCartaDrawable = context.getResources().getDrawable(noHayCartaId);
+        ImageView cartaSeleccionada = null;
+        Drawable cartaView = context.getResources().getDrawable(imagenId);
+
+
+        for (int i = 0; i < contenedor.getChildCount(); i++) {
+            ImageView imageView = (ImageView) contenedor.getChildAt(i); // Ajusta según el ID real de la carta
+            Drawable currentDrawable = imageView.getDrawable();
+
+            if (currentDrawable != null && currentDrawable.getConstantState().equals(noHayCartaDrawable.getConstantState())) {
+                cartaSeleccionada = imageView;
+            }
+        }
+        if (cartaSeleccionada != null) {
+            //cartaSeleccionada.setImageDrawable(cartaView); // Reemplazar carta
+            cartaSeleccionada.setImageResource(imagenId);
+            cartaSeleccionada.setTag(carta.getImagen());
+        }
+            /*
+            //Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
+        else {
+            //Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
         }
 
-        cartaView.setOnClickListener(view -> fasesDialog(context, carta,fase));
-    */
-
+             */
     }
-
+/*
     public static void cartaViewM(Context context, Carta carta, LinearLayout contenedor) {
         int imagenId = context.getResources().getIdentifier(
                 carta.getImagen(), "drawable", context.getPackageName()
@@ -140,9 +154,10 @@ public class Utilitaria {
         );
 
         Drawable noHayCartaDrawable = context.getResources().getDrawable(noHayCartaId);
+        Drawable cartaCambiar = context.getResources().getDrawable(imagenId);
 
         // Buscar si existe un ImageView con la imagen "no_hay_carta"
-        ImageView noHayCartaView = null;
+        ImageView cartaSeleccionada = null;
         for (int i = 0; i < contenedor.getChildCount(); i++) {
             View child = contenedor.getChildAt(i);
             if (child instanceof ImageView) {
@@ -151,15 +166,16 @@ public class Utilitaria {
                 // Verificar si el Drawable actual del ImageView es "no_hay_carta"
                 Drawable currentDrawable = imageView.getDrawable();
                 if (currentDrawable != null && currentDrawable.getConstantState().equals(noHayCartaDrawable.getConstantState())) {
-                    noHayCartaView = imageView;
+                    cartaSeleccionada = imageView;
                 }
             }
         }
 
-        if (noHayCartaView != null) {
-            noHayCartaView.setImageDrawable(noHayCartaDrawable);
-            noHayCartaView.setImageResource(imagenId);
-            noHayCartaView.setScaleType(ImageView.ScaleType.FIT_XY);
+        if (cartaSeleccionada != null) {
+            //cartaSeleccionada.setImageDrawable(cartaCambiar);
+            //cartaSeleccionada.setImageDrawable(noHayCartaDrawable);
+            cartaSeleccionada.setImageResource(imagenId);
+            //cartaSeleccionada.setScaleType(ImageView.ScaleType.FIT_XY);
 
         } else {
             // Crear un nuevo ImageView si no existe "no_hay_carta"
@@ -167,13 +183,14 @@ public class Utilitaria {
             cartaView.setImageResource(imagenId);
             cartaView.setTag(carta.getImagen());
             contenedor.addView(cartaView);
-
-            // Configurar las propiedades del nuevo ImageView
             cartaView.getLayoutParams().width = 250;
             cartaView.setPadding(10, 0, 10, 0);
             cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
+
         }
     }
+
+ */
 
     public static void selecMano(Context context, ArrayList<Carta> cartas, LinearLayout mano, ImageView[] currentSelectedCard,String fase){
         for (int i = 0; i < mano.getChildCount(); i++) {

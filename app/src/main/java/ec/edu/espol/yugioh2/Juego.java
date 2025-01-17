@@ -1,10 +1,22 @@
 package ec.edu.espol.yugioh2;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.res.Resources;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class Juego {
     private Maquina maquina;
     private Jugador jugador;
+    private Context context;
+
+    public Juego (Context context){
+        this.context = context;
+    }
     public Juego(Maquina maquina, Jugador jugador){
         this.maquina= maquina;
         this.jugador= jugador;
@@ -68,5 +80,48 @@ public class Juego {
         }
         return resultado.toString();
     }
+
+    public void faseTomarCarta(){
+        jugador.tomarCarta();
+        maquina.tomarCarta();
+    }
+
+    public void FasePrincipal(){
+        // TIENE QUE HABILITAR PARA PONER LAS CARTAS EN EL TABLERO Y SE PUEDAN USAR MAGICAS
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Detalles de la Carta");
+
+        for (Carta carta: jugador.getTablero().getCartasMons()){
+            CartaMonstruo c = (CartaMonstruo) carta;
+            builder.setMessage(c.toString());
+        }
+        for (Carta carta: jugador.getTablero().getEspeciales()){
+            CartaMagica c = (CartaMagica) carta;
+            builder.setMessage(c.toString());
+        }
+
+
+        // Botones del cuadro de diálogo
+        builder.setPositiveButton("Ataque", (dialog, which) -> {
+            Toast.makeText(context.getApplicationContext(), "Carta colocada en Ataque", Toast.LENGTH_SHORT).show();
+            // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
+        });
+
+        builder.setNegativeButton("Defensa", (dialog, which) -> {
+            Toast.makeText(context.getApplicationContext(), "Carta colocada en Defensa", Toast.LENGTH_SHORT).show();
+            // Aquí puedes agregar la lógica para poner la carta en defensa (guardar el estado, etc.)
+        });
+
+        builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
+        builder.show();
+
+    }
+
+    public void FaseBatalla(){
+
+    }
+
+
     
 }

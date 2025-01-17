@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private TextView fases_M;
     private TextView fases_J;
-  
     private LinearLayout manoJugador;
     private LinearLayout monstruosJ;
 
@@ -108,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             CartaTrampa c = (CartaTrampa) carta;
             builder.setMessage(c.toString());
         }
+
         // Botones del cuadro de diálogo
         builder.setPositiveButton("Ataque", (dialog, which) -> {
             Toast.makeText(getApplicationContext(), "Carta colocada en Ataque", Toast.LENGTH_SHORT).show();
@@ -127,8 +127,11 @@ public class MainActivity extends AppCompatActivity {
     {
         AssetManager am = this.getAssets();
         try {
+            //Jugador j = new Jugador("Alexa");
             Deck deck= Deck.crearDeck(am);
             ArrayList<Carta> cartas= deck.getCartas();
+            //ArrayList<Carta> cartas= j.getMano();
+
             for(Carta c : cartas)
             {
                 ImageView imv = new ImageView(this);

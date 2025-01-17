@@ -23,7 +23,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView fases_M;
     private TextView fases_J;
     private LinearLayout manoJugador;
-    private LinearLayout monstruosJ;
+    private LinearLayout magicasJ;
+
+    private LinearLayout monstruoJ;
+    private LinearLayout magicasM;
+    private LinearLayout monstruoM;
 
     private Deck deck;
 
@@ -44,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
         fases_M = (TextView) findViewById(R.id.fases_M);
         fases_J = (TextView) findViewById(R.id.fases_J);
         manoJugador= findViewById(R.id.manoJugador);
-        monstruosJ = findViewById(R.id.monstruosJ);
+        magicasJ = findViewById(R.id.magicasJ); // cambie monstruoJ por magicaJ incluso en la funcion del tablero
+        monstruoJ= findViewById(R.id.monstruoJ);
+        magicasM= findViewById(R.id.magicasM);
+        monstruoM= findViewById(R.id.monstruosM);
+
 
 
         //fases();
@@ -125,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void inicializar()
     {
+        ArrayList<ImageView> imagenesDeck= new ArrayList<>();
         AssetManager am = this.getAssets();
         try {
             //Jugador j = new Jugador("Alexa");
@@ -149,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         mostrarDetallesCarta(c);
                     }
                 });
+                imagenesDeck.add(imv);
             }
 
         } catch (IOException e) {
@@ -175,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             });
         }
-        for (int i = 0; i< monstruosJ.getChildCount(); i++){
+        for (int i = 0; i< magicasJ.getChildCount(); i++){
             // Referencias a las cartas en el tablero
-            ImageView monstruo = (ImageView) monstruosJ.getChildAt(i); // Ajusta según los IDs reales
+            ImageView monstruo = (ImageView) magicasJ.getChildAt(i); // Ajusta según los IDs reales
 
             monstruo.setOnClickListener(v -> {
                 if (currentSelectedCard[0] != null) {

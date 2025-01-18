@@ -165,7 +165,6 @@ public class Juego {
     }
     public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ,LinearLayout especialesM) {
         if (turno==0){
-            Utilitaria.crearDialogs(context, "Fase", fase, "OK");
             for (Carta c : jugador.getMano()) {
                 Utilitaria.crearyAgregar(context, c, manoJ);
                 }
@@ -178,22 +177,26 @@ public class Juego {
         if (fase.equals("Fase Tomar Carta")) {
             //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
             Carta ct= jugador.getDeck().getCartas().get(0);
+            jugador.getMano().add(ct);
             jugador.getDeck().getCartas().remove(0);
+            Toast.makeText(context, "Jugador tomo la carta "+ct.getNombre(), Toast.LENGTH_SHORT).show();
             Utilitaria.crearyAgregar(context,ct,manoJ);
 
             Carta ctm= maquina.getDeck().getCartas().get(0);
+            maquina.getMano().add(ctm);
             maquina.getDeck().getCartas().remove(0);
+            Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
             Utilitaria.crearyAgregar(context,ctm,manoM);
 
 
             //Se cambie el text del nombre del jugador
             //Que se cambien los turnos
             //Que se cambien las fases
-            Utilitaria.crearDialogs(context, "Fase", fase, "OK");
+
             turno++;
         }
         if (fase.equals("Fase Principal")) {
-            Utilitaria.crearDialogs(context,"Fase",fase,"OK");
+
 
             fasePrincipal(manoJ, monstruosJ, especialesJ);
             maquina.mFasePrincipal();

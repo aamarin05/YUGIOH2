@@ -1,6 +1,6 @@
 CartaMonstruo,"Dragón Blanco de Ojos Azules","Un dragón legendario",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.D,TipoAtributo.LUZ,2500,3000,dragon_blanco_de_ojos_azules
 CartaMonstruo,"Mago Oscuro","Un mago experto",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.L,TipoAtributo.OSCURIDAD,2100,2500,mago_oscuro
-CartaMonstruo,"Espadachín de la LLama","Manipulador de la LLama",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.G,TipoAtributo.FUEGO,1600,1800,espadachin_de_la_llama
+CartaMonstruo,"Espadachín de la Llama","Manipulador de la LLama",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.G,TipoAtributo.FUEGO,1600,1800,espadachin_de_la_llama
 CartaMonstruo,"Dragón de Fuego","Un dragón envuelto en llamas",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.D,TipoAtributo.OSCURIDAD,1250,1500,dragon_de_fuego
 CartaMonstruo,"Rey Bestia","El líder de las bestias salvajes",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.B,TipoAtributo.TIERRA,1200,3000,rey_bestia
 CartaMonstruo,"Zombi Fundido","Un no-muerto aterrador",Posicion.VERTICAL,Orientacion.ARRIBA,TipoMonstruo.Z,TipoAtributo.FUEGO,400,1600,zombi_fundido

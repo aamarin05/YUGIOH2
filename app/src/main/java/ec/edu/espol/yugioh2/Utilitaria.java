@@ -301,7 +301,7 @@ public class Utilitaria {
         //else
           //  Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
     }
-
+/*
     public static ArrayList<Carta> declararBatalla(Context context,ArrayList<Carta> monstruosJ,ArrayList<Carta> monstruosM, LinearLayout monstruosA, LinearLayout monstruosO, String fase){
         final ImageView[] currentSelectedCard = {null};
         selecCarta1(context,monstruosJ,monstruosA,currentSelectedCard,fase);
@@ -312,6 +312,22 @@ public class Utilitaria {
         cartas.add(atacante);
         cartas.add(oponente);
         return cartas;
+    }
+
+ */
+    public static void declararBatalla(Context context,ArrayList<Carta> monstruosJ,ArrayList<Carta> monstruosM, LinearLayout monstruosA, LinearLayout monstruosO, String fase){
+        final ImageView[] currentSelectedCard = {null};
+        selecCarta1(context,monstruosJ,monstruosA,currentSelectedCard,fase);
+        //Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
+        //Carta atacante = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
+        /*
+        selecCarta1(context,monstruosM,monstruosO,currentSelectedCard,fase);
+        Carta oponente = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
+        ArrayList<Carta> cartas = new ArrayList<>();
+        cartas.add(atacante);
+        cartas.add(oponente);
+
+         */
     }
 
     //funcion que cambia el texto del view de la vida por el nombre y los puntos de vida

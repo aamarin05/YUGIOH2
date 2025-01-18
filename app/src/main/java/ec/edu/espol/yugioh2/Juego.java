@@ -16,6 +16,8 @@ public class Juego {
     private Context context;
     private int turno=1;
 
+    private String fase;
+
     public Juego (Context context){
         this.context = context;
     }
@@ -23,6 +25,10 @@ public class Juego {
         maquina= new Maquina(context);
         this.jugador= jugador;
         this.context = context;
+    }
+
+    public void setFase(String fase){
+        this.fase = fase;
     }
     public static void batallaDirecta(CartaMonstruo monstruoAtacante, Jugador oponente){
         int puntos = oponente.getPuntos() - monstruoAtacante.getAtaque();
@@ -109,22 +115,27 @@ public class Juego {
         ArrayList<Carta> cartasM= new ArrayList<>();
         cartasM.addAll(maquina.getTablero().getCartasMons());
 
-        ArrayList<Carta> cartas = Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
-        CartaMonstruo oponente = (CartaMonstruo) cartas.get(1);
-        CartaMonstruo atacante = (CartaMonstruo) cartas.get(0);
+        Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
 
-        Juego.declararBatalla(oponente,atacante,maquina,jugador);
+        //ArrayList<Carta> cartas = Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
+        //CartaMonstruo oponente = (CartaMonstruo) cartas.get(1);
+        //CartaMonstruo atacante = (CartaMonstruo) cartas.get(0);
+
+        //Juego.declararBatalla(oponente,atacante,maquina,jugador);
 
     }
 
     public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM) {
+        if (fase.equals("Fase Tomar Carta"))
         //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
-        for (Carta c: jugador.getMano()){
-            Utilitaria.crearyAgregar(context,c,manoJ);
-        }
+        {
+            for (Carta c : jugador.getMano()) {
+                Utilitaria.crearyAgregar(context, c, manoJ);
+            }
 
-        for (Carta c: maquina.getMano()){
-            Utilitaria.crearyAgregar(context,c,manoM);
+            for (Carta c : maquina.getMano()) {
+                Utilitaria.crearyAgregar(context, c, manoM);
+            }
         }
         //Se cambie el text del nombre del jugador
         //Que se cambien los turnos
@@ -147,31 +158,38 @@ public class Juego {
         }
     }
     public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ,LinearLayout especialesM) {
-        //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
-        for (Carta c: jugador.getMano()){
-            Utilitaria.crearyAgregar(context,c,manoJ);
+        if (fase.equals("Fase Tomar Carta")) {
+            //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
+            for (Carta c : jugador.getMano()) {
+                Utilitaria.crearyAgregar(context, c, manoJ);
+            }
+
+            for (Carta c : maquina.getMano()) {
+                Utilitaria.crearyAgregar(context, c, manoM);
+            }
+            //Se cambie el text del nombre del jugador
+            //Que se cambien los turnos
+            //Que se cambien las fases
+            Utilitaria.crearDialogs(context, "Fase", fase, "OK");
+        }
+        if (fase.equals("Fase Principal")) {
+            Utilitaria.crearDialogs(context,"Fase",fase,"OK");
+
+            fasePrincipal(manoJ, monstruosJ, especialesJ);
+            maquina.mFasePrincipal();
+
+            for (Carta carta : maquina.getTablero().getCartasMons())
+                Utilitaria.reemplazar(context, carta, monstruosM);
+            for (Carta carta : maquina.getTablero().getEspeciales())
+                Utilitaria.reemplazar(context, carta, especialesM);
         }
 
-        for (Carta c: maquina.getMano()){
-            Utilitaria.crearyAgregar(context,c,manoM);
-        }
-        //Se cambie el text del nombre del jugador
-        //Que se cambien los turnos
-        //Que se cambien las fases
+        /*
+        if (fase.equals("Fase Batalla"))
+            faseBatalla(monstruosJ,monstruosM);
 
 
-
-        fasePrincipal(manoJ,monstruosJ,especialesJ);
-        maquina.mFasePrincipal();
-
-        for (Carta carta: maquina.getTablero().getCartasMons())
-            Utilitaria.reemplazar(context,carta,monstruosM);
-        for (Carta carta: maquina.getTablero().getEspeciales())
-            Utilitaria.reemplazar(context,carta,especialesM);
-
-
-        //faseBatalla(monstruosJ,monstruosM);
-
+         */
 
 
 

@@ -230,7 +230,7 @@
 
 
     <TextView
-        android:id="@+id/J_vida"
+        android:id="@+id/vidaJugador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LP Presonaje: 4000"
@@ -255,7 +255,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/turno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Turno: 0"
@@ -367,7 +367,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/guideline2">
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        android:contentDescription="Desplazamiento horizontal con imágenes">
 
         <LinearLayout
             android:id="@+id/manoMaquina"

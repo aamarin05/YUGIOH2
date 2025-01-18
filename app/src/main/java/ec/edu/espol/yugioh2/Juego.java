@@ -14,6 +14,7 @@ public class Juego {
     private Maquina maquina;
     private Jugador jugador;
     private Context context;
+    private int turno=1;
 
     public Juego (Context context){
         this.context = context;

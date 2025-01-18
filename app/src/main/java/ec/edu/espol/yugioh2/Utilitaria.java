@@ -3,6 +3,8 @@ package ec.edu.espol.yugioh2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +26,8 @@ public class Utilitaria {
                 })
                 .show();
     }
-    public static void fasesDialog(Context context, Carta carta, String fase,ImageView imageView,ImageView[] currentSelectedCard){
+    //public static void fasesDialog(Context context, Carta carta, String fase,ImageView imageView,ImageView[] currentSelectedCard){
+    public static void fasesDialog(Context context, Carta carta, String fase,LinearLayout monstruosJ,LinearLayout especialesJ){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Detalles de la Carta");
@@ -36,28 +39,37 @@ public class Utilitaria {
                 builder.setMessage(c.toString());
                 boton = "Ataque";
 
+                builder.setPositiveButton(boton, (dialog, which) -> {
+                    reemplazar(context,carta,monstruosJ);
+                    Toast.makeText(context.getApplicationContext(), c.toString(), Toast.LENGTH_SHORT).show();
+                    // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
+                });
+
                 builder.setNegativeButton("Defensa", (dialog, which) -> {
-                    currentSelectedCard[0] = imageView;
-                    Toast.makeText(context.getApplicationContext(), "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
+                    reemplazar(context,carta,monstruosJ);
+                    //Toast.makeText(context.getApplicationContext(), "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
                     // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
                 });
             }
-            if (carta instanceof CartaMagica) {
-                CartaMagica c = (CartaMagica) carta;
-                builder.setMessage(c.toString());
+            if (carta instanceof CartaMagica || carta instanceof CartaTrampa) {
+                //CartaMagica c = (CartaMagica) carta;
+                builder.setMessage(carta.toString());
                 boton = "Colocar";
+                builder.setPositiveButton(boton, (dialog, which) -> {
+                    reemplazar(context,carta,especialesJ);
+                    Toast.makeText(context.getApplicationContext(), carta.toString(), Toast.LENGTH_SHORT).show();
+                    // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
+                });
             }
+            /*
             if (carta instanceof CartaTrampa) {
                 CartaTrampa c = (CartaTrampa) carta;
                 builder.setMessage(c.toString());
                 boton = "Colocar";
             }
+
+             */
             // Botones del cuadro de diálogo
-            builder.setPositiveButton(boton, (dialog, which) -> {
-                currentSelectedCard[0] = imageView;
-                Toast.makeText(context.getApplicationContext(), "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
-                // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
-            });
 
             builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
         }
@@ -211,24 +223,8 @@ public class Utilitaria {
                             .setNegativeButton("Cancelar", null)
                             .show();
                      */
-                Utilitaria.fasesDialog(context, carta, fase, imageView, currentSelectedCard);
-            });
-        }
-    }
-
-    public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, ImageView[] currentSelectedCard){
-        for (int i = 0; i< monstruosJ.getChildCount(); i++){
-            // Referencias a las cartas en el tablero
-            ImageView carta = (ImageView) monstruosJ.getChildAt(i); // Ajusta según los IDs reales
-
-            carta.setOnClickListener(v -> {
-                if (currentSelectedCard[0] != null) {
-                    carta.setImageDrawable(currentSelectedCard[0].getDrawable()); // Reemplazar carta
-                    currentSelectedCard[0] = null; // Resetear selección
-                    Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
-                }
+                currentSelectedCard[0] = imageView;
+                //Utilitaria.fasesDialog(context, carta, fase, imageView, currentSelectedCard);
             });
         }
     }
@@ -268,38 +264,47 @@ public class Utilitaria {
         return null; // No se encontró ninguna carta asociada
     }
 
-    public static void selecCarta2(Context context,ArrayList<Carta> listaCartas, LinearLayout monstruosM, ImageView[] currentSelectedCard){
-        for (int i = 0; i< monstruosM.getChildCount(); i++){
-            // Referencias a las cartas en el tablero
-            ImageView carta = (ImageView) monstruosM.getChildAt(i); // Ajusta según los IDs reales
-
-            carta.setOnClickListener(v -> {
-                if (currentSelectedCard[0] != null) {
-                    Utilitaria.imageViewCarta(currentSelectedCard[0],listaCartas,context); // Reemplazar carta
-                    currentSelectedCard[0] = null; // Resetear selección
-                    Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
     public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout monstruosJ,LinearLayout especialesJ, String fase){
         final ImageView[] currentSelectedCard = {null};
-        selecCarta1(context,cartas,mano,currentSelectedCard,fase);
-        //if (currentSelectedCard[0] != null)
-        //{
-            //Carta carta = Utilitaria.imageViewCarta(currentSelectedCard[0], cartas, context);
+        for (int i = 0; i < mano.getChildCount(); i++) {
 
-            //if (carta instanceof CartaMonstruo)
-                selecTablero(context, mano, monstruosJ, currentSelectedCard);
-            //else
-              selecTablero(context, mano, especialesJ, currentSelectedCard);
+            ImageView imageView = (ImageView) mano.getChildAt(i); // Ajusta según el ID real de la carta
 
-        //}
+            Carta carta = Utilitaria.buscarCarta(cartas, (String) imageView.getTag());
+            imageView.setOnClickListener(v -> {
+                    /*
+                    new AlertDialog.Builder(context)
+                            .setTitle("¿Colocar carta en el tablero?")
+                            .setMessage("¿Quieres colocar esta carta en el tablero?")
+                            .setPositiveButton("OK", (dialog, which) -> {
+                                currentSelectedCard[0] = imageView; // Almacenar la carta seleccionada
+                                Toast.makeText(context, "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("Cancelar", null)
+                            .show();
+                     */
+                currentSelectedCard[0] = imageView;
+               // Utilitaria.fasesDialog(context, carta, fase, imageView, currentSelectedCard);
+            });
+        }
+
+        Carta carta = Utilitaria.imageViewCarta(currentSelectedCard[0], cartas, context);
+        if (carta instanceof CartaMonstruo) {
+            reemplazar(context, carta, monstruosJ);
+            Toast.makeText(context, "MONSRTEUO", Toast.LENGTH_SHORT).show();
+        }
+        else if (carta instanceof CartaMagica || carta instanceof CartaTrampa)
+          //selecTablero(context, mano, especialesJ, currentSelectedCard);
+        {
+            reemplazar(context, carta, especialesJ);
+            Toast.makeText(context, "ESPECIAL", Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(context, "NO HAY CARTA", Toast.LENGTH_SHORT).show();
+
+
         //else
-          //  Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
+       //   Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
     }
 /*
     public static ArrayList<Carta> declararBatalla(Context context,ArrayList<Carta> monstruosJ,ArrayList<Carta> monstruosM, LinearLayout monstruosA, LinearLayout monstruosO, String fase){
@@ -342,5 +347,50 @@ public class Utilitaria {
         textturno.setText("Turno: "+ texto);
     }
 
+    public static void cartaTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, LinearLayout especialesJ, ArrayList<Carta> cartas,String fase) {
+        for (int i = 0; i < mano.getChildCount(); i++) {
+            ImageView cardView = (ImageView) mano.getChildAt(i);
 
+            String nombreCarta = (String) cardView.getTag();
+
+            // Buscar la carta en el ArrayList
+            Carta carta = Utilitaria.buscarCarta(cartas, nombreCarta);
+
+            if (carta == null) {
+                Toast.makeText(context, "Carta no encontrada", Toast.LENGTH_SHORT).show();
+                return;
+            }
+                cardView.setOnClickListener(v -> {
+                    fasesDialog(context,carta,fase,monstruosJ,especialesJ);
+
+                    /*
+
+                    // Mostrar diálogo para colocar la carta
+                    new AlertDialog.Builder(context)
+                            .setTitle("Colocar carta")
+                            .setMessage("¿Quieres colocar esta carta en el campo?")
+                            .setPositiveButton("Sí", (dialog, which) -> {
+
+                                if (carta instanceof CartaMonstruo) {
+                                    reemplazar(context, carta, monstruosJ);
+                                    Toast.makeText(context, carta.toString(), Toast.LENGTH_SHORT).show();
+
+                                    //enablePlacement(context, cardView, monstruosJ, "monstruos");
+                                }
+
+                                if (carta instanceof CartaTrampa || carta instanceof CartaMagica) {
+                                    reemplazar(context,carta,especialesJ);
+                                    Toast.makeText(context, carta.toString(), Toast.LENGTH_SHORT).show();
+                                    //enablePlacement(context, cardView, especialesJ, "especiales");
+                               }
+
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+
+                     */
+                });
+            }
+
+        }
 }

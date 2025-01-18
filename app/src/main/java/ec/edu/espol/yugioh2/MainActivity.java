@@ -74,11 +74,9 @@ public class MainActivity extends AppCompatActivity {
         //fases();
         //inicializar();
 
-        Juego juego = new Juego(new Jugador("Alexa",this),this);
+        Juego juego = new Juego(j,this);
         juego.setFase(fases_J.getText().toString());
         juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasJ,magicasM);
-
-        //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
 
         //Se define un boton con el ID y se crea una variable
@@ -91,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 cambiarFase(fases_J);
                 cambiarFase(fases_M);
                 juego.setFase(fases_J.getText().toString());
+
             }
 
         });

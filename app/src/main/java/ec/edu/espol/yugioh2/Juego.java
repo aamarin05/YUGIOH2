@@ -156,9 +156,9 @@ public class Juego {
             fasePrincipal(manoJ,monstruosJ,especialesJ);
             maquina.mFasePrincipal();
             for (Carta carta: maquina.getTablero().getCartasMons())
-                Utilitaria.crearyAgregar(context,carta,monstruosM);
+                Utilitaria.reemplazar(context,carta,monstruosM);
             for (Carta carta: maquina.getTablero().getEspeciales())
-                Utilitaria.crearyAgregar(context,carta,especialesM);
+                Utilitaria.reemplazar(context,carta,especialesM);
 
             faseBatalla(monstruosJ,monstruosM);
         }
@@ -187,6 +187,11 @@ public class Juego {
             maquina.getDeck().getCartas().remove(0);
             Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
             Utilitaria.crearyAgregar(context,ctm,manoM);
+            StringBuilder cartasMano = new StringBuilder();
+            for (int i = 0; i < maquina.getMano().size(); i++) {
+                cartasMano.append((i + 1)).append(". ").append(maquina.getMano().get(i).getNombre()).append("\n");
+            }
+            Utilitaria.crearDialogs(context,"CARTAS MANOS",cartasMano.toString(),"ok");
 
 
             //Se cambie el text del nombre del jugador
@@ -198,6 +203,7 @@ public class Juego {
         if (fase.equals("Fase Principal")) {
 
 
+
             fasePrincipal(manoJ, monstruosJ, especialesJ);
             maquina.mFasePrincipal();
 
@@ -205,16 +211,18 @@ public class Juego {
                 Utilitaria.reemplazar(context, carta, monstruosM);
             for (Carta carta : maquina.getTablero().getEspeciales())
                 Utilitaria.reemplazar(context, carta, especialesM);
+            Utilitaria.quitarCartas(manoM,maquina.getMano());
+
+            StringBuilder cartasMano = new StringBuilder();
+            for (int i = 0; i < maquina.getMano().size(); i++) {
+                cartasMano.append((i + 1)).append(". ").append(maquina.getMano().get(i).getNombre()).append("\n");
+            }
+            Utilitaria.crearDialogs(context,"CARTAS MANOS",cartasMano.toString(),"ok");
         }
 
-        /*
-        if (fase.equals("Fase Batalla"))
-            faseBatalla(monstruosJ,monstruosM);
 
-
-         */
-
-
+        //if (fase.equals("Fase Batalla"))
+            //faseBatalla(monstruosJ,monstruosM);
 
     }
 

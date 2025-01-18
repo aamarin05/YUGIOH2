@@ -367,6 +367,30 @@ public class Utilitaria {
         textturno.setText("Turno: "+ texto);
     }
 
+    public static ArrayList<Carta> leerImagenesLayout(LinearLayout contenedor, ArrayList<Carta> cartas) {
+        ArrayList<Carta> cartasContenedor = new ArrayList<>();
+        for (int i = 0; i < contenedor.getChildCount(); i++) {
+            ImageView imageView = (ImageView) contenedor.getChildAt(i); // Ajusta según el ID real de la carta
+            Carta carta = Utilitaria.buscarCarta(cartas, (String) imageView.getTag());
+            cartasContenedor.add(carta);
+
+        }
+        return cartasContenedor;
+    }
+
+    public static void quitarCartas(LinearLayout contenedor, ArrayList<Carta> cartasAtributo){
+        //MANO Y MANO
+        // EN EL CONTENEDOR ESTÁN ESTÁ LA CARTA1 Y CARTA2
+        //EN EL ATRIBUTO ESTÁN LAS CARTAS 1, 2, 3, 4
+        ArrayList<Carta> cartasContenedor = leerImagenesLayout(contenedor,cartasAtributo);
+
+        for (Carta carta: cartasAtributo){
+            //SI LA CARTA DEL ATRIBUTO NO ESTÁ EN EL CONTENEDOR, ESA CARTA SE ELIMINA DEL ATRIBUTO
+            if (!cartasContenedor.contains(carta))
+                cartasAtributo.remove(carta);
+        }
+
+    }
 
 
 }

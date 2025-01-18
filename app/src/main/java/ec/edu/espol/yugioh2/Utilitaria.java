@@ -193,7 +193,7 @@ public class Utilitaria {
 
  */
 
-    public static void selecMano(Context context, ArrayList<Carta> cartas, LinearLayout mano, ImageView[] currentSelectedCard,String fase){
+    public static void selecCarta1(Context context, ArrayList<Carta> cartas, LinearLayout mano, ImageView[] currentSelectedCard,String fase){
         for (int i = 0; i < mano.getChildCount(); i++) {
 
             ImageView imageView = (ImageView) mano.getChildAt(i); // Ajusta según el ID real de la carta
@@ -242,12 +242,78 @@ public class Utilitaria {
         return null; // En caso de no encontrar la carta
     }
 
-    public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout monstruosJ, String fase){
-        final ImageView[] currentSelectedCard = {null};
-        selecMano(context,cartas,mano,currentSelectedCard,fase);
-        selecTablero(context,mano,monstruosJ,currentSelectedCard);
+    public static Carta imageViewCarta(ImageView imageView, ArrayList<Carta> listaCartas, Context context) {
+        // Obtener el Drawable del ImageView
+        Drawable drawableImageView = imageView.getDrawable();
 
+        if (drawableImageView == null) {
+            return null; // Si el ImageView no tiene imagen, no hay carta asociada
+        }
+        // Iterar sobre el ArrayList de cartas para encontrar la que corresponde al Drawable
+        for (Carta carta : listaCartas) {
+            // Obtener el recurso Drawable de la carta basado en su atributo "imagen"
+            int imagenId = context.getResources().getIdentifier(
+                    carta.getImagen(), "drawable", context.getPackageName()
+            );
+
+            if (imagenId != 0) { // Asegurarse de que el recurso exista
+                Drawable drawableCarta = context.getResources().getDrawable(imagenId);
+
+                // Comparar si los Drawables son iguales
+                if (drawableImageView.getConstantState().equals(drawableCarta.getConstantState())) {
+                    return carta; // Devolver la carta asociada
+                }
+            }
+        }
+        return null; // No se encontró ninguna carta asociada
     }
+
+    public static void selecCarta2(Context context,ArrayList<Carta> listaCartas, LinearLayout monstruosM, ImageView[] currentSelectedCard){
+        for (int i = 0; i< monstruosM.getChildCount(); i++){
+            // Referencias a las cartas en el tablero
+            ImageView carta = (ImageView) monstruosM.getChildAt(i); // Ajusta según los IDs reales
+
+            carta.setOnClickListener(v -> {
+                if (currentSelectedCard[0] != null) {
+                    Utilitaria.imageViewCarta(currentSelectedCard[0],listaCartas,context); // Reemplazar carta
+                    currentSelectedCard[0] = null; // Resetear selección
+                    Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout monstruosJ,LinearLayout especialesJ, String fase){
+        final ImageView[] currentSelectedCard = {null};
+        selecCarta1(context,cartas,mano,currentSelectedCard,fase);
+        //if (currentSelectedCard[0] != null)
+        //{
+            //Carta carta = Utilitaria.imageViewCarta(currentSelectedCard[0], cartas, context);
+
+            //if (carta instanceof CartaMonstruo)
+                selecTablero(context, mano, monstruosJ, currentSelectedCard);
+            //else
+              selecTablero(context, mano, especialesJ, currentSelectedCard);
+
+        //}
+        //else
+          //  Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
+    }
+
+    public static ArrayList<Carta> declararBatalla(Context context,ArrayList<Carta> monstruosJ,ArrayList<Carta> monstruosM, LinearLayout monstruosA, LinearLayout monstruosO, String fase){
+        final ImageView[] currentSelectedCard = {null};
+        selecCarta1(context,monstruosJ,monstruosA,currentSelectedCard,fase);
+        Carta atacante = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
+        selecCarta1(context,monstruosM,monstruosO,currentSelectedCard,fase);
+        Carta oponente = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
+        ArrayList<Carta> cartas = new ArrayList<>();
+        cartas.add(atacante);
+        cartas.add(oponente);
+        return cartas;
+    }
+
     //funcion que cambia el texto del view de la vida por el nombre y los puntos de vida
     public static void vidaJugadorView(Jugador j,TextView textvida)
     {
@@ -259,5 +325,6 @@ public class Utilitaria {
         String texto= ""+turno;
         textturno.setText("Turno: "+ texto);
     }
+
 
 }

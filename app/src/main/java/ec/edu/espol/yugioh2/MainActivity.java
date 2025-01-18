@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         //inicializar();
 
         Juego juego = new Juego(new Jugador("Alexa",this),this);
-        juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasM);
+        juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasJ,magicasM);
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
 
@@ -105,9 +105,8 @@ public class MainActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "Fase cambiada", Toast.LENGTH_SHORT).show();//muestra un pequeño mensaje que la fase se ha cambiado y luego se elimina
         j.setText(nuevaFase);
-
-
     }
+
     public void mostrarDetallesCarta(Carta carta) {
         // Crear el cuadro de diálogo
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -139,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
 
     }
+
     public void inicializar()
     {
         ArrayList<ImageView> imagenesDeck= new ArrayList<>();

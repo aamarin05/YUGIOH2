@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -247,4 +248,16 @@ public class Utilitaria {
         selecTablero(context,mano,monstruosJ,currentSelectedCard);
 
     }
+    //funcion que cambia el texto del view de la vida por el nombre y los puntos de vida
+    public static void vidaJugadorView(Jugador j,TextView textvida)
+    {
+        textvida.setText("LP "+j.getNombre()+": "+j.getPuntos());
+    }
+    //funcion que cambia el texto del view de turnos por el asignado
+    public static void cambiarturnoView(int turno, TextView textturno)
+    {
+        String texto= ""+turno;
+        textturno.setText("Turno: "+ texto);
+    }
+
 }

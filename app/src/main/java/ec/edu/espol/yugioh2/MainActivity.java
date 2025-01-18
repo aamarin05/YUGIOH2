@@ -22,6 +22,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private TextView fases_M;
     private TextView fases_J;
+    private TextView vidaJugador;
+    private TextView turno;
     private LinearLayout manoJugador;
     private LinearLayout manoMaquina;
     private LinearLayout magicasJ;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView selectedCard;
     private ImageView currentSelectedCard = null;
     private Juego juego;
+    private Jugador j;
 
 
     @Override
@@ -50,12 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
         fases_M = (TextView) findViewById(R.id.fases_M);
         fases_J = (TextView) findViewById(R.id.fases_J);
+
         manoJugador= findViewById(R.id.manoJugador);
         magicasJ = findViewById(R.id.magicasJ); // cambie monstruoJ por magicaJ incluso en la funcion del tablero
         monstruosJ= findViewById(R.id.monstruosJ);
         magicasM= findViewById(R.id.magicasM);
         monstruoM= findViewById(R.id.monstruosM);
         manoMaquina = findViewById(R.id.manoMaquina);
+        vidaJugador= (TextView) findViewById(R.id.vidaJugador);
+        turno= (TextView) findViewById(R.id.turno);
+
+
+        j= new Jugador("Juan",this);
+        j.setPuntos(100);
+        Utilitaria.vidaJugadorView(j,vidaJugador);
+        Utilitaria.cambiarturnoView(2,turno);
 
 
 
@@ -63,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         //inicializar();
 
         Juego juego = new Juego(new Jugador("Alexa",this),this);
+
         juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasM);
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 

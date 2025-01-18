@@ -67,7 +67,7 @@ public class CartaMonstruo extends Carta {
         else
             modo = "DEFENSA";
         if (getOrientacion() == Orientacion.ARRIBA) {
-            return super.toString() + " \nATQ: " + ataque + " \nDEF: " + defensa + " \nTIPO: " + tipo + " \nATRIBUTO: " + atributo;
+            return "CartaMonstruo: "+super.toString() + " \nATQ: " + ataque + " \nDEF: " + defensa + " \nTIPO: " + tipo + " \nATRIBUTO: " + atributo;
         } else {
             return "Carta boca abajo";
         }

@@ -1,9 +1,11 @@
 package ec.edu.espol.yugioh2;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView fases_M;
+
     private TextView fases_J;
     private TextView vidaJugador;
     private TextView turno;
@@ -51,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        fases_M = (TextView) findViewById(R.id.fases_M);
-        fases_J = (TextView) findViewById(R.id.fases_J);
+
+        fases_J = (TextView) findViewById(R.id.fases_M);
 
         manoJugador= findViewById(R.id.manoJugador);
         magicasJ = findViewById(R.id.magicasJ); // cambie monstruoJ por magicaJ incluso en la funcion del tablero
@@ -68,17 +70,28 @@ public class MainActivity extends AppCompatActivity {
         j.setPuntos(100);
         Utilitaria.vidaJugadorView(j,vidaJugador);
         Utilitaria.cambiarturnoView(2,turno);
+        TextView textoInicioJuego = findViewById(R.id.texto_inicio_juego);
 
 
 
         //fases();
         //inicializar();
 
+
+
+        textoInicioJuego.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                textoInicioJuego.setVisibility(View.GONE);
+            }
+        }, 3000);
+
         Juego juego = new Juego(new Jugador("Alexa",this),this);
-        juego.setFase(fases_J.getText().toString());
-        juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasJ,magicasM);
+        //juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasJ,magicasM);
 
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
+
 
 
         //Se define un boton con el ID y se crea una variable
@@ -89,14 +102,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Aquí va la lógica para cambiar de fase
                 cambiarFase(fases_J);
-                cambiarFase(fases_M);
-                juego.setFase(fases_J.getText().toString());
+                juego.setFase(fases_J.getText().toString(), manoJugador, manoMaquina, monstruosJ,monstruoM,magicasJ,magicasM);
             }
 
         });
 
 
     }
+
+
     public void fases(){
         if (fases_J.getText().toString().equals("Fase Tomar Carta"))
             inicializar();
@@ -140,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Botones del cuadro de diálogo
         builder.setPositiveButton("Ataque", (dialog, which) -> {
-            Toast.makeText(getApplicationContext(), "Carta colocada en Ataque", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Se tomo la carta", Toast.LENGTH_SHORT).show();
             // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
         });
 

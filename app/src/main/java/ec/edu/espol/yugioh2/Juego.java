@@ -14,7 +14,7 @@ public class Juego {
     private Maquina maquina;
     private Jugador jugador;
     private Context context;
-    private int turno=1;
+    private int turno=0;
 
     private String fase;
 
@@ -27,13 +27,18 @@ public class Juego {
         this.context = context;
     }
 
-    public void setFase(String fase){
-        this.fase = fase;
+    public void setFase(String nuevaFase, LinearLayout manoJ, LinearLayout manoM,
+                        LinearLayout monstruosJ, LinearLayout monstruosM,
+                        LinearLayout especialesJ, LinearLayout especialesM) {
+        this.fase = nuevaFase;
+        // Llama automáticamente a la función prueba cuando se actualiza la fase
+        prueba(manoJ, manoM, monstruosJ, monstruosM, especialesJ, especialesM);
     }
     public static void batallaDirecta(CartaMonstruo monstruoAtacante, Jugador oponente){
         int puntos = oponente.getPuntos() - monstruoAtacante.getAtaque();
         oponente.setPuntos(puntos);
     }
+
 
     public static String declararBatalla(CartaMonstruo cartaOponente, CartaMonstruo cartaAtacante, Jugador oponente, Jugador atacante) {
         // Ambas cartas en modo ataque
@@ -136,6 +141,7 @@ public class Juego {
             for (Carta c : maquina.getMano()) {
                 Utilitaria.crearyAgregar(context, c, manoM);
             }
+
         }
         //Se cambie el text del nombre del jugador
         //Que se cambien los turnos
@@ -158,22 +164,39 @@ public class Juego {
         }
     }
     public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ,LinearLayout especialesM) {
-        if (fase.equals("Fase Tomar Carta")) {
-            //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
+        if (turno==0){
             for (Carta c : jugador.getMano()) {
                 Utilitaria.crearyAgregar(context, c, manoJ);
-            }
-
+                }
             for (Carta c : maquina.getMano()) {
                 Utilitaria.crearyAgregar(context, c, manoM);
             }
+            turno+=1;
+
+        }
+        if (fase.equals("Fase Tomar Carta")) {
+            //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
+            Carta ct= jugador.getDeck().getCartas().get(0);
+            jugador.getMano().add(ct);
+            jugador.getDeck().getCartas().remove(0);
+            Toast.makeText(context, "Jugador tomo la carta "+ct.getNombre(), Toast.LENGTH_SHORT).show();
+            Utilitaria.crearyAgregar(context,ct,manoJ);
+
+            Carta ctm= maquina.getDeck().getCartas().get(0);
+            maquina.getMano().add(ctm);
+            maquina.getDeck().getCartas().remove(0);
+            Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
+            Utilitaria.crearyAgregar(context,ctm,manoM);
+
+
             //Se cambie el text del nombre del jugador
             //Que se cambien los turnos
             //Que se cambien las fases
-            Utilitaria.crearDialogs(context, "Fase", fase, "OK");
+
+            turno++;
         }
         if (fase.equals("Fase Principal")) {
-            Utilitaria.crearDialogs(context,"Fase",fase,"OK");
+
 
             fasePrincipal(manoJ, monstruosJ, especialesJ);
             maquina.mFasePrincipal();

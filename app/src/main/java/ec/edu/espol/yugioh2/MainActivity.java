@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView fases_M;
+
     private TextView fases_J;
     private TextView vidaJugador;
     private TextView turno;
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        fases_M = (TextView) findViewById(R.id.fases_M);
-        fases_J = (TextView) findViewById(R.id.fases_J);
+
+        fases_J = (TextView) findViewById(R.id.fases_M);
 
         manoJugador= findViewById(R.id.manoJugador);
         magicasJ = findViewById(R.id.magicasJ); // cambie monstruoJ por magicaJ incluso en la funcion del tablero
@@ -75,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
         //inicializar();
 
         Juego juego = new Juego(new Jugador("Alexa",this),this);
-        juego.setFase(fases_J.getText().toString());
-        juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasJ,magicasM);
+        //juego.prueba(manoJugador,manoMaquina,monstruosJ,monstruoM,magicasJ,magicasM);
 
         //Utilitaria.colocarTablero(this,manoJugador,monstruosJ);
 
@@ -89,8 +88,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Aquí va la lógica para cambiar de fase
                 cambiarFase(fases_J);
-                cambiarFase(fases_M);
-                juego.setFase(fases_J.getText().toString());
+                juego.setFase(fases_J.getText().toString(), manoJugador, manoMaquina, monstruosJ,monstruoM,magicasJ,magicasM);
             }
 
         });

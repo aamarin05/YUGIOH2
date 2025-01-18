@@ -111,12 +111,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void fases(){
-        if (fases_J.getText().toString().equals("Fase Tomar Carta"))
-            inicializar();
-
-    }
-
     // Metodo para cambiar de fase
 
     private void cambiarFase(TextView j) {

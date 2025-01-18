@@ -114,7 +114,7 @@ public class Utilitaria {
 
     }
 
-    public static void reemplazar(Context context, Carta carta, LinearLayout contenedor) {
+    public static void reemplazar(Context context, Carta carta, LinearLayout contenedor,ArrayList<Carta> mano, LinearLayout manoView) {
         int imagenId = context.getResources().getIdentifier(
                 carta.getImagen(), "drawable", context.getPackageName()
         );
@@ -158,8 +158,13 @@ public class Utilitaria {
             }
 
             // Reemplazar la carta en el contenedor adecuado
+            mano.remove(carta);
+            manoView.removeAllViews();
+            for (Carta c: mano)
+                crearyAgregar(context,c,manoView);
             cartaSeleccionada.setImageResource(imagenId);
             cartaSeleccionada.setTag(carta.getImagen());  // Actualiza el tag con el nombre de la carta
+
         }
     }
 /*
@@ -355,6 +360,7 @@ public class Utilitaria {
          */
     }
 
+
     //funcion que cambia el texto del view de la vida por el nombre y los puntos de vida
     public static void vidaJugadorView(Jugador j,TextView textvida)
     {
@@ -365,6 +371,19 @@ public class Utilitaria {
     {
         String texto= ""+turno;
         textturno.setText("Turno: "+ texto);
+    }
+    public static ImageView crearImagen(Context context, Carta carta) {
+        int imagenId = context.getResources().getIdentifier(
+                carta.getImagen(),"drawable",context.getPackageName()
+        );
+        ImageView cartaView = new ImageView(context);
+        cartaView.setImageResource(imagenId);
+        cartaView.setTag(carta.getImagen());
+        cartaView.getLayoutParams().width = 250;
+        cartaView.setPadding(10,0,10,0);
+        cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
+        return cartaView;
+
     }
 
 

@@ -202,9 +202,9 @@ public class Juego {
             maquina.mFasePrincipal();
 
             for (Carta carta : maquina.getTablero().getCartasMons())
-                Utilitaria.reemplazar(context, carta, monstruosM);
+                Utilitaria.reemplazar(context, carta, monstruosM,maquina.getMano(),manoM);
             for (Carta carta : maquina.getTablero().getEspeciales())
-                Utilitaria.reemplazar(context, carta, especialesM);
+                Utilitaria.reemplazar(context, carta, especialesM,maquina.getMano(),manoM);
         }
 
         /*

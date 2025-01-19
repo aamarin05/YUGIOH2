@@ -49,15 +49,15 @@ public class Juego {
                 oponente.setPuntos(puntos);
                 cartaOponente.destruida();
                 oponente.getTablero().removerCarta(cartaOponente);
-                return "Carta: \n"+ cartaOponente + "\ndestruida, puntos de oponente "+oponente.getPuntos()+" .\n";
+                return "Carta: \n"+ cartaOponente + "destruida. \nPuntos de oponente actualizados. ";
             } else if (cartaAtacante.getAtaque() == cartaOponente.getAtaque()) {
                 oponente.getTablero().removerCarta(cartaOponente);
                 atacante.getTablero().removerCarta(cartaAtacante);
                 cartaOponente.destruida();
                 cartaAtacante.destruida();
-                return "Sus cartas fueron iguales.\n";
+                return "Sus cartas fueron iguales y se destruyeron.\n";
             } else 
-                return "Carta: \n" + cartaAtacante + "\n no pudo atacar\n" + cartaOponente + "\n";
+                return "Carta: \n" + cartaAtacante + "\n no pudo atacar a\n" + cartaOponente + "\n porque es de menor ataque";
         }
         else if (cartaAtacante.eModoAtaque() && cartaOponente.eModoDefensa()) {
             if (cartaAtacante.getAtaque() > cartaOponente.getDefensa()) {
@@ -72,7 +72,7 @@ public class Juego {
                 cartaOponente.setPosicion(Posicion.HORIZONTAL);
                 return "Ataque fallido, puntos del atacante actualizados.\n";
             } else {
-                return "Carta " + cartaAtacante + " no pudo atacar " + cartaOponente + "\n";
+                return "Carta " + cartaAtacante + " no pudo atacar " + cartaOponente + "\n Mismo ataque y defensa";
             }
         }
     
@@ -118,7 +118,7 @@ public class Juego {
         //BATALLA JUGADOR
 
         //Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
-        Utilitaria.gestionarBatalla(context,cartasA,monstruosA,cartasO,monstruosO,jugador,maquina,"Fase Batalla");
+        //Utilitaria.gestionarBatalla(context,cartasA,monstruosA,cartasO,monstruosO,jugador,maquina,"Fase Batalla");
 
         //ArrayList<Carta> cartas = Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
         //CartaMonstruo oponente = (CartaMonstruo) cartas.get(1);
@@ -257,10 +257,10 @@ public class Juego {
         }
 
         if (fase.equals("Fase Batalla")) {
-            //faseBatalla(monstruosJ,monstruosM,jugador.getTablero().getCartasMons(),maquina.getTablero().getCartasMons(),jugador,maquina);
             Utilitaria.quitarClickListeners(manoJ);
+            //faseBatalla(monstruosJ,monstruosM,jugador.getTablero().getCartasMons(),maquina.getTablero().getCartasMons(),jugador,maquina);
 
-            Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
+            Utilitaria.mostrarDetallesbatalla(context, monstruosJ,monstruosM,especialesJ,especialesM,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales(),maquina.getTablero().getCartasMons(),maquina.getTablero().getEspeciales(),jugador,maquina);
         }
         
     }

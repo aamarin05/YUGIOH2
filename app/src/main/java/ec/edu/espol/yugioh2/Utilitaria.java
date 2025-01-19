@@ -406,7 +406,7 @@ public class Utilitaria {
                 });
 
                 // Botón para cambiar el modo (ataque/defensa)
-                builder.setNeutralButton("Cambiar Modo " + cambiara, (dialog, which) -> {
+                builder.setNegativeButton("Cambiar Modo " + cambiara, (dialog, which) -> {
                     // Cambiar entre vertical y horizontal
                     if (c.getPosicion() == Posicion.VERTICAL) {
                         carta.setRotation(90); // Imagen en modo horizontal
@@ -419,7 +419,7 @@ public class Utilitaria {
                 });
 
                 // Botón para cerrar
-                builder.setNegativeButton("Cerrar", null);
+                builder.setNeutralButton("Cerrar", null);
 
                 // Mostrar el AlertDialog
                 builder.show();

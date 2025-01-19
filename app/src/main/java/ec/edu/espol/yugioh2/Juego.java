@@ -260,7 +260,7 @@ public class Juego {
             //faseBatalla(monstruosJ,monstruosM,jugador.getTablero().getCartasMons(),maquina.getTablero().getCartasMons(),jugador,maquina);
             Utilitaria.quitarClickListeners(manoJ);
 
-            //Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero());
+            Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
         }
         
     }

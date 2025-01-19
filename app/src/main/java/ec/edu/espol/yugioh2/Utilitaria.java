@@ -239,22 +239,48 @@ public class Utilitaria {
         }
     }
 
-    public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, ImageView[] currentSelectedCard,ArrayList<Carta> cartas){
-        for (int i = 0; i< monstruosJ.getChildCount(); i++){
+    public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, ImageView[] currentSelectedCard, ArrayList<Carta> cartas) {
+        for (int i = 0; i < monstruosJ.getChildCount(); i++) {
             // Referencias a las cartas en el tablero
-            ImageView carta = (ImageView) monstruosJ.getChildAt(i); // Ajusta según los IDs reales
-            String cartaTag = (String) carta.getTag();
-            Carta c = buscarCarta(cartas,cartaTag);
-
+            ImageView carta = (ImageView) monstruosJ.getChildAt(i);
 
             carta.setOnClickListener(v -> {
                 if (currentSelectedCard[0] != null) {
+                    String cartaTag = (String) currentSelectedCard[0].getTag();
+                    Carta c = buscarCarta(cartas, cartaTag);
                     mano.removeView(currentSelectedCard[0]);
-                    carta.setImageDrawable(currentSelectedCard[0].getDrawable()); // Reemplazar carta
-                    currentSelectedCard[0] = null; // Resetear selección
-                    cartas.remove(c);
-                    Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
 
+                    if (c.getOrientacion() == Orientacion.ABAJO) {
+                        // Cambiar la imagen de la carta boca abajo
+                        int idCartaAbajo = R.drawable.carta_abajo; // Asegúrate de usar un recurso adecuado
+                        Drawable cartaAbajo = context.getResources().getDrawable(idCartaAbajo);
+                        carta.setImageDrawable(cartaAbajo);
+
+                        // Ajustar tamaño de la carta boca abajo (wrap_content y weight 1)
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) carta.getLayoutParams();
+                        params.width = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el ancho al contenido
+                        params.height = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el alto al contenido
+                        params.weight = 1; // Establece el peso a 1 para distribuir el espacio equitativamente
+                        carta.setLayoutParams(params);
+
+                        currentSelectedCard[0] = null; // Resetear selección
+                        cartas.remove(c);
+                        Toast.makeText(context, "Carta colocada boca abajo en el tablero", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Reemplazar la carta normalmente
+                        carta.setImageDrawable(currentSelectedCard[0].getDrawable());
+
+                        // Restablecer el tamaño y el peso de la carta
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) carta.getLayoutParams();
+                        params.width = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el ancho al contenido
+                        params.height = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el alto al contenido
+                        params.weight = 1; // Establece el peso a 1
+                        carta.setLayoutParams(params);
+
+                        currentSelectedCard[0] = null; // Resetear selección
+                        cartas.remove(c);
+                        Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
                     Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();

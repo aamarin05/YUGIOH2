@@ -370,6 +370,22 @@ public class Utilitaria {
             carta.setOnClickListener(null);
         }
     }
+    public static void eliminarClickListenersTablero(LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM) {
+        // Crear una lista de los LinearLayout del tablero
+        LinearLayout[] tableros = {monstruosJ, monstruosM, especialesJ, especialesM};
+
+        // Recorrer cada LinearLayout del tablero
+        for (LinearLayout tablero : tableros) {
+            // Recorrer todos los hijos del LinearLayout (cartas en el tablero)
+            for (int i = 0; i < tablero.getChildCount(); i++) {
+                // Obtener la carta (ImageView)
+                ImageView carta = (ImageView) tablero.getChildAt(i);
+
+                // Eliminar el OnClickListener de cada carta
+                carta.setOnClickListener(null);
+            }
+        }
+    }
     public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ, ArrayList<CartaMonstruo> tableroM, ArrayList<Carta> tableroE) {
         // Recorrer el LinearLayout de monstruos
         for (int i = 0; i < monstruosJ.getChildCount(); i++) {
@@ -621,6 +637,7 @@ public class Utilitaria {
         builder.show();
 
     }
+
 
 
 

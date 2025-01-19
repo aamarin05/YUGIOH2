@@ -104,7 +104,7 @@ public class Maquina extends Jugador {
             if (!usadas.contains(carta)){
                 for (CartaMonstruo monstruo: monstruos){
                     if (carta instanceof CartaMagica){
-                        ((CartaMagica) carta).usar(monstruo);
+                        ((CartaMagica) carta).usar(monstruo,this);
                         usadas.add(carta);
                     }
                 }
@@ -135,7 +135,7 @@ public class Maquina extends Jugador {
                         for (CartaMonstruo monsJ: monstruosJ){
                             if (monsM.getAtaque() > monsJ.getAtaque()||monsM.getAtaque() > monsJ.getDefensa()||monsM.getDefensa() < monsJ.getAtaque()||monsM.getAtaque() == monsJ.getAtaque()){
                                 usadas.add(monsM);
-                                //resultado.append(Juego.declararBatalla(monsJ, monsM, jugador, this)).append("\n");
+                                //Fresultado.append(Juego.declararBatalla(monsJ, monsM, jugador, this)).append("\n");
                             }
                         }
                     }

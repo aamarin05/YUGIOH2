@@ -99,6 +99,7 @@ public class Juego {
         return resultado.toString();
     }
 
+
     public void faseTomarCarta(){
         String msjJ = jugador.tomarCarta();
         String msjM = maquina.tomarCarta();
@@ -108,15 +109,6 @@ public class Juego {
         //Tiene que agregarse la carta a la mano visualmente
     }
 
-
-    public void fasePrincipal(LinearLayout mano, LinearLayout monstruosJ, LinearLayout especialesJ){
-        // TIENE QUE HABILITAR PARA PONER LAS CARTAS EN EL TABLERO Y SE PUEDAN USAR MAGICAS
-
-        Utilitaria.colocarTablero(context,jugador.getMano(),mano,monstruosJ, especialesJ,"Fase Principal",jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
-       // Utilitaria.colocarTablero(context,maquina.getMano(),mano,monstruosJ,"Fase Principal");
-
-
-    }
 
 
     public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ,LinearLayout especialesM) {
@@ -152,7 +144,7 @@ public class Juego {
 
         if (fase.equals("Fase Principal")) {
 
-            fasePrincipal(manoJ, monstruosJ, especialesJ);
+            Utilitaria.colocarTablero(context,jugador.getMano(),manoJ,monstruosJ, especialesJ,"Fase Principal",jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
             maquina.mFasePrincipal();
 
             for (Carta carta : maquina.getTablero().getCartasMons()) {
@@ -205,7 +197,7 @@ public class Juego {
         }
         if (fase.equals("Fase Principal")) {
 
-            fasePrincipal(manoJ, monstruosJ, especialesJ);
+            Utilitaria.colocarTablero(context,jugador.getMano(),manoJ,monstruosJ, especialesJ,"Fase Principal",jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
             maquina.mFasePrincipal();
           
             for (Carta carta : maquina.getTablero().getCartasMons()) {

@@ -412,9 +412,8 @@ public class Utilitaria {
                     // Solo agregar el botón de "Declarar batalla" si la carta está en modo ataque (posición vertical)
                     if (cartaMonstruo.getPosicion() == Posicion.VERTICAL) {
                         builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
-                            // Lógica de batalla
                           selecOponente(context,tableroMonsM,monstruosM,monstruosJ,jugador,maquina,cartaMonstruo);
-                            Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
+                          Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
                         });
                     }
 
@@ -475,11 +474,13 @@ public class Utilitaria {
 
                 // Determinar si la carta es mágica o trampa
                 if (cartaSeleccionada instanceof CartaMagica) {
+                    CartaMagica cM = (CartaMagica) cartaSeleccionada;
                     builder.setMessage(cartaSeleccionada.toString());
 
                     // Botón para usar la carta mágica
                     builder.setPositiveButton("Usar carta", (dialog, which) -> {
                         // Lógica para usar la carta mágica
+                        selecMejora(context,tableroMonsJ,monstruosJ,magicasJ,cM,jugador);
                         Toast.makeText(context, "Carta mágica utilizada", Toast.LENGTH_SHORT).show();
                     });
                 } else if (cartaSeleccionada instanceof CartaTrampa) {
@@ -511,7 +512,7 @@ public class Utilitaria {
         return cartasContenedor;
 
     }
-    
+
 
     public static void removerImageView(Context context,LinearLayout mano, Carta carta){
         int imagenId = context.getResources().getIdentifier(carta.getImagen(), "drawable", context.getPackageName());
@@ -611,6 +612,40 @@ public class Utilitaria {
                     }
                     else {
                     Toast.makeText(context, "La carta seleccionada no puede ser atacada.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    public static void selecMejora(Context context,ArrayList<CartaMonstruo> monstruosMejorar, LinearLayout layoutMonstruos,LinearLayout layoutMagicas,
+                                     CartaMagica cartaMagica, Jugador jugador) {
+
+        //TENGO LA CARTA ATACANTE
+        for (int i = 0; i < layoutMonstruos.getChildCount(); i++) {
+            ImageView cartaOponenteView = (ImageView) layoutMonstruos.getChildAt(i);
+            ArrayList<Carta> cartasM = new ArrayList<>();
+
+            // Convertir cada CartaMonstruo a Carta
+            for (CartaMonstruo cartaMonstruo : monstruosMejorar) {
+                cartasM.add(cartaMonstruo); // CartaMonstruo es un tipo de Carta, por lo que se puede agregar directamente
+            }
+
+            cartaOponenteView.setOnClickListener(oponenteView -> {
+                String cartaTag = (String) cartaOponenteView.getTag();
+                Carta c = buscarCarta(cartasM, cartaTag);
+
+                if (c != null) {
+                    if(c instanceof CartaMonstruo) {
+                        CartaMonstruo cartaMejora = (CartaMonstruo) c;
+                        String resultado = cartaMagica.usar(cartaMejora,jugador);
+                        if (!resultado.equals("No se puede usar, no son del mismo tipo de Monstruo"))
+                            noHayCarta(context,layoutMagicas,cartaMagica);
+                        crearDialogs(context, "MEJORA", resultado, "OK");
+                        //Toast.makeText(context, resultado, Toast.LENGTH_LONG).show();}
+                    }
+                }
+                else {
+                    Toast.makeText(context, "Selecciona un Monstruo.", Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -511,22 +511,7 @@ public class Utilitaria {
         return cartasContenedor;
 
     }
-
-    public static void quitarCartas(Context context,LinearLayout contenedor, ArrayList<Carta> cartasAtributoM,ArrayList<Carta> cartasAtributoE){
-        //MANO Y MANO
-        // EN EL CONTENEDOR ESTÁN ESTÁ LA CARTA1 Y CARTA2
-        //EN EL ATRIBUTO ESTÁN LAS CARTAS 1, 2, 3, 4
-        ArrayList<Carta> cartasContenedor = leerImagenesLayout(context,contenedor,cartasAtributoE);
-
-
-        for (Carta carta: cartasContenedor){
-            if (carta instanceof CartaMonstruo)
-                cartasAtributoM.add(carta);
-            if (carta instanceof CartaTrampa || carta instanceof  CartaMagica)
-                cartasAtributoE.add(carta);
-        }
-
-    }
+    
 
     public static void removerImageView(Context context,LinearLayout mano, Carta carta){
         int imagenId = context.getResources().getIdentifier(carta.getImagen(), "drawable", context.getPackageName());

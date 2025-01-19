@@ -91,7 +91,7 @@ public class Juego {
             if ((especial instanceof CartaTrampa) && (((CartaTrampa) especial).usar(monsM))) {
                 trampas.add((CartaTrampa) especial);
                 j.getTablero().getEspeciales().remove(especial);
-                resultado.append("Se usó una carta trampa: ").append(especial.toString()).append("\n");
+                resultado.append("Se usó una carta trampa: ").append(especial).append("\n");
             }
             else
                 resultado.append("");

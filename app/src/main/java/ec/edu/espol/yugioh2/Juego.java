@@ -221,6 +221,7 @@ public class Juego {
             maquina.getDeck().getCartas().remove(0);
             Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
             Utilitaria.crearyAgregar(context,ctm,manoM);
+            Utilitaria.eliminarClickListenersTablero(monstruosJ, monstruosM, especialesJ, especialesM);
 
             //Se cambie el text del nombre del jugador
             //Que se cambien los turnos

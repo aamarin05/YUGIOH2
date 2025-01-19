@@ -370,62 +370,131 @@ public class Utilitaria {
             carta.setOnClickListener(null);
         }
     }
+    public static void eliminarClickListenersTablero(LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM) {
+        // Crear una lista de los LinearLayout del tablero
+        LinearLayout[] tableros = {monstruosJ, monstruosM, especialesJ, especialesM};
+
+        // Recorrer cada LinearLayout del tablero
+        for (LinearLayout tablero : tableros) {
+            // Recorrer todos los hijos del LinearLayout (cartas en el tablero)
+            for (int i = 0; i < tablero.getChildCount(); i++) {
+                // Obtener la carta (ImageView)
+                ImageView carta = (ImageView) tablero.getChildAt(i);
+
+                // Eliminar el OnClickListener de cada carta
+                carta.setOnClickListener(null);
+            }
+        }
+    }
     public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ, ArrayList<CartaMonstruo> tableroM, ArrayList<Carta> tableroE) {
         // Recorrer el LinearLayout de monstruos
         for (int i = 0; i < monstruosJ.getChildCount(); i++) {
             ImageView carta = (ImageView) monstruosJ.getChildAt(i);
-            ArrayList<CartaMonstruo> cartasMonstruos = tableroM;
-            ArrayList<Carta> cartasM = new ArrayList<>();
 
-            // Convertir cada CartaMonstruo a Carta
-            for (CartaMonstruo cartaMonstruo : cartasMonstruos) {
-                cartasM.add(cartaMonstruo); // CartaMonstruo es un tipo de Carta, por lo que se puede agregar directamente
-            }
-
+            // Establecer el click listener para la ImageView
             carta.setOnClickListener(v -> {
-                // Obtener el tag de la carta seleccionada
-                String cartaTag = (String) carta.getTag();
-                Carta c = buscarCarta(cartasM, cartaTag);
+                // Obtener el índice de la ImageView tocada
+                int index = monstruosJ.indexOfChild(carta);
+
+                // Obtener la carta correspondiente en tableroM utilizando el índice
+                CartaMonstruo cartaMonstruo = tableroM.get(index);
 
                 // Crear el AlertDialog para mostrar las especificaciones de la carta
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Detalles de la carta");
-                builder.setMessage(c.toString());
 
-                // Mostrar especificaciones de la carta (nombre, ataque, defensa, etc.)
-                String cambiara;
-                if (c.getPosicion() == Posicion.VERTICAL)
-                    cambiara = "defensa";
-                else
-                    cambiara = "ataque";
+                // Mostrar detalles de la carta
+                if (cartaMonstruo.getOrientacion() == Orientacion.ARRIBA) {
+                    builder.setMessage(cartaMonstruo.toString()); // Mostrar detalles de la carta
 
-                // Botón para declarar batalla
-                builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
-                    // Lógica de batalla
-                    Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
-                });
-
-                // Botón para cambiar el modo (ataque/defensa)
-                builder.setNegativeButton("Cambiar Modo " + cambiara, (dialog, which) -> {
-                    // Cambiar entre vertical y horizontal
-                    if (c.getPosicion() == Posicion.VERTICAL) {
-                        carta.setRotation(90); // Imagen en modo horizontal
-                        c.setPosicion(Posicion.HORIZONTAL); // Actualizar la posición a horizontal
-                    } else {
-                        carta.setRotation(0); // Imagen en modo vertical
-                        c.setPosicion(Posicion.VERTICAL); // Actualizar la posición a vertical
+                    // Solo agregar el botón de "Declarar batalla" si la carta está en modo ataque (posición vertical)
+                    if (cartaMonstruo.getPosicion() == Posicion.VERTICAL) {
+                        builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
+                            // Lógica de batalla
+                            Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
+                        });
                     }
-                    Toast.makeText(context, "Modo cambiado", Toast.LENGTH_SHORT).show();
-                });
 
-                // Botón para cerrar
-                builder.setNeutralButton("Cerrar", null);
+                    // Botón para cambiar el modo (ataque/defensa)
+                    String cambiara = (cartaMonstruo.getPosicion() == Posicion.VERTICAL) ? "defensa" : "ataque";
+                    builder.setNeutralButton("Cambiar Modo " + cambiara, (dialog, which) -> {
+                        // Cambiar entre vertical y horizontal
+                        if (cartaMonstruo.getPosicion() == Posicion.VERTICAL) {
+                            carta.setRotation(90); // Imagen en modo horizontal
+                            cartaMonstruo.setPosicion(Posicion.HORIZONTAL); // Actualizar la posición a horizontal
+                        } else {
+                            carta.setRotation(0); // Imagen en modo vertical
+                            cartaMonstruo.setPosicion(Posicion.VERTICAL); // Actualizar la posición a vertical
+                        }
+                        Toast.makeText(context, "Modo cambiado", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    // Si la carta está orientada "abajo", solo mostrar el nombre
+                    builder.setMessage("Nombre de la carta: " + cartaMonstruo.getNombre());
+
+                    // Botón para voltear la carta (solo cartas monstruo)
+                    builder.setPositiveButton("Voltear carta", (dialog, which) -> {
+                        // Obtener el identificador del recurso de la imagen desde el nombre
+                        int imageResId = context.getResources().getIdentifier(cartaMonstruo.getImagen(), "drawable", context.getPackageName());
+
+                        // Cambiar la imagen del ImageView por la imagen original
+                        carta.setImageResource(imageResId); // Actualizar la imagen con el recurso correspondiente
+
+                        // Voltear la carta (cambiar la orientación)
+                        cartaMonstruo.setOrientacion(Orientacion.ARRIBA); // Cambiar la orientación de la carta a "arriba"
+                        Toast.makeText(context, "Carta volteada", Toast.LENGTH_SHORT).show();
+                    });
+                }
+
+                // Botón para cerrar el diálogo
+                builder.setNegativeButton("Cerrar", null);
+
+                // Mostrar el AlertDialog
+                builder.show();
+            });
+        }
+
+        // Recorrer el LinearLayout de cartas mágicas y trampas (magicasJ)
+        for (int i = 0; i < magicasJ.getChildCount(); i++) {
+            ImageView carta = (ImageView) magicasJ.getChildAt(i);
+
+            // Establecer el click listener para la ImageView
+            carta.setOnClickListener(v -> {
+                // Obtener el índice de la ImageView tocada
+                int index = magicasJ.indexOfChild(carta);
+
+                // Obtener la carta correspondiente en tableroE (cartas mágicas y trampas)
+                Carta cartaSeleccionada = tableroE.get(index);
+
+                // Crear el AlertDialog para mostrar las especificaciones de la carta
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Detalles de la carta");
+
+                // Determinar si la carta es mágica o trampa
+                if (cartaSeleccionada instanceof CartaMagica) {
+                    builder.setMessage(cartaSeleccionada.toString());
+
+                    // Botón para usar la carta mágica
+                    builder.setPositiveButton("Usar carta", (dialog, which) -> {
+                        // Lógica para usar la carta mágica
+                        Toast.makeText(context, "Carta mágica utilizada", Toast.LENGTH_SHORT).show();
+                    });
+                } else if (cartaSeleccionada instanceof CartaTrampa) {
+                    builder.setMessage(cartaSeleccionada.toString());
+
+                    // Solo botón de cerrar para cartas trampa
+                    builder.setNegativeButton("Cerrar", null);
+                }
+
+                // Botón para cerrar el diálogo
+                builder.setNegativeButton("Cerrar", null);
 
                 // Mostrar el AlertDialog
                 builder.show();
             });
         }
     }
+
 
     public static ArrayList<Carta> leerImagenesLayout(Context context,LinearLayout contenedor, ArrayList<Carta> cartas) {
         ArrayList<Carta> cartasContenedor = new ArrayList<>();
@@ -568,6 +637,7 @@ public class Utilitaria {
         builder.show();
 
     }
+
 
 
 

@@ -25,7 +25,7 @@ public class Utilitaria {
                 .show();
     }
 
-    public static void fasesDialog(Context context, Carta carta, String fase, ImageView imageView, ImageView[] currentSelectedCard) {
+    public static void fasesDialog(Context context, Carta carta, String fase, ImageView imageView, ImageView[] currentSelectedCard, ArrayList<Carta> mano) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Detalles de la Carta");
@@ -37,6 +37,7 @@ public class Utilitaria {
                 builder.setMessage(c.toString());
                 boton = "Ataque";
                 builder.setNegativeButton("Defensa", (dialog, which) -> {
+                    mano.remove(carta);
                     currentSelectedCard[0] = imageView;
                     Toast.makeText(context.getApplicationContext(), "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
                     // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
@@ -55,6 +56,7 @@ public class Utilitaria {
             }
             // Botones del cuadro de diálogo
             builder.setPositiveButton(boton, (dialog, which) -> {
+                mano.remove(carta);
                 currentSelectedCard[0] = imageView;
                 Toast.makeText(context.getApplicationContext(), "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
                 // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
@@ -229,7 +231,7 @@ public class Utilitaria {
                             .setNegativeButton("Cancelar", null)
                             .show();
                      */
-                Utilitaria.fasesDialog(context, carta, fase, imageView, currentSelectedCard);
+                Utilitaria.fasesDialog(context, carta, fase, imageView, currentSelectedCard,cartas);
             });
         }
     }
@@ -367,30 +369,28 @@ public class Utilitaria {
         textturno.setText("Turno: "+ texto);
     }
 
-    public static ArrayList<Carta> leerImagenesLayout(LinearLayout contenedor, ArrayList<Carta> cartas) {
+    public static ArrayList<Carta> leerImagenesLayout(Context context,LinearLayout contenedor, ArrayList<Carta> cartas) {
         ArrayList<Carta> cartasContenedor = new ArrayList<>();
         for (int i = 0; i < contenedor.getChildCount(); i++) {
+
             ImageView imageView = (ImageView) contenedor.getChildAt(i); // Ajusta según el ID real de la carta
+
             Carta carta = Utilitaria.buscarCarta(cartas, (String) imageView.getTag());
             cartasContenedor.add(carta);
-
         }
         return cartasContenedor;
+
     }
 
-    public static void quitarCartas(LinearLayout contenedor, ArrayList<Carta> cartasAtributo){
+    public static void quitarCartas(Context context,LinearLayout contenedor, ArrayList<Carta> cartasAtributo){
         //MANO Y MANO
         // EN EL CONTENEDOR ESTÁN ESTÁ LA CARTA1 Y CARTA2
         //EN EL ATRIBUTO ESTÁN LAS CARTAS 1, 2, 3, 4
-        ArrayList<Carta> cartasContenedor = leerImagenesLayout(contenedor,cartasAtributo);
+        ArrayList<Carta> cartasContenedor = leerImagenesLayout(context,contenedor,cartasAtributo);
 
-        for (Carta carta: cartasAtributo){
-            //SI LA CARTA DEL ATRIBUTO NO ESTÁ EN EL CONTENEDOR, ESA CARTA SE ELIMINA DEL ATRIBUTO
-            if (!cartasContenedor.contains(carta))
-                cartasAtributo.remove(carta);
-        }
+
+        cartasAtributo.removeIf(carta -> !cartasContenedor.contains(carta));
+
 
     }
-
-
 }

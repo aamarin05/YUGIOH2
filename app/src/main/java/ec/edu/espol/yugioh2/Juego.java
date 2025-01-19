@@ -185,11 +185,7 @@ public class Juego {
             maquina.getDeck().getCartas().remove(0);
             Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
             Utilitaria.crearyAgregar(context,ctm,manoM);
-            StringBuilder cartasMano = new StringBuilder();
-            for (int i = 0; i < maquina.getMano().size(); i++) {
-                cartasMano.append((i + 1)).append(". ").append(maquina.getMano().get(i).getNombre()).append("\n");
-            }
-            Utilitaria.crearDialogs(context,"CARTAS MANOS",cartasMano.toString(),"ok");
+
 
 
             //Se cambie el text del nombre del jugador
@@ -209,13 +205,20 @@ public class Juego {
                 Utilitaria.reemplazar(context, carta, monstruosM);
             for (Carta carta : maquina.getTablero().getEspeciales())
                 Utilitaria.reemplazar(context, carta, especialesM);
-            Utilitaria.quitarCartas(manoM,maquina.getMano());
+            //Utilitaria.quitarCartas(context,manoJ,jugador.getMano());
 
-            StringBuilder cartasMano = new StringBuilder();
-            for (int i = 0; i < maquina.getMano().size(); i++) {
-                cartasMano.append((i + 1)).append(". ").append(maquina.getMano().get(i).getNombre()).append("\n");
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < jugador.getMano().size(); i++) {
+                builder.append(i + 1).append(". ") // Agrega el número de la lista
+                        .append(jugador.getMano().get(i).getNombre())       // Agrega el elemento actual
+                        .append("\n");              // Salto de línea después de cada elemento
             }
-            Utilitaria.crearDialogs(context,"CARTAS MANOS",cartasMano.toString(),"ok");
+
+            Utilitaria.crearDialogs(context,"Context",builder.toString(),"ok");
+
+
+
         }
 
 

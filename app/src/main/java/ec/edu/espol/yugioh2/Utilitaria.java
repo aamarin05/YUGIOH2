@@ -136,7 +136,7 @@ public class Utilitaria {
 
     }
 
-    public static void reemplazar(Context context, Carta carta, LinearLayout contenedor,ArrayList<Carta> mano, LinearLayout manoView) {
+    public static void reemplazar(Context context, Carta carta, LinearLayout contenedor) {
         int imagenId = context.getResources().getIdentifier(
                 carta.getImagen(), "drawable", context.getPackageName()
         );
@@ -180,10 +180,6 @@ public class Utilitaria {
             }
 
             // Reemplazar la carta en el contenedor adecuado
-            mano.remove(carta);
-            manoView.removeAllViews();
-            for (Carta c: mano)
-                crearyAgregar(context,c,manoView);
             cartaSeleccionada.setImageResource(imagenId);
             cartaSeleccionada.setTag(carta.getImagen());  // Actualiza el tag con el nombre de la carta
 
@@ -271,22 +267,26 @@ public class Utilitaria {
                     String cartaTag = (String) currentSelectedCard[0].getTag();
                     Carta c = buscarCarta(cartas, cartaTag);
                     mano.removeView(currentSelectedCard[0]);
-
+/*
+              
                     if (c.getOrientacion() == Orientacion.ABAJO) {
                         // Cambiar la imagen de la carta boca abajo
                         int idCartaAbajo = R.drawable.carta_abajo; // Asegúrate de usar un recurso adecuado
+
                         Drawable cartaAbajo = context.getResources().getDrawable(idCartaAbajo);
                         carta.setImageDrawable(cartaAbajo);
                         currentSelectedCard[0] = null; // Resetear selección
                         cartas.remove(c);
                         Toast.makeText(context, "Carta colocada boca abajo en el tablero", Toast.LENGTH_SHORT).show();
                     } else {
+
+ */
                         // Reemplazar la carta normalmente
                         carta.setImageDrawable(currentSelectedCard[0].getDrawable());
                         currentSelectedCard[0] = null; // Resetear selección
                         cartas.remove(c);
                         Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
-                    }
+                    //}
 
                 } else {
                     Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();

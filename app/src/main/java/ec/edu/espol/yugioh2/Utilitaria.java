@@ -3,14 +3,12 @@ package ec.edu.espol.yugioh2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Utilitaria {
 
@@ -78,25 +76,6 @@ public class Utilitaria {
 
             builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
         }
-        if (fase.equals("Fase Batalla")) {
-            if (carta instanceof CartaMonstruo) {
-                CartaMonstruo c = (CartaMonstruo) carta;
-                builder.setMessage(c.toString());
-                boton = "Declarar Batalla";
-            }
-            if (carta instanceof CartaMagica) {
-                CartaMagica c = (CartaMagica) carta;
-                builder.setMessage(c.toString());
-                boton = "Usar Magica";
-            }
-            // Botones del cuadro de diálogo
-            builder.setPositiveButton(boton, (dialog, which) -> {
-                Toast.makeText(context.getApplicationContext(), "Carta usada", Toast.LENGTH_SHORT).show();
-                // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
-            });
-
-            builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
-        }
 
         builder.show();
 
@@ -114,17 +93,6 @@ public class Utilitaria {
         cartaView.getLayoutParams().width = 250;
         cartaView.setPadding(10,0,10,0);
         cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
-
-/*
-        if (imagenId != 0) {
-            cartaView.setImageResource(imagenId);
-        } else {
-            cartaView.setImageResource(R.drawable.no_hay_carta);
-        }
-
-        cartaView.setOnClickListener(view -> fasesDialog(context, carta,fase));
-    */
-
 
     }
 
@@ -233,17 +201,7 @@ public class Utilitaria {
 
             Carta carta = Utilitaria.buscarCarta(cartas, (String) imageView.getTag());
             imageView.setOnClickListener(v -> {
-                    /*
-                    new AlertDialog.Builder(context)
-                            .setTitle("¿Colocar carta en el tablero?")
-                            .setMessage("¿Quieres colocar esta carta en el tablero?")
-                            .setPositiveButton("OK", (dialog, which) -> {
-                                currentSelectedCard[0] = imageView; // Almacenar la carta seleccionada
-                                Toast.makeText(context, "Ahora selecciona una carta del tablero para reemplazarla.", Toast.LENGTH_SHORT).show();
-                            })
-                            .setNegativeButton("Cancelar", null)
-                            .show();
-                     */
+
                 Utilitaria.fasesDialog(context, carta, fase, imageView, currentSelectedCard,tableroM,tableroE,mano,monstruosJ,especialesJ,cartas);
 
             });
@@ -251,8 +209,6 @@ public class Utilitaria {
     }
 
     public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, LinearLayout especialesJ, ImageView[] currentSelectedCard, ArrayList<Carta> cartas,ArrayList<CartaMonstruo> tableroM,ArrayList<Carta> tableroE) {
-
-        // Referencias a las cartas en el tablero
 
         if (currentSelectedCard[0] != null) {
             String cartaTag = (String) currentSelectedCard[0].getTag();
@@ -338,6 +294,15 @@ public class Utilitaria {
         return null; // En caso de no encontrar la carta
     }
 
+    private static CartaMonstruo buscarCartaMonstruo(ArrayList<CartaMonstruo> cartas, String nombre) {
+        for (CartaMonstruo carta : cartas) {
+            if (nombre.equals(carta.getImagen())) {
+                return carta;
+            }
+        }
+        return null;
+    }
+
     public static Carta imageViewCarta(ImageView imageView, ArrayList<Carta> listaCartas, Context context) {
         // Obtener el Drawable del ImageView
         Drawable drawableImageView = imageView.getDrawable();
@@ -364,61 +329,10 @@ public class Utilitaria {
         return null; // No se encontró ninguna carta asociada
     }
 
-    public static void selecCarta2(Context context,ArrayList<Carta> listaCartas, LinearLayout monstruosM, ImageView[] currentSelectedCard){
-        for (int i = 0; i< monstruosM.getChildCount(); i++){
-            // Referencias a las cartas en el tablero
-            ImageView carta = (ImageView) monstruosM.getChildAt(i); // Ajusta según los IDs reales
-
-            carta.setOnClickListener(v -> {
-                if (currentSelectedCard[0] != null) {
-                    Utilitaria.imageViewCarta(currentSelectedCard[0],listaCartas,context); // Reemplazar carta
-                    currentSelectedCard[0] = null; // Resetear selección
-                    Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
 
     public static void colocarTablero(Context context,ArrayList<Carta> cartas, LinearLayout mano, LinearLayout monstruosJ,LinearLayout especialesJ, String fase,ArrayList<CartaMonstruo> tableroM,ArrayList<Carta> tableroE){
         final ImageView[] currentSelectedCard = {null};
         selecCarta1(context,cartas,mano,currentSelectedCard,fase,tableroM,tableroE,monstruosJ,especialesJ);
-        //if (currentSelectedCard[0] != null)
-        //{
-
-
-        //}
-        //else
-          //  Toast.makeText(context, "Selecciona una carta primero", Toast.LENGTH_SHORT).show();
-    }
-/*
-    public static ArrayList<Carta> declararBatalla(Context context,ArrayList<Carta> monstruosJ,ArrayList<Carta> monstruosM, LinearLayout monstruosA, LinearLayout monstruosO, String fase){
-        final ImageView[] currentSelectedCard = {null};
-        selecCarta1(context,monstruosJ,monstruosA,currentSelectedCard,fase);
-        Carta atacante = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
-        selecCarta1(context,monstruosM,monstruosO,currentSelectedCard,fase);
-        Carta oponente = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
-        ArrayList<Carta> cartas = new ArrayList<>();
-        cartas.add(atacante);
-        cartas.add(oponente);
-        return cartas;
-    }
-
- */
-    public static void declararBatalla(Context context,ArrayList<Carta> monstruosJ,ArrayList<Carta> monstruosM, LinearLayout monstruosA, LinearLayout monstruosO, String fase){
-        final ImageView[] currentSelectedCard = {null};
-       // selecCarta1(context,monstruosJ,monstruosA,currentSelectedCard,fase,table);
-        //Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
-        //Carta atacante = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
-        /*
-        selecCarta1(context,monstruosM,monstruosO,currentSelectedCard,fase);
-        Carta oponente = Utilitaria.imageViewCarta(currentSelectedCard[0],monstruosJ,context);
-        ArrayList<Carta> cartas = new ArrayList<>();
-        cartas.add(atacante);
-        cartas.add(oponente);
-
-         */
     }
 
 
@@ -597,4 +511,91 @@ public class Utilitaria {
             mano.removeView(cartaSeleccionada);
         }
     }
+
+    public static void gestionarBatalla(Context context,
+                                        ArrayList<CartaMonstruo> cartasAtacante, LinearLayout layoutAtacante,
+                                        ArrayList<CartaMonstruo> cartasOponente, LinearLayout layoutOponente,
+                                        Jugador atacante, Jugador oponente, String fase) {
+        final ImageView[] currentSelectedCard = {null};
+
+        // Listener para las cartas del jugador atacante
+        for (int i = 0; i < layoutAtacante.getChildCount(); i++) {
+            ImageView imageView = (ImageView) layoutAtacante.getChildAt(i);
+            
+            if (imageView.getTag() == null) {
+                Toast.makeText(context, "Error: El ImageView en posición " + i + " no tiene un Tag.", Toast.LENGTH_SHORT).show();
+            }
+
+            CartaMonstruo cartaAtacante = buscarCartaMonstruo(cartasAtacante, (String) imageView.getTag());
+            if (cartaAtacante == null) {
+                Toast.makeText(context, "Error: No se encontró una carta para el Tag: " + imageView.getTag(), Toast.LENGTH_SHORT).show();
+
+            }
+
+                imageView.setOnClickListener(v -> {
+                    //currentSelectedCard[0] = imageView; // Seleccionar carta atacante
+                    fasesDialogBatalla(context, cartaAtacante, fase, imageView,currentSelectedCard, layoutOponente, cartasOponente, atacante, oponente);
+                });
+        }
+
+        for (int i = 0; i < layoutOponente.getChildCount(); i++) {
+            ImageView oponenteImageView = (ImageView) layoutOponente.getChildAt(i);
+            if (oponenteImageView.getTag() == null) {
+                Toast.makeText(context, "Error: El ImageView del oponente en posición " + i + " no tiene un Tag.", Toast.LENGTH_SHORT).show();
+            }
+
+            CartaMonstruo cartaOponente = buscarCartaMonstruo(cartasOponente, (String) oponenteImageView.getTag());
+            if (cartaOponente == null) {
+                Toast.makeText(context, "Error: No se encontró una carta para el Tag: " + oponenteImageView.getTag(), Toast.LENGTH_SHORT).show();
+            }
+
+            oponenteImageView.setOnClickListener(oponenteView -> {
+                if (currentSelectedCard[0] != null){
+                    String cartaTag = (String) currentSelectedCard[0].getTag();
+                    CartaMonstruo cartaAtacante = buscarCartaMonstruo(cartasAtacante,cartaTag);
+
+                    if (cartaOponente != null) {
+                        String resultado = Juego.declararBatalla(
+                                cartaOponente,
+                                cartaAtacante,
+                                oponente,
+                                atacante
+                        );
+                        crearDialogs(context,"JUGADORES",atacante.toString()+"\n"+oponente.toString(),"OK");
+                        Toast.makeText(context, resultado, Toast.LENGTH_LONG).show();
+                        // Reiniciar selección
+                        currentSelectedCard[0] = null;
+                    }
+                } else {
+                    Toast.makeText(context, "La carta seleccionada no puede ser atacada.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private static void fasesDialogBatalla(Context context,
+                                           CartaMonstruo cartaAtacante, String fase, ImageView imageView,
+                                           ImageView[] currentSelectedCard, LinearLayout layoutOponente,
+                                           ArrayList<CartaMonstruo> cartasOponente, Jugador atacante, Jugador oponente) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Detalles de la Carta");
+        builder.setMessage(cartaAtacante.toString());
+
+        if ("Fase Batalla".equals(fase)) {
+            builder.setPositiveButton("Declarar Batalla", (dialog, which) -> {
+                // Seleccionar carta oponente tras confirmar ataque
+                currentSelectedCard[0] = imageView;
+                Toast.makeText(context, "Selecciona una carta oponente para atacar.", Toast.LENGTH_SHORT).show();
+            });
+
+            builder.setNeutralButton("Cancelar", (dialog, which) -> dialog.dismiss());
+        }
+
+        builder.show();
+
+    }
+
+
+
 }

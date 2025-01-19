@@ -268,7 +268,7 @@ public class Utilitaria {
                     Carta c = buscarCarta(cartas, cartaTag);
                     mano.removeView(currentSelectedCard[0]);
 /*
-              
+
                     if (c.getOrientacion() == Orientacion.ABAJO) {
                         // Cambiar la imagen de la carta boca abajo
                         int idCartaAbajo = R.drawable.carta_abajo; // Asegúrate de usar un recurso adecuado

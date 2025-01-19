@@ -255,14 +255,13 @@ public class Juego {
 
             Utilitaria.crearDialogs(context,"Context", String.valueOf(jugador.getTablero().getEspeciales().size()),"ok");
         }
-        /*
+
         if (fase.equals("Fase Batalla")) {
             //faseBatalla(monstruosJ,monstruosM);
             Utilitaria.quitarClickListeners(manoJ);
             Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero());
         }
-
-         */
+        
     }
 
 

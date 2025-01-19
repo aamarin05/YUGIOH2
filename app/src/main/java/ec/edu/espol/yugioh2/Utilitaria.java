@@ -456,14 +456,14 @@ public class Utilitaria {
             carta.setOnClickListener(null);
         }
     }
-    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ,ArrayList<CartaMonstruo> tableroM,ArrayList<Carta> tableroE) {
+    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ, ArrayList<CartaMonstruo> tableroM, ArrayList<Carta> tableroE) {
         // Recorrer el LinearLayout de monstruos
         for (int i = 0; i < monstruosJ.getChildCount(); i++) {
             ImageView carta = (ImageView) monstruosJ.getChildAt(i);
             ArrayList<CartaMonstruo> cartasMonstruos = tableroM;
             ArrayList<Carta> cartasM = new ArrayList<>();
 
-// Convertir cada CartaMonstruo a Carta
+            // Convertir cada CartaMonstruo a Carta
             for (CartaMonstruo cartaMonstruo : cartasMonstruos) {
                 cartasM.add(cartaMonstruo); // CartaMonstruo es un tipo de Carta, por lo que se puede agregar directamente
             }
@@ -479,65 +479,38 @@ public class Utilitaria {
                 builder.setMessage(c.toString());
 
                 // Mostrar especificaciones de la carta (nombre, ataque, defensa, etc.)
-
-
-                // Agregar botón para cambiar entre ataque y defensa si es un monstruo
                 String cambiara;
-                if (c.getPosicion()==Posicion.VERTICAL)
-                    cambiara= "defensa";
+                if (c.getPosicion() == Posicion.VERTICAL)
+                    cambiara = "defensa";
                 else
-                    cambiara= "ataque";
-                builder.setPositiveButton("Cambiar Modo "+cambiara, (dialog, which) -> {
+                    cambiara = "ataque";
+
+                // Botón para declarar batalla
+                builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
+                    // Lógica de batalla
+                    Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
+                });
+
+                // Botón para cambiar el modo (ataque/defensa)
+                builder.setNeutralButton("Cambiar Modo " + cambiara, (dialog, which) -> {
                     // Cambiar entre vertical y horizontal
                     if (c.getPosicion() == Posicion.VERTICAL) {
-                        // Cambiar la imagen a la orientación horizontal
-                        carta.setRotation(90); // Imágen en modo horizontal
+                        carta.setRotation(90); // Imagen en modo horizontal
                         c.setPosicion(Posicion.HORIZONTAL); // Actualizar la posición a horizontal
                     } else {
-                        // Cambiar la imagen a la orientación vertical
-                        carta.setRotation(0); // Imágen en modo vertical
-                        // Actualizar la posición de la carta
+                        carta.setRotation(0); // Imagen en modo vertical
                         c.setPosicion(Posicion.VERTICAL); // Actualizar la posición a vertical
                     }
                     Toast.makeText(context, "Modo cambiado", Toast.LENGTH_SHORT).show();
                 });
 
-                // Mostrar el AlertDialog
+                // Botón para cerrar
                 builder.setNegativeButton("Cerrar", null);
+
+                // Mostrar el AlertDialog
                 builder.show();
             });
         }
-        /*
-        // Recorrer el LinearLayout de cartas mágicas (si es necesario)
-        for (int i = 0; i < magicasJ.getChildCount(); i++) {
-            ImageView carta = (ImageView) magicasJ.getChildAt(i);
-
-
-
-            carta.setOnClickListener(v -> {
-                // Obtener el tag de la carta seleccionada
-                String cartaTag = (String) carta.getTag();
-                Carta c = buscarCarta(cartas, cartaTag);
-
-                // Crear el AlertDialog para mostrar las especificaciones de la carta
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Detalles de la carta");
-
-                // Mostrar detalles
-                builder.setMessage(c.toString());
-
-                // Botón para usar la carta mágica
-                builder.setPositiveButton("Usar Carta Mágica", (dialog, which) -> {
-                    // Lógica para usar la carta mágica
-                    Toast.makeText(context, "Carta mágica usada", Toast.LENGTH_SHORT).show();
-                });
-
-                // Mostrar el AlertDialog
-                builder.setNegativeButton("Cerrar", null);
-                builder.show();
-            });
-        }
-        */
     }
 
     public static ArrayList<Carta> leerImagenesLayout(Context context,LinearLayout contenedor, ArrayList<Carta> cartas) {

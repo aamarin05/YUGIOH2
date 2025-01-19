@@ -234,7 +234,7 @@ public class Juego {
 
             fasePrincipal(manoJ, monstruosJ, especialesJ);
             maquina.mFasePrincipal();
-
+          
             for (Carta carta : maquina.getTablero().getCartasMons()) {
                 Utilitaria.reemplazar(context, carta, monstruosM);
                 Utilitaria.removerImageView(context, manoM, carta);
@@ -243,7 +243,7 @@ public class Juego {
                 Utilitaria.reemplazar(context, carta, especialesM);
                 Utilitaria.removerImageView(context, manoM, carta);
             }
-            //Utilitaria.quitarCartas(context,manoJ,jugador.getMano());
+
 
             StringBuilder builder = new StringBuilder();
 
@@ -254,6 +254,11 @@ public class Juego {
             }
 
             Utilitaria.crearDialogs(context,"Context", String.valueOf(jugador.getTablero().getEspeciales().size()),"ok");
+        }
+        if (fase.equals("Fase Batalla")) {
+            //faseBatalla(monstruosJ,monstruosM);
+            Utilitaria.quitarClickListeners(manoJ);
+            Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero());
         }
     }
 

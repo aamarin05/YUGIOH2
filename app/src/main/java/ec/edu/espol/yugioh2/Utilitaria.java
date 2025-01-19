@@ -400,7 +400,7 @@ public class Utilitaria {
                 int index = monstruosJ.indexOfChild(carta);
 
                 // Obtener la carta correspondiente en tableroM utilizando el índice
-                CartaMonstruo cartaMonstruo = tableroM.get(index);
+                CartaMonstruo cartaMonstruo = tableroMonsJ.get(index);
 
                 // Crear el AlertDialog para mostrar las especificaciones de la carta
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -413,8 +413,7 @@ public class Utilitaria {
                     if (cartaMonstruo.getPosicion() == Posicion.VERTICAL) {
                         builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
                             // Lógica de batalla
-                          CartaMonstruo cartaAtacante = (CartaMonstruo) c;
-                          selecOponente(context,tableroMonsM,monstruosM,jugador,maquina,cartaAtacante);
+                          selecOponente(context,tableroMonsM,monstruosM,jugador,maquina,cartaMonstruo);
                             Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
                         });
                     }
@@ -468,7 +467,7 @@ public class Utilitaria {
                 int index = magicasJ.indexOfChild(carta);
 
                 // Obtener la carta correspondiente en tableroE (cartas mágicas y trampas)
-                Carta cartaSeleccionada = tableroE.get(index);
+                Carta cartaSeleccionada = tableroEspeJ.get(index);
 
                 // Crear el AlertDialog para mostrar las especificaciones de la carta
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

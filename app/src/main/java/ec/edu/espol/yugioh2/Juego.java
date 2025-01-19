@@ -207,12 +207,14 @@ public class Juego {
                 Utilitaria.reemplazar(context, carta, especialesM,maquina.getMano(),manoM);
         }
 
-        /*
-        if (fase.equals("Fase Batalla"))
-            faseBatalla(monstruosJ,monstruosM);
+
+        if (fase.equals("Fase Batalla")) {
+            //faseBatalla(monstruosJ,monstruosM);
+            Utilitaria.quitarClickListeners(manoJ);
+            Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero());
+        }
 
 
-         */
 
 
 

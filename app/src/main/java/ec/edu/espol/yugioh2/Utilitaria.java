@@ -255,28 +255,12 @@ public class Utilitaria {
                         int idCartaAbajo = R.drawable.carta_abajo; // Asegúrate de usar un recurso adecuado
                         Drawable cartaAbajo = context.getResources().getDrawable(idCartaAbajo);
                         carta.setImageDrawable(cartaAbajo);
-
-                        // Ajustar tamaño de la carta boca abajo (wrap_content y weight 1)
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) carta.getLayoutParams();
-                        params.width = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el ancho al contenido
-                        params.height = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el alto al contenido
-                        params.weight = 1; // Establece el peso a 1 para distribuir el espacio equitativamente
-                        carta.setLayoutParams(params);
-
                         currentSelectedCard[0] = null; // Resetear selección
                         cartas.remove(c);
                         Toast.makeText(context, "Carta colocada boca abajo en el tablero", Toast.LENGTH_SHORT).show();
                     } else {
                         // Reemplazar la carta normalmente
                         carta.setImageDrawable(currentSelectedCard[0].getDrawable());
-
-                        // Restablecer el tamaño y el peso de la carta
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) carta.getLayoutParams();
-                        params.width = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el ancho al contenido
-                        params.height = LinearLayout.LayoutParams.WRAP_CONTENT; // Ajusta el alto al contenido
-                        params.weight = 1; // Establece el peso a 1
-                        carta.setLayoutParams(params);
-
                         currentSelectedCard[0] = null; // Resetear selección
                         cartas.remove(c);
                         Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
@@ -410,6 +394,108 @@ public class Utilitaria {
         cartaView.setScaleType(ImageView.ScaleType.FIT_XY);
         return cartaView;
 
+    }
+    public static void quitarClickListeners(LinearLayout mano) {
+        // Recorrer todos los hijos del LinearLayout (cartas en la mano)
+        for (int i = 0; i < mano.getChildCount(); i++) {
+            // Obtener la carta (ImageView)
+            ImageView carta = (ImageView) mano.getChildAt(i);
+
+            // Eliminar el OnClickListener de cada carta
+            carta.setOnClickListener(null);
+        }
+    }
+    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ,Tablero tablero) {
+        // Recorrer el LinearLayout de monstruos
+        for (int i = 0; i < monstruosJ.getChildCount(); i++) {
+            ImageView carta = (ImageView) monstruosJ.getChildAt(i);
+            ArrayList<CartaMonstruo> cartasMonstruos = tablero.getCartasMons();
+            ArrayList<Carta> cartas = new ArrayList<>();
+
+// Convertir cada CartaMonstruo a Carta
+            for (CartaMonstruo cartaMonstruo : cartasMonstruos) {
+                cartas.add(cartaMonstruo); // CartaMonstruo es un tipo de Carta, por lo que se puede agregar directamente
+            }
+
+            carta.setOnClickListener(v -> {
+                // Obtener el tag de la carta seleccionada
+                String cartaTag = (String) carta.getTag();
+                Carta c = buscarCarta(cartas, cartaTag);
+
+                // Crear el AlertDialog para mostrar las especificaciones de la carta
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Detalles de la carta");
+                builder.setMessage(c.toString());
+
+                // Mostrar especificaciones de la carta (nombre, ataque, defensa, etc.)
+
+
+                // Agregar botón para cambiar entre ataque y defensa si es un monstruo
+                String cambiara;
+                if (c.getPosicion()==Posicion.VERTICAL)
+                    cambiara= "defensa";
+                else
+                    cambiara= "ataque";
+                builder.setPositiveButton("Cambiar Modo "+cambiara, (dialog, which) -> {
+                    // Cambiar entre vertical y horizontal
+                    if (c.getPosicion() == Posicion.VERTICAL) {
+                        // Cambiar la imagen a la orientación horizontal
+                        carta.setRotation(90); // Imágen en modo horizontal
+                        c.setPosicion(Posicion.HORIZONTAL); // Actualizar la posición a horizontal
+                    } else {
+                        // Cambiar la imagen a la orientación vertical
+                        carta.setRotation(0); // Imágen en modo vertical
+                        // Actualizar la posición de la carta
+                        c.setPosicion(Posicion.VERTICAL); // Actualizar la posición a vertical
+                    }
+                    Toast.makeText(context, "Modo cambiado", Toast.LENGTH_SHORT).show();
+                });
+
+                // Agregar botón para usar la carta si es mágica
+                if (c instanceof CartaMagica) {
+                    builder.setMessage(c.toString());
+                    builder.setPositiveButton("Usar Carta", (dialog, which) -> {
+                        // Lógica para usar la carta mágica
+                        Toast.makeText(context, "Carta mágica usada", Toast.LENGTH_SHORT).show();
+                    });
+                }
+
+                // Mostrar el AlertDialog
+                builder.setNegativeButton("Cerrar", null);
+                builder.show();
+            });
+        }
+        /*
+        // Recorrer el LinearLayout de cartas mágicas (si es necesario)
+        for (int i = 0; i < magicasJ.getChildCount(); i++) {
+            ImageView carta = (ImageView) magicasJ.getChildAt(i);
+
+
+
+            carta.setOnClickListener(v -> {
+                // Obtener el tag de la carta seleccionada
+                String cartaTag = (String) carta.getTag();
+                Carta c = buscarCarta(cartas, cartaTag);
+
+                // Crear el AlertDialog para mostrar las especificaciones de la carta
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Detalles de la carta");
+
+                // Mostrar detalles
+                builder.setMessage(c.toString());
+
+                // Botón para usar la carta mágica
+                builder.setPositiveButton("Usar Carta Mágica", (dialog, which) -> {
+                    // Lógica para usar la carta mágica
+                    Toast.makeText(context, "Carta mágica usada", Toast.LENGTH_SHORT).show();
+                });
+
+                // Mostrar el AlertDialog
+                builder.setNegativeButton("Cerrar", null);
+                builder.show();
+            });
+        }
+        */
     }
 
 

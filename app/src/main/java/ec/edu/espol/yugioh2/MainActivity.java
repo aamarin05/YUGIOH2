@@ -111,12 +111,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void fases(){
-        if (fases_J.getText().toString().equals("Fase Tomar Carta"))
-            inicializar();
-
-    }
-
     // Metodo para cambiar de fase
 
     private void cambiarFase(TextView j) {
@@ -132,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         else if (faseActual.equals("Fase Batalla")){
             nuevaFase = "Fase Tomar Carta";
         }
-        Toast.makeText(this, "Fase cambiada", Toast.LENGTH_SHORT).show();//muestra un pequeño mensaje que la fase se ha cambiado y luego se elimina
+        //Toast.makeText(this, "Fase cambiada", Toast.LENGTH_SHORT).show();//muestra un pequeño mensaje que la fase se ha cambiado y luego se elimina
         j.setText(nuevaFase);
     }
 

@@ -37,19 +37,17 @@ public class Utilitaria {
                 builder.setMessage(c.toString());
                 boton = "Ataque";
                 builder.setPositiveButton(boton, (dialog, which) -> {
-                    tableroM.add(c);
                     currentSelectedCard[0] = imageView;
                     // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
                     carta.setOrientacion(Orientacion.ARRIBA);
-                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas);
+                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas,tableroM,tableroE);
 
                 });
                 builder.setNegativeButton("Defensa", (dialog, which) -> {
-                    tableroM.add(c);
                     currentSelectedCard[0] = imageView;
                     // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
                     c.setOrientacion(Orientacion.ABAJO);
-                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas);
+                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas,tableroM,tableroE);
                 });
             }
             if (carta instanceof CartaMagica) {
@@ -57,11 +55,10 @@ public class Utilitaria {
                 builder.setMessage(c.toString());
                 boton = "Colocar";
                 builder.setPositiveButton(boton, (dialog, which) -> {
-                    tableroE.add(c);
                     currentSelectedCard[0] = imageView;
                     // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
                     carta.setOrientacion(Orientacion.ARRIBA);
-                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas);
+                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas,tableroM,tableroE);
 
                 });
             }
@@ -70,11 +67,10 @@ public class Utilitaria {
                 builder.setMessage(c.toString());
                 boton = "Colocar";
                 builder.setPositiveButton(boton, (dialog, which) -> {
-                    tableroE.add(c);
                     currentSelectedCard[0] = imageView;
                     // Aquí puedes agregar la lógica para poner la carta en ataque (guardar el estado, etc.)
                     carta.setOrientacion(Orientacion.ARRIBA);
-                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas);
+                    selecTablero(context, manoView, monstruosJ, especialesJ,currentSelectedCard, cartas,tableroM,tableroE);
 
                 });
             }
@@ -254,7 +250,7 @@ public class Utilitaria {
         }
     }
 
-    public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, LinearLayout especialesJ, ImageView[] currentSelectedCard, ArrayList<Carta> cartas) {
+    public static void selecTablero(Context context, LinearLayout mano, LinearLayout monstruosJ, LinearLayout especialesJ, ImageView[] currentSelectedCard, ArrayList<Carta> cartas,ArrayList<CartaMonstruo> tableroM,ArrayList<Carta> tableroE) {
 
         // Referencias a las cartas en el tablero
 
@@ -263,6 +259,7 @@ public class Utilitaria {
             Carta c = buscarCarta(cartas, cartaTag);
 
             if (c.getOrientacion() == Orientacion.ABAJO) {
+                CartaMonstruo cm= (CartaMonstruo) c;
                 for (int i = 0; i < monstruosJ.getChildCount(); i++) {
                     ImageView carta = (ImageView) monstruosJ.getChildAt(i);
                     Drawable imagenActual = carta.getDrawable(); // Obtener el drawable actual
@@ -276,7 +273,8 @@ public class Utilitaria {
                         Drawable cartaAbajo = context.getResources().getDrawable(idCartaAbajo);
                         carta.setImageDrawable(cartaAbajo);
                         currentSelectedCard[0] = null; // Resetear selección
-                        cartas.remove(c);
+                        tableroM.add(i,cm);
+                        cartas.remove(cm);
                         Toast.makeText(context, "Carta colocada boca abajo en el tablero", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -284,6 +282,7 @@ public class Utilitaria {
                 Toast.makeText(context, "No se puede colocar más cartas monstruo", Toast.LENGTH_SHORT).show();
             } else {
                 if (c instanceof CartaMonstruo) {
+                    CartaMonstruo ctm= (CartaMonstruo) c;
                     for (int i = 0; i < monstruosJ.getChildCount(); i++) {
                         ImageView carta = (ImageView) monstruosJ.getChildAt(i);
                         Drawable imagenActual = carta.getDrawable(); // Obtener el drawable actual
@@ -294,8 +293,10 @@ public class Utilitaria {
                             mano.removeView(currentSelectedCard[0]);
                             // Reemplazar la carta normalmente
                             carta.setImageDrawable(currentSelectedCard[0].getDrawable());
+                            carta.setTag(ctm.getImagen());
                             currentSelectedCard[0] = null; // Resetear selección
-                            cartas.remove(c);
+                            cartas.remove(ctm);
+                            tableroM.add(i,ctm);
                             Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -314,6 +315,7 @@ public class Utilitaria {
                             carta.setImageDrawable(currentSelectedCard[0].getDrawable());
                             currentSelectedCard[0] = null; // Resetear selección
                             cartas.remove(c);
+                            tableroE.add(i,c);
                             Toast.makeText(context, "Carta colocada en el tablero", Toast.LENGTH_SHORT).show();
                             return;
                         }

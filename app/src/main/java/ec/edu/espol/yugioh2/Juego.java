@@ -114,14 +114,11 @@ public class Juego {
 
     }
 
-    private void faseBatalla(LinearLayout monstruosA,LinearLayout monstruosO) {
+    private void faseBatalla(LinearLayout monstruosA,LinearLayout monstruosO, ArrayList<CartaMonstruo> cartasA, ArrayList<CartaMonstruo> cartasO,Jugador jugador,Jugador maquina) {
         //BATALLA JUGADOR
-        ArrayList<Carta> cartasJ= new ArrayList<>();
-        cartasJ.addAll(jugador.getTablero().getCartasMons());
-        ArrayList<Carta> cartasM= new ArrayList<>();
-        cartasM.addAll(maquina.getTablero().getCartasMons());
 
-        Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
+        //Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
+        Utilitaria.gestionarBatalla(context,cartasA,monstruosA,cartasO,monstruosO,jugador,maquina,"Fase Batalla");
 
         //ArrayList<Carta> cartas = Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
         //CartaMonstruo oponente = (CartaMonstruo) cartas.get(1);
@@ -244,6 +241,7 @@ public class Juego {
                 Utilitaria.removerImageView(context, manoM, carta);
             }
 
+            /*
 
             StringBuilder builder = new StringBuilder();
 
@@ -254,15 +252,17 @@ public class Juego {
             }
 
             Utilitaria.crearDialogs(context,"Context", String.valueOf(jugador.getTablero().getEspeciales().size()),"ok");
-        }
-        /*
-        if (fase.equals("Fase Batalla")) {
-            //faseBatalla(monstruosJ,monstruosM);
-            Utilitaria.quitarClickListeners(manoJ);
-            Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero());
+
+             */
         }
 
-         */
+        if (fase.equals("Fase Batalla")) {
+            //faseBatalla(monstruosJ,monstruosM,jugador.getTablero().getCartasMons(),maquina.getTablero().getCartasMons(),jugador,maquina);
+            Utilitaria.quitarClickListeners(manoJ);
+            //Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero());
+        }
+
+
     }
 
 

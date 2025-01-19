@@ -413,7 +413,7 @@ public class Utilitaria {
                     if (cartaMonstruo.getPosicion() == Posicion.VERTICAL) {
                         builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
                             // Lógica de batalla
-                          selecOponente(context,tableroMonsM,monstruosM,jugador,maquina,cartaMonstruo);
+                          selecOponente(context,tableroMonsM,monstruosM,monstruosJ,jugador,maquina,cartaMonstruo);
                             Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
                         });
                     }
@@ -557,7 +557,48 @@ public class Utilitaria {
         }
     }
 
-    public static void selecOponente(Context context,ArrayList<CartaMonstruo> cartasOponente, LinearLayout layoutOponente,
+    public static void noHayCarta(Context context,LinearLayout contenedor, Carta carta){
+        int imagenId = context.getResources().getIdentifier(carta.getImagen(), "drawable", context.getPackageName());
+        //ID DEL DRWABLE
+        if (imagenId == 0) {
+            // Si la carta no tiene un drawable válido, no hacer nad
+            return;
+        }
+
+        // Obtener el ID del drawable "no hay carta"
+        int noHayCartaId = context.getResources().getIdentifier("no_hay_carta", "drawable", context.getPackageName());
+        if (noHayCartaId == 0) {
+            // Si no se encuentra el drawable "no_hay_carta", no hacer nada
+            return;
+        }
+
+        // Obtener el drawable de la carta específica
+        Drawable drawableCarta = context.getResources().getDrawable(imagenId);
+        ImageView cartaSeleccionada = null;
+        //CARTA SELECCIONADA ES LA QUE SE VA A CAMBIAR
+
+       // Drawable noHayCartaDrawable = context.getResources().getDrawable(noHayCartaId);
+
+        // Recorre todos los elementos del LinearLayout
+        for (int i = 0; i < contenedor.getChildCount(); i++) {
+            ImageView imageView = (ImageView) contenedor.getChildAt(i);
+
+            // Comparar el drawable del ImageView con el de la carta
+            Drawable currentDrawable = imageView.getDrawable();
+            if (currentDrawable != null && currentDrawable.getConstantState().equals(drawableCarta.getConstantState())) {
+                cartaSeleccionada = imageView;
+                // Continúa recorriendo para garantizar que solo la última coincidencia (si hay varias) será seleccionada
+            }
+        }
+        // Si encontró el último ImageView correspondiente, eliminarlo
+        if (cartaSeleccionada != null) {
+            //contenedor.removeView(cartaSeleccionada);
+            cartaSeleccionada.setImageResource(noHayCartaId);
+            cartaSeleccionada.setTag(noHayCartaId);
+        }
+    }
+
+    public static void selecOponente(Context context,ArrayList<CartaMonstruo> cartasOponente, LinearLayout layoutOponente,LinearLayout layoutAtacante,
                                         Jugador atacante, Jugador oponente,CartaMonstruo cartaAtacante) {
 
         //TENGO LA CARTA ATACANTE
@@ -574,12 +615,14 @@ public class Utilitaria {
             cartaOponenteView.setOnClickListener(oponenteView -> {
                 String cartaTag = (String) cartaOponenteView.getTag();
                 Carta c = buscarCarta(cartasM, cartaTag);
-                CartaMonstruo cartaOponente = (CartaMonstruo) c;
 
-                    if (cartaOponente != null) {
-                        String resultado = Juego.declararBatalla(cartaOponente, cartaAtacante, oponente, atacante);
-                        crearDialogs(context,"JUGADORES",resultado,"OK");
-                        //Toast.makeText(context, resultado, Toast.LENGTH_LONG).show();
+                    if (c != null) {
+                        if(c instanceof CartaMonstruo) {
+                            CartaMonstruo cartaOponente = (CartaMonstruo) c;
+                            String resultado = Juego.declararBatalla(cartaOponente, cartaAtacante, oponente, atacante,context,layoutOponente,layoutAtacante);
+                            crearDialogs(context, "JUGADORES", resultado, "OK");
+                            //Toast.makeText(context, resultado, Toast.LENGTH_LONG).show();}
+                        }
                     }
                     else {
                     Toast.makeText(context, "La carta seleccionada no puede ser atacada.", Toast.LENGTH_SHORT).show();

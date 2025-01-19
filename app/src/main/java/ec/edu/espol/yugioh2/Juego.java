@@ -40,7 +40,7 @@ public class Juego {
     }
 
 
-    public static String declararBatalla(CartaMonstruo cartaOponente, CartaMonstruo cartaAtacante, Jugador oponente, Jugador atacante) {
+    public static String declararBatalla(CartaMonstruo cartaOponente, CartaMonstruo cartaAtacante, Jugador oponente, Jugador atacante, Context context,LinearLayout monstruoO,LinearLayout monstruoA) {
         // Ambas cartas en modo ataque
         if (cartaOponente.eModoAtaque() && cartaAtacante.eModoAtaque()) {
             if (cartaOponente.getAtaque() < cartaAtacante.getAtaque()) {
@@ -48,21 +48,25 @@ public class Juego {
                 int puntos = oponente.getPuntos() - Math.abs(diferencia);
                 oponente.setPuntos(puntos);
                 cartaOponente.destruida();
+                Utilitaria.noHayCarta(context, monstruoO, cartaOponente);
                 oponente.getTablero().removerCarta(cartaOponente);
-                return "Carta: \n"+ cartaOponente + "destruida. \nPuntos de oponente actualizados. ";
+                return "Carta de : "+oponente.getNombre()+" \n"+ cartaOponente.getNombre() + "destruida. \nPuntos de oponente actualizados. ";
             } else if (cartaAtacante.getAtaque() == cartaOponente.getAtaque()) {
                 oponente.getTablero().removerCarta(cartaOponente);
                 atacante.getTablero().removerCarta(cartaAtacante);
                 cartaOponente.destruida();
                 cartaAtacante.destruida();
+                Utilitaria.noHayCarta(context, monstruoO, cartaOponente);
+                Utilitaria.noHayCarta(context, monstruoA, cartaAtacante);
                 return "Sus cartas fueron iguales y se destruyeron.\n";
             } else 
-                return "Carta: \n" + cartaAtacante + "\n no pudo atacar a\n" + cartaOponente + "\n porque es de menor ataque";
+                return "Carta de: "+atacante.getNombre()+"\n" + cartaAtacante.getNombre() + "\n no pudo atacar a\n" + cartaOponente.getNombre() + "\n porque es de menor ataque";
         }
         else if (cartaAtacante.eModoAtaque() && cartaOponente.eModoDefensa()) {
             if (cartaAtacante.getAtaque() > cartaOponente.getDefensa()) {
                 oponente.getTablero().removerCarta(cartaOponente);
                 cartaOponente.destruida();
+                Utilitaria.noHayCarta(context, monstruoO, cartaOponente);
                 return "Carta oponente destruida.\n";
             } else if (cartaAtacante.getAtaque() < cartaOponente.getDefensa()) {
                 int diferencia = cartaAtacante.getAtaque() - cartaOponente.getDefensa();
@@ -72,7 +76,7 @@ public class Juego {
                 cartaOponente.setPosicion(Posicion.HORIZONTAL);
                 return "Ataque fallido, puntos del atacante actualizados.\n";
             } else {
-                return "Carta " + cartaAtacante + " no pudo atacar " + cartaOponente + "\n Mismo ataque y defensa";
+                return "Carta " + cartaAtacante.getNombre() + " no pudo atacar " + cartaOponente.getNombre() + "\n Mismo ataque y defensa";
             }
         }
     

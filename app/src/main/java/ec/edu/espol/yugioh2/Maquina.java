@@ -135,7 +135,7 @@ public class Maquina extends Jugador {
                         for (CartaMonstruo monsJ: monstruosJ){
                             if (monsM.getAtaque() > monsJ.getAtaque()||monsM.getAtaque() > monsJ.getDefensa()||monsM.getDefensa() < monsJ.getAtaque()||monsM.getAtaque() == monsJ.getAtaque()){
                                 usadas.add(monsM);
-                                resultado.append(Juego.declararBatalla(monsJ, monsM, jugador, this)).append("\n");
+                                //resultado.append(Juego.declararBatalla(monsJ, monsM, jugador, this)).append("\n");
                             }
                         }
                     }

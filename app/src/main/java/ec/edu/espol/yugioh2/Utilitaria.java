@@ -228,6 +228,7 @@ public class Utilitaria {
                         int idCartaAbajo = R.drawable.carta_abajo; // Asegúrate de usar un recurso adecuado
                         Drawable cartaAbajo = context.getResources().getDrawable(idCartaAbajo);
                         carta.setImageDrawable(cartaAbajo);
+                        carta.setTag(cm.getImagen());
                         currentSelectedCard[0] = null; // Resetear selección
                         tableroM.add(i,cm);
                         cartas.remove(cm);
@@ -370,6 +371,7 @@ public class Utilitaria {
             carta.setOnClickListener(null);
         }
     }
+
     public static void eliminarClickListenersTablero(LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM) {
         // Crear una lista de los LinearLayout del tablero
         LinearLayout[] tableros = {monstruosJ, monstruosM, especialesJ, especialesM};
@@ -386,7 +388,8 @@ public class Utilitaria {
             }
         }
     }
-    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ, ArrayList<CartaMonstruo> tableroM, ArrayList<Carta> tableroE) {
+    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout magicasJ,LinearLayout magicasM,
+                                              ArrayList<CartaMonstruo> tableroMonsJ, ArrayList<Carta> tableroEspeJ, ArrayList<CartaMonstruo> tableroMonsM, ArrayList<Carta> tableroEspeM,Jugador jugador, Jugador maquina) {
         // Recorrer el LinearLayout de monstruos
         for (int i = 0; i < monstruosJ.getChildCount(); i++) {
             ImageView carta = (ImageView) monstruosJ.getChildAt(i);
@@ -406,11 +409,12 @@ public class Utilitaria {
                 // Mostrar detalles de la carta
                 if (cartaMonstruo.getOrientacion() == Orientacion.ARRIBA) {
                     builder.setMessage(cartaMonstruo.toString()); // Mostrar detalles de la carta
-
                     // Solo agregar el botón de "Declarar batalla" si la carta está en modo ataque (posición vertical)
                     if (cartaMonstruo.getPosicion() == Posicion.VERTICAL) {
                         builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
                             // Lógica de batalla
+                          CartaMonstruo cartaAtacante = (CartaMonstruo) c;
+                          selecOponente(context,tableroMonsM,monstruosM,jugador,maquina,cartaAtacante);
                             Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
                         });
                     }
@@ -554,61 +558,31 @@ public class Utilitaria {
         }
     }
 
-    public static void gestionarBatalla(Context context,
-                                        ArrayList<CartaMonstruo> cartasAtacante, LinearLayout layoutAtacante,
-                                        ArrayList<CartaMonstruo> cartasOponente, LinearLayout layoutOponente,
-                                        Jugador atacante, Jugador oponente, String fase) {
-        final ImageView[] currentSelectedCard = {null};
+    public static void selecOponente(Context context,ArrayList<CartaMonstruo> cartasOponente, LinearLayout layoutOponente,
+                                        Jugador atacante, Jugador oponente,CartaMonstruo cartaAtacante) {
 
-        // Listener para las cartas del jugador atacante
-        for (int i = 0; i < layoutAtacante.getChildCount(); i++) {
-            ImageView imageView = (ImageView) layoutAtacante.getChildAt(i);
-            
-            if (imageView.getTag() == null) {
-                Toast.makeText(context, "Error: El ImageView en posición " + i + " no tiene un Tag.", Toast.LENGTH_SHORT).show();
-            }
-
-            CartaMonstruo cartaAtacante = buscarCartaMonstruo(cartasAtacante, (String) imageView.getTag());
-            if (cartaAtacante == null) {
-                Toast.makeText(context, "Error: No se encontró una carta para el Tag: " + imageView.getTag(), Toast.LENGTH_SHORT).show();
-
-            }
-
-                imageView.setOnClickListener(v -> {
-                    //currentSelectedCard[0] = imageView; // Seleccionar carta atacante
-                    fasesDialogBatalla(context, cartaAtacante, fase, imageView,currentSelectedCard, layoutOponente, cartasOponente, atacante, oponente);
-                });
-        }
-
+        //TENGO LA CARTA ATACANTE
         for (int i = 0; i < layoutOponente.getChildCount(); i++) {
-            ImageView oponenteImageView = (ImageView) layoutOponente.getChildAt(i);
-            if (oponenteImageView.getTag() == null) {
-                Toast.makeText(context, "Error: El ImageView del oponente en posición " + i + " no tiene un Tag.", Toast.LENGTH_SHORT).show();
+            ImageView cartaOponenteView = (ImageView) layoutOponente.getChildAt(i);
+            ArrayList<CartaMonstruo> cartasMonstruos = cartasOponente;
+            ArrayList<Carta> cartasM = new ArrayList<>();
+
+            // Convertir cada CartaMonstruo a Carta
+            for (CartaMonstruo cartaMonstruo : cartasMonstruos) {
+                cartasM.add(cartaMonstruo); // CartaMonstruo es un tipo de Carta, por lo que se puede agregar directamente
             }
 
-            CartaMonstruo cartaOponente = buscarCartaMonstruo(cartasOponente, (String) oponenteImageView.getTag());
-            if (cartaOponente == null) {
-                Toast.makeText(context, "Error: No se encontró una carta para el Tag: " + oponenteImageView.getTag(), Toast.LENGTH_SHORT).show();
-            }
-
-            oponenteImageView.setOnClickListener(oponenteView -> {
-                if (currentSelectedCard[0] != null){
-                    String cartaTag = (String) currentSelectedCard[0].getTag();
-                    CartaMonstruo cartaAtacante = buscarCartaMonstruo(cartasAtacante,cartaTag);
+            cartaOponenteView.setOnClickListener(oponenteView -> {
+                String cartaTag = (String) cartaOponenteView.getTag();
+                Carta c = buscarCarta(cartasM, cartaTag);
+                CartaMonstruo cartaOponente = (CartaMonstruo) c;
 
                     if (cartaOponente != null) {
-                        String resultado = Juego.declararBatalla(
-                                cartaOponente,
-                                cartaAtacante,
-                                oponente,
-                                atacante
-                        );
-                        crearDialogs(context,"JUGADORES",atacante.toString()+"\n"+oponente.toString(),"OK");
-                        Toast.makeText(context, resultado, Toast.LENGTH_LONG).show();
-                        // Reiniciar selección
-                        currentSelectedCard[0] = null;
+                        String resultado = Juego.declararBatalla(cartaOponente, cartaAtacante, oponente, atacante);
+                        crearDialogs(context,"JUGADORES",resultado,"OK");
+                        //Toast.makeText(context, resultado, Toast.LENGTH_LONG).show();
                     }
-                } else {
+                    else {
                     Toast.makeText(context, "La carta seleccionada no puede ser atacada.", Toast.LENGTH_SHORT).show();
                 }
             });

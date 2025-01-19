@@ -456,22 +456,22 @@ public class Utilitaria {
             carta.setOnClickListener(null);
         }
     }
-    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ,Tablero tablero) {
+    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout magicasJ,ArrayList<CartaMonstruo> tableroM,ArrayList<Carta> tableroE) {
         // Recorrer el LinearLayout de monstruos
         for (int i = 0; i < monstruosJ.getChildCount(); i++) {
             ImageView carta = (ImageView) monstruosJ.getChildAt(i);
-            ArrayList<CartaMonstruo> cartasMonstruos = tablero.getCartasMons();
-            ArrayList<Carta> cartas = new ArrayList<>();
+            ArrayList<CartaMonstruo> cartasMonstruos = tableroM;
+            ArrayList<Carta> cartasM = new ArrayList<>();
 
 // Convertir cada CartaMonstruo a Carta
             for (CartaMonstruo cartaMonstruo : cartasMonstruos) {
-                cartas.add(cartaMonstruo); // CartaMonstruo es un tipo de Carta, por lo que se puede agregar directamente
+                cartasM.add(cartaMonstruo); // CartaMonstruo es un tipo de Carta, por lo que se puede agregar directamente
             }
 
             carta.setOnClickListener(v -> {
                 // Obtener el tag de la carta seleccionada
                 String cartaTag = (String) carta.getTag();
-                Carta c = buscarCarta(cartas, cartaTag);
+                Carta c = buscarCarta(cartasM, cartaTag);
 
                 // Crear el AlertDialog para mostrar las especificaciones de la carta
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -501,15 +501,6 @@ public class Utilitaria {
                     }
                     Toast.makeText(context, "Modo cambiado", Toast.LENGTH_SHORT).show();
                 });
-
-                // Agregar botón para usar la carta si es mágica
-                if (c instanceof CartaMagica) {
-                    builder.setMessage(c.toString());
-                    builder.setPositiveButton("Usar Carta", (dialog, which) -> {
-                        // Lógica para usar la carta mágica
-                        Toast.makeText(context, "Carta mágica usada", Toast.LENGTH_SHORT).show();
-                    });
-                }
 
                 // Mostrar el AlertDialog
                 builder.setNegativeButton("Cerrar", null);

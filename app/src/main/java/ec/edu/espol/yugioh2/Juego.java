@@ -259,7 +259,7 @@ public class Juego {
         if (fase.equals("Fase Batalla")) {
             //faseBatalla(monstruosJ,monstruosM);
             Utilitaria.quitarClickListeners(manoJ);
-            Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero());
+            Utilitaria.mostrarDetallesbatalla(context, monstruosJ, especialesJ,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
         }
         
     }

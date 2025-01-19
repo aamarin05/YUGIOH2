@@ -52,11 +52,7 @@ public class Carta {
     // TO STRING
     @Override
     public String toString() {
-        if (orientacion == Orientacion.ARRIBA) {
-            return nombre + "\n" + descripcion;
-        } else {
-            return "Carta boca abajo";
-        }
+        return nombre + "\n" + descripcion;
     }
 }
 

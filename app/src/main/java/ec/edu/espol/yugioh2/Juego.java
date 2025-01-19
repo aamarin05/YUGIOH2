@@ -32,7 +32,7 @@ public class Juego {
                         LinearLayout especialesJ, LinearLayout especialesM) {
         this.fase = nuevaFase;
         // Llama automáticamente a la función prueba cuando se actualiza la fase
-        jugar(manoJ, manoM, monstruosJ, monstruosM, especialesJ, especialesM);
+        prueba(manoJ, manoM, monstruosJ, monstruosM, especialesJ, especialesM);
     }
     public static void batallaDirecta(CartaMonstruo monstruoAtacante, Jugador oponente){
         int puntos = oponente.getPuntos() - monstruoAtacante.getAtaque();
@@ -108,7 +108,7 @@ public class Juego {
     public void fasePrincipal(LinearLayout mano, LinearLayout monstruosJ, LinearLayout especialesJ){
         // TIENE QUE HABILITAR PARA PONER LAS CARTAS EN EL TABLERO Y SE PUEDAN USAR MAGICAS
 
-        Utilitaria.colocarTablero(context,jugador.getMano(),mano,monstruosJ, especialesJ,"Fase Principal");
+        Utilitaria.colocarTablero(context,jugador.getMano(),mano,monstruosJ, especialesJ,"Fase Principal",jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
        // Utilitaria.colocarTablero(context,maquina.getMano(),mano,monstruosJ,"Fase Principal");
 
 
@@ -204,7 +204,7 @@ public class Juego {
         if (turno==0){
             for (Carta c : jugador.getMano()) {
                 Utilitaria.crearyAgregar(context, c, manoJ);
-                }
+            }
             for (Carta c : maquina.getMano()) {
                 Utilitaria.crearyAgregar(context, c, manoM);
             }
@@ -225,52 +225,36 @@ public class Juego {
             Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
             Utilitaria.crearyAgregar(context,ctm,manoM);
 
-
-
             //Se cambie el text del nombre del jugador
             //Que se cambien los turnos
             //Que se cambien las fases
-
             turno++;
         }
         if (fase.equals("Fase Principal")) {
-
-
 
             fasePrincipal(manoJ, monstruosJ, especialesJ);
             maquina.mFasePrincipal();
 
             for (Carta carta : maquina.getTablero().getCartasMons()) {
                 Utilitaria.reemplazar(context, carta, monstruosM);
-
                 Utilitaria.removerImageView(context, manoM, carta);
             }
-            //doy carta la busca y la elimina
             for (Carta carta : maquina.getTablero().getEspeciales()) {
                 Utilitaria.reemplazar(context, carta, especialesM);
                 Utilitaria.removerImageView(context, manoM, carta);
-
             }
             //Utilitaria.quitarCartas(context,manoJ,jugador.getMano());
 
             StringBuilder builder = new StringBuilder();
 
-            for (int i = 0; i < jugador.getMano().size(); i++) {
+            for (int i = 0; i < jugador.getTablero().getEspeciales().size(); i++) {
                 builder.append(i + 1).append(". ") // Agrega el número de la lista
-                        .append(jugador.getMano().get(i).getNombre())       // Agrega el elemento actual
+                        .append(jugador.getTablero().getEspeciales().get(i).getNombre())       // Agrega el elemento actual
                         .append("\n");              // Salto de línea después de cada elemento
             }
 
-            Utilitaria.crearDialogs(context,"Context",builder.toString(),"ok");
-
-
-
+            Utilitaria.crearDialogs(context,"Context", String.valueOf(jugador.getTablero().getEspeciales().size()),"ok");
         }
-
-
-        //if (fase.equals("Fase Batalla"))
-            //faseBatalla(monstruosJ,monstruosM);
-
     }
 
 

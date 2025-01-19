@@ -388,8 +388,8 @@ public class Utilitaria {
             }
         }
     }
-    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout magicasJ,LinearLayout magicasM,
-                                              ArrayList<CartaMonstruo> tableroMonsJ, ArrayList<Carta> tableroEspeJ, ArrayList<CartaMonstruo> tableroMonsM, ArrayList<Carta> tableroEspeM,Jugador jugador, Jugador maquina) {
+    public static void mostrarDetallesbatalla(Context context, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout magicasJ, LinearLayout magicasM,
+                                              ArrayList<CartaMonstruo> tableroMonsJ, ArrayList<Carta> tableroEspeJ, ArrayList<CartaMonstruo> tableroMonsM, ArrayList<Carta> tableroEspeM, Jugador jugador, Jugador maquina) {
         // Recorrer el LinearLayout de monstruos
         for (int i = 0; i < monstruosJ.getChildCount(); i++) {
             ImageView carta = (ImageView) monstruosJ.getChildAt(i);
@@ -399,8 +399,18 @@ public class Utilitaria {
                 // Obtener el índice de la ImageView tocada
                 int index = monstruosJ.indexOfChild(carta);
 
+                // Verificar si el índice tiene una carta válida
+                if (index < 0 || index >= tableroMonsJ.size() || tableroMonsJ.get(index) == null) {
+                    return; // Ignorar clic si no hay carta
+                }
+
                 // Obtener la carta correspondiente en tableroM utilizando el índice
                 CartaMonstruo cartaMonstruo = tableroMonsJ.get(index);
+
+                // Verificar si la carta es "no_hay_carta"
+                if ("no_hay_carta".equals(cartaMonstruo.getNombre())) {
+                    return; // Ignorar clic si es una carta vacía
+                }
 
                 // Crear el AlertDialog para mostrar las especificaciones de la carta
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -413,7 +423,7 @@ public class Utilitaria {
                     if (cartaMonstruo.getPosicion() == Posicion.VERTICAL) {
                         builder.setPositiveButton("Declarar batalla", (dialog, which) -> {
                             // Lógica de batalla
-                          selecOponente(context,tableroMonsM,monstruosM,jugador,maquina,cartaMonstruo);
+                            selecOponente(context, tableroMonsM, monstruosM, jugador, maquina, cartaMonstruo);
                             Toast.makeText(context, "Declaro batalla", Toast.LENGTH_SHORT).show();
                         });
                     }
@@ -466,8 +476,18 @@ public class Utilitaria {
                 // Obtener el índice de la ImageView tocada
                 int index = magicasJ.indexOfChild(carta);
 
+                // Verificar si el índice tiene una carta válida
+                if (index < 0 || index >= tableroEspeJ.size() || tableroEspeJ.get(index) == null) {
+                    return; // Ignorar clic si no hay carta
+                }
+
                 // Obtener la carta correspondiente en tableroE (cartas mágicas y trampas)
                 Carta cartaSeleccionada = tableroEspeJ.get(index);
+
+                // Verificar si la carta es "no_hay_carta"
+                if ("no_hay_carta".equals(cartaSeleccionada.getNombre())) {
+                    return; // Ignorar clic si es una carta vacía
+                }
 
                 // Crear el AlertDialog para mostrar las especificaciones de la carta
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

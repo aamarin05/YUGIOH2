@@ -61,16 +61,9 @@ public class CartaMonstruo extends Carta {
     // Método toString
     @Override
     public String toString() {
-        String modo;
-        if (eModoAtaque())
-            modo = "ATAQUE";
-        else
-            modo = "DEFENSA";
-        if (getOrientacion() == Orientacion.ARRIBA) {
-            return "CartaMonstruo: "+super.toString() + " \nATQ: " + ataque + " \nDEF: " + defensa + " \nTIPO: " + tipo + " \nATRIBUTO: " + atributo;
-        } else {
-            return "Carta boca abajo";
-        }
+        return "CartaMonstruo: "+super.toString() + " \nATQ: " + ataque + " \nDEF: " + defensa + " \nTIPO: " + tipo + " \nATRIBUTO: " + atributo;
+
+
     }
 
 }

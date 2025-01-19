@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         else if (faseActual.equals("Fase Batalla")){
             nuevaFase = "Fase Tomar Carta";
         }
-        Toast.makeText(this, "Fase cambiada", Toast.LENGTH_SHORT).show();//muestra un pequeño mensaje que la fase se ha cambiado y luego se elimina
+        //Toast.makeText(this, "Fase cambiada", Toast.LENGTH_SHORT).show();//muestra un pequeño mensaje que la fase se ha cambiado y luego se elimina
         j.setText(nuevaFase);
     }
 

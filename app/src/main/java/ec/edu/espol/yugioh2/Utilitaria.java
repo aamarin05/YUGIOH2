@@ -391,6 +391,34 @@ public class Utilitaria {
 
         cartasAtributo.removeIf(carta -> !cartasContenedor.contains(carta));
 
+    }
 
+    public static void removerImageView(Context context,LinearLayout mano, Carta carta){
+        int imagenId = context.getResources().getIdentifier(carta.getImagen(), "drawable", context.getPackageName());
+
+        if (imagenId == 0) {
+            // Si la carta no tiene un drawable válido, no hacer nad
+            return;
+        }
+
+        // Obtener el drawable de la carta específica
+        Drawable drawableCarta = context.getResources().getDrawable(imagenId);
+        ImageView cartaSeleccionada = null;
+
+        // Recorre todos los elementos del LinearLayout
+        for (int i = 0; i < mano.getChildCount(); i++) {
+            ImageView imageView = (ImageView) mano.getChildAt(i);
+
+                // Comparar el drawable del ImageView con el de la carta
+            Drawable currentDrawable = imageView.getDrawable();
+            if (currentDrawable != null && currentDrawable.getConstantState().equals(drawableCarta.getConstantState())) {
+                cartaSeleccionada = imageView;
+                // Continúa recorriendo para garantizar que solo la última coincidencia (si hay varias) será seleccionada
+            }
+        }
+        // Si encontró el último ImageView correspondiente, eliminarlo
+        if (cartaSeleccionada != null) {
+            mano.removeView(cartaSeleccionada);
+        }
     }
 }

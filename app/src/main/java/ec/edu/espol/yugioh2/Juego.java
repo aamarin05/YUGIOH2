@@ -168,7 +168,6 @@ public class Juego {
     }
 
 
-    }
     public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM, TextView turnosView,TextView vidaJView,TextView vidaMView) {
         turnosView.setText("Turno: "+turno);
         vidaJView.setText("LP de "+jugador.getNombre()+": "+jugador.getPuntos());

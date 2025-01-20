@@ -41,7 +41,7 @@ public class Juego {
     }
 
 
-    public static String declararBatalla(CartaMonstruo cartaOponente, CartaMonstruo cartaAtacante, Jugador oponente, Jugador atacante) {
+    public static String declararBatalla(CartaMonstruo cartaOponente, CartaMonstruo cartaAtacante, Jugador oponente, Jugador atacante, Context context,LinearLayout monstruoO,LinearLayout monstruoA) {
         // Ambas cartas en modo ataque
         if (cartaOponente.eModoAtaque() && cartaAtacante.eModoAtaque()) {
             if (cartaOponente.getAtaque() < cartaAtacante.getAtaque()) {
@@ -49,21 +49,25 @@ public class Juego {
                 int puntos = oponente.getPuntos() - Math.abs(diferencia);
                 oponente.setPuntos(puntos);
                 cartaOponente.destruida();
+                Utilitaria.noHayCarta(context, monstruoO, cartaOponente);
                 oponente.getTablero().removerCarta(cartaOponente);
-                return "Carta: \n"+ cartaOponente + "destruida. \nPuntos de oponente actualizados. ";
+                return "Carta de : "+oponente.getNombre()+" \n"+ cartaOponente.getNombre() + "destruida. \nPuntos de oponente actualizados. ";
             } else if (cartaAtacante.getAtaque() == cartaOponente.getAtaque()) {
                 oponente.getTablero().removerCarta(cartaOponente);
                 atacante.getTablero().removerCarta(cartaAtacante);
                 cartaOponente.destruida();
                 cartaAtacante.destruida();
+                Utilitaria.noHayCarta(context, monstruoO, cartaOponente);
+                Utilitaria.noHayCarta(context, monstruoA, cartaAtacante);
                 return "Sus cartas fueron iguales y se destruyeron.\n";
             } else 
-                return "Carta: \n" + cartaAtacante + "\n no pudo atacar a\n" + cartaOponente + "\n porque es de menor ataque";
+                return "Carta de: "+atacante.getNombre()+"\n" + cartaAtacante.getNombre() + "\n no pudo atacar a\n" + cartaOponente.getNombre() + "\n porque es de menor ataque";
         }
         else if (cartaAtacante.eModoAtaque() && cartaOponente.eModoDefensa()) {
             if (cartaAtacante.getAtaque() > cartaOponente.getDefensa()) {
                 oponente.getTablero().removerCarta(cartaOponente);
                 cartaOponente.destruida();
+                Utilitaria.noHayCarta(context, monstruoO, cartaOponente);
                 return "Carta oponente destruida.\n";
             } else if (cartaAtacante.getAtaque() < cartaOponente.getDefensa()) {
                 int diferencia = cartaAtacante.getAtaque() - cartaOponente.getDefensa();
@@ -73,7 +77,7 @@ public class Juego {
                 cartaOponente.setPosicion(Posicion.HORIZONTAL);
                 return "Ataque fallido, puntos del atacante actualizados.\n";
             } else {
-                return "Carta " + cartaAtacante + " no pudo atacar " + cartaOponente + "\n Mismo ataque y defensa";
+                return "Carta " + cartaAtacante.getNombre() + " no pudo atacar " + cartaOponente.getNombre() + "\n Mismo ataque y defensa";
             }
         }
     
@@ -88,13 +92,14 @@ public class Juego {
             if ((especial instanceof CartaTrampa) && (((CartaTrampa) especial).usar(monsM))) {
                 trampas.add((CartaTrampa) especial);
                 j.getTablero().getEspeciales().remove(especial);
-                resultado.append("Se usó una carta trampa: ").append(especial.toString()).append("\n");
+                resultado.append("Se usó una carta trampa: ").append(especial).append("\n");
             }
             else
                 resultado.append("");
         }
         return resultado.toString();
     }
+
 
     public void faseTomarCarta(){
         String msjJ = jugador.tomarCarta();
@@ -106,31 +111,10 @@ public class Juego {
     }
 
 
-    public void fasePrincipal(LinearLayout mano, LinearLayout monstruosJ, LinearLayout especialesJ){
-        // TIENE QUE HABILITAR PARA PONER LAS CARTAS EN EL TABLERO Y SE PUEDAN USAR MAGICAS
-
-        Utilitaria.colocarTablero(context,jugador.getMano(),mano,monstruosJ, especialesJ,"Fase Principal",jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
-       // Utilitaria.colocarTablero(context,maquina.getMano(),mano,monstruosJ,"Fase Principal");
-
-
-    }
-
-    private void faseBatalla(LinearLayout monstruosA,LinearLayout monstruosO, ArrayList<CartaMonstruo> cartasA, ArrayList<CartaMonstruo> cartasO,Jugador jugador,Jugador maquina) {
-        //BATALLA JUGADOR
-
-        //Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
-        //Utilitaria.gestionarBatalla(context,cartasA,monstruosA,cartasO,monstruosO,jugador,maquina,"Fase Batalla");
-
-        //ArrayList<Carta> cartas = Utilitaria.declararBatalla(context,cartasJ,cartasM,monstruosA, monstruosO,"Fase Batalla");
-        //CartaMonstruo oponente = (CartaMonstruo) cartas.get(1);
-        //CartaMonstruo atacante = (CartaMonstruo) cartas.get(0);
-
-        //Juego.declararBatalla(oponente,atacante,maquina,jugador);
-
-    }
 
     public void jugar(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ,LinearLayout especialesM) {
         if (turno==0){
+
             for (Carta c : jugador.getMano()) {
                 Utilitaria.crearyAgregar(context, c, manoJ);
             }
@@ -141,80 +125,7 @@ public class Juego {
 
         }
         if (fase.equals("Fase Tomar Carta")) {
-            //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
-            Carta ct= jugador.getDeck().getCartas().get(0);
-            jugador.getMano().add(ct);
-            jugador.getDeck().getCartas().remove(0);
-            Toast.makeText(context, "Jugador tomo la carta "+ct.getNombre(), Toast.LENGTH_SHORT).show();
-            Utilitaria.crearyAgregar(context,ct,manoJ);
 
-            Carta ctm= maquina.getDeck().getCartas().get(0);
-            maquina.getMano().add(ctm);
-            maquina.getDeck().getCartas().remove(0);
-            Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
-            Utilitaria.crearyAgregar(context,ctm,manoM);
-
-
-
-            //Se cambie el text del nombre del jugador
-            //Que se cambien los turnos
-            //Que se cambien las fases
-
-            turno++;
-        }
-        if (fase.equals("Fase Principal")) {
-
-
-
-            fasePrincipal(manoJ, monstruosJ, especialesJ);
-            maquina.mFasePrincipal();
-
-            for (Carta carta : maquina.getTablero().getCartasMons()) {
-                Utilitaria.reemplazar(context, carta, monstruosM);
-                Utilitaria.removerImageView(context, manoM, carta);
-            }
-            for (Carta carta : maquina.getTablero().getEspeciales()) {
-                Utilitaria.reemplazar(context, carta, especialesM);
-                Utilitaria.removerImageView(context, manoM, carta);
-            }
-            //Utilitaria.quitarCartas(context,manoJ,jugador.getMano());
-
-            StringBuilder builder = new StringBuilder();
-
-            for (int i = 0; i < jugador.getMano().size(); i++) {
-                builder.append(i + 1).append(". ") // Agrega el número de la lista
-                        .append(jugador.getMano().get(i).getNombre())       // Agrega el elemento actual
-                        .append("\n");              // Salto de línea después de cada elemento
-            }
-
-            Utilitaria.crearDialogs(context,"Context",builder.toString(),"ok");
-
-
-
-        }
-
-
-        //if (fase.equals("Fase Batalla"))
-        //faseBatalla(monstruosJ,monstruosM);
-
-    }
-    public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM, TextView turnosView,TextView vidaJView,TextView vidaMView) {
-        turnosView.setText("Turno: "+turno);
-        vidaJView.setText("LP de "+jugador.getNombre()+": "+jugador.getPuntos());
-        vidaMView.setText("LP de la "+maquina.getNombre()+": "+maquina.getPuntos());
-
-        if (fase.equals("Fase Tomar Carta")) {
-            if (turno==1){
-                for (Carta c : jugador.getMano()) {
-                    Utilitaria.crearyAgregar(context, c, manoJ);
-                }
-                for (Carta c : maquina.getMano()) {
-                    Utilitaria.crearyAgregar(context, c, manoM);
-                }
-
-
-            }
-            //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
             Carta ct= jugador.getDeck().getCartas().get(0);
             jugador.getMano().add(ct);
             jugador.getDeck().getCartas().remove(0);
@@ -228,13 +139,73 @@ public class Juego {
             Utilitaria.crearyAgregar(context,ctm,manoM);
             Utilitaria.eliminarClickListenersTablero(monstruosJ, monstruosM, especialesJ, especialesM);
 
-            //Se cambie el text del nombre del jugador
-            //Que se cambien los turnos
-            //Que se cambien las fases
+            turno++;
+        }
+
+
+        if (fase.equals("Fase Principal")) {
+
+            Utilitaria.colocarTablero(context,jugador.getMano(),manoJ,monstruosJ, especialesJ,"Fase Principal",jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
+            maquina.mFasePrincipal();
+
+            for (Carta carta : maquina.getTablero().getCartasMons()) {
+                Utilitaria.reemplazar(context, carta, monstruosM);
+                Utilitaria.removerImageView(context, manoM, carta);
+            }
+            for (Carta carta : maquina.getTablero().getEspeciales()) {
+                Utilitaria.reemplazar(context, carta, especialesM);
+                Utilitaria.removerImageView(context, manoM, carta);
+            }
+
+        }
+
+
+        if (fase.equals("Fase Batalla")) {
+            Utilitaria.quitarClickListeners(manoJ);
+            Utilitaria.mostrarDetallesbatalla(context, monstruosJ,monstruosM,especialesJ,especialesM,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales(),maquina.getTablero().getCartasMons(),maquina.getTablero().getEspeciales(),jugador,maquina);
+        }
+
+    }
+
+
+    }
+    public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM, TextView turnosView,TextView vidaJView,TextView vidaMView) {
+        turnosView.setText("Turno: "+turno);
+        vidaJView.setText("LP de "+jugador.getNombre()+": "+jugador.getPuntos());
+        vidaMView.setText("LP de la "+maquina.getNombre()+": "+maquina.getPuntos());
+
+
+        if (fase.equals("Fase Tomar Carta")) {
+
+            if (turno==1){
+                for (Carta c : jugador.getMano()) {
+                    Utilitaria.crearyAgregar(context, c, manoJ);
+                }
+                for (Carta c : maquina.getMano()) {
+                    Utilitaria.crearyAgregar(context, c, manoM);
+                }
+
+
+            }
+            //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
+
+            Carta ct= jugador.getDeck().getCartas().get(0);
+            jugador.getMano().add(ct);
+            jugador.getDeck().getCartas().remove(0);
+            Toast.makeText(context, "Jugador tomo la carta "+ct.getNombre(), Toast.LENGTH_SHORT).show();
+            Utilitaria.crearyAgregar(context,ct,manoJ);
+
+            Carta ctm= maquina.getDeck().getCartas().get(0);
+            maquina.getMano().add(ctm);
+            maquina.getDeck().getCartas().remove(0);
+            Toast.makeText(context, "La maquina tomo la carta "+ctm.getNombre(), Toast.LENGTH_SHORT).show();
+            Utilitaria.crearyAgregar(context,ctm,manoM);
+            Utilitaria.eliminarClickListenersTablero(monstruosJ, monstruosM, especialesJ, especialesM);
+
         }
         if (fase.equals("Fase Principal")) {
 
-            fasePrincipal(manoJ, monstruosJ, especialesJ);
+            Utilitaria.colocarTablero(context,jugador.getMano(),manoJ,monstruosJ, especialesJ,"Fase Principal",jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales());
             maquina.mFasePrincipal();
           
             for (Carta carta : maquina.getTablero().getCartasMons()) {
@@ -246,19 +217,6 @@ public class Juego {
                 Utilitaria.removerImageView(context, manoM, carta);
             }
 
-            /*
-
-            StringBuilder builder = new StringBuilder();
-
-            for (int i = 0; i < jugador.getTablero().getEspeciales().size(); i++) {
-                builder.append(i + 1).append(". ") // Agrega el número de la lista
-                        .append(jugador.getTablero().getEspeciales().get(i).getNombre())       // Agrega el elemento actual
-                        .append("\n");              // Salto de línea después de cada elemento
-            }
-
-            Utilitaria.crearDialogs(context,"Context", String.valueOf(jugador.getTablero().getEspeciales().size()),"ok");
-
-             */
         }
 
         if (fase.equals("Fase Batalla")) {
@@ -278,9 +236,10 @@ public class Juego {
                 turno+=1;
             }else {
                 //faseBatalla(monstruosJ,monstruosM,jugador.getTablero().getCartasMons(),maquina.getTablero().getCartasMons(),jugador,maquina);
-                Utilitaria.mostrarDetallesbatalla(context, monstruosJ, monstruosM, especialesJ, especialesM, jugador.getTablero().getCartasMons(), jugador.getTablero().getEspeciales(), maquina.getTablero().getCartasMons(), maquina.getTablero().getEspeciales(), jugador, maquina);
+                Utilitaria.mostrarDetallesbatalla(context, monstruosJ,monstruosM,especialesJ,especialesM,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales(),maquina.getTablero().getCartasMons(),maquina.getTablero().getEspeciales(),jugador,maquina);
                 turno++;
             }
+
         }
         
     }

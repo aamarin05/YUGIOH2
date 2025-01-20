@@ -24,7 +24,7 @@ public class CartaMagica extends Carta{
     }
 
     // Función a usar en el juego
-    public String usar(CartaMonstruo cartaMonstruo) {
+    public String usar(CartaMonstruo cartaMonstruo, Jugador jugador) {
         if (tipo == cartaMonstruo.getTipo()) {
             if (defensa == 0) { // Carta mágica que aumenta el ataque
                 int nuevoAtaque = cartaMonstruo.getAtaque() + ataque;
@@ -33,6 +33,7 @@ public class CartaMagica extends Carta{
                 int nuevaDefensa = cartaMonstruo.getDefensa() + this.defensa;
                 cartaMonstruo.setDefensa(nuevaDefensa);
             }
+            jugador.getTablero().removerCarta(this);
             return toString();
         } else {
             return "No se puede usar, no son del mismo tipo de Monstruo";

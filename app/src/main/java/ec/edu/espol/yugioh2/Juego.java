@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Juego {
     private Maquina maquina;
     private Jugador jugador;
     private Context context;
-    private int turno=0;
+    private int turno=1;
 
     private String fase;
 
@@ -29,10 +30,10 @@ public class Juego {
 
     public void setFase(String nuevaFase, LinearLayout manoJ, LinearLayout manoM,
                         LinearLayout monstruosJ, LinearLayout monstruosM,
-                        LinearLayout especialesJ, LinearLayout especialesM) {
+                        LinearLayout especialesJ, LinearLayout especialesM,TextView turnosView,TextView vidaJView,TextView vidaMView) {
         this.fase = nuevaFase;
         // Llama automáticamente a la función prueba cuando se actualiza la fase
-        prueba(manoJ, manoM, monstruosJ, monstruosM, especialesJ, especialesM);
+        prueba(manoJ, manoM, monstruosJ, monstruosM, especialesJ, especialesM,turnosView,vidaJView,vidaMView);
     }
     public static void batallaDirecta(CartaMonstruo monstruoAtacante, Jugador oponente){
         int puntos = oponente.getPuntos() - monstruoAtacante.getAtaque();
@@ -167,18 +168,26 @@ public class Juego {
     }
 
 
-    public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ,LinearLayout especialesM) {
-        if (turno==0){
-            for (Carta c : jugador.getMano()) {
-                Utilitaria.crearyAgregar(context, c, manoJ);
-            }
-            for (Carta c : maquina.getMano()) {
-                Utilitaria.crearyAgregar(context, c, manoM);
-            }
-            turno+=1;
+    }
+    public void prueba(LinearLayout manoJ, LinearLayout manoM, LinearLayout monstruosJ, LinearLayout monstruosM, LinearLayout especialesJ, LinearLayout especialesM, TextView turnosView,TextView vidaJView,TextView vidaMView) {
+        turnosView.setText("Turno: "+turno);
+        vidaJView.setText("LP de "+jugador.getNombre()+": "+jugador.getPuntos());
+        vidaMView.setText("LP de la "+maquina.getNombre()+": "+maquina.getPuntos());
 
-        }
+
         if (fase.equals("Fase Tomar Carta")) {
+
+            if (turno==1){
+                for (Carta c : jugador.getMano()) {
+                    Utilitaria.crearyAgregar(context, c, manoJ);
+                }
+                for (Carta c : maquina.getMano()) {
+                    Utilitaria.crearyAgregar(context, c, manoM);
+                }
+
+
+            }
+            //Se coloquen las cartas de la mano del jugador y de la maquina en el linearLayout
 
             Carta ct= jugador.getDeck().getCartas().get(0);
             jugador.getMano().add(ct);
@@ -193,7 +202,6 @@ public class Juego {
             Utilitaria.crearyAgregar(context,ctm,manoM);
             Utilitaria.eliminarClickListenersTablero(monstruosJ, monstruosM, especialesJ, especialesM);
 
-            turno++;
         }
         if (fase.equals("Fase Principal")) {
 
@@ -213,7 +221,25 @@ public class Juego {
 
         if (fase.equals("Fase Batalla")) {
             Utilitaria.quitarClickListeners(manoJ);
-            Utilitaria.mostrarDetallesbatalla(context, monstruosJ,monstruosM,especialesJ,especialesM,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales(),maquina.getTablero().getCartasMons(),maquina.getTablero().getEspeciales(),jugador,maquina);
+            if(turno<2) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Información del Turno");
+                builder.setMessage("A partir del segundo turno puedes declarar batalla.\nSigue a la siguiente fase porfavor :)");
+
+                // Botón "OK" para cerrar el diálogo
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss(); // Cierra el cuadro de diálogo
+                });
+
+                // Mostrar el AlertDialog
+                builder.show();
+                turno+=1;
+            }else {
+                //faseBatalla(monstruosJ,monstruosM,jugador.getTablero().getCartasMons(),maquina.getTablero().getCartasMons(),jugador,maquina);
+                Utilitaria.mostrarDetallesbatalla(context, monstruosJ,monstruosM,especialesJ,especialesM,jugador.getTablero().getCartasMons(),jugador.getTablero().getEspeciales(),maquina.getTablero().getCartasMons(),maquina.getTablero().getEspeciales(),jugador,maquina);
+                turno++;
+            }
+
         }
         
     }
